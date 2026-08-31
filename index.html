@@ -1,12 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Wire Coincheap</title>
+  <title>Wire Coincheap - Global Trading Platform</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif}
+    body{background: linear-gradient(135deg, #0a192f 0%, #112240 50%, #1a365d 100%); color:#fff; min-height:100vh; overflow-x:hidden}
+    body::before{content:''; position:fixed; width:700px; height:700px; background: radial-gradient(circle, rgba(34,197,94,0.15) 0%, transparent 70%); border-radius:50%; top:50%; left:50%; transform:translate(-50%, -50%); animation: pulse 4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.1)}}
+    .wrap{position:relative; z-index:2; max-width:1100px; margin:0 auto; padding:40px 20px}
+    nav{display:flex; justify-content:space-between; align-items:center; margin-bottom:60px}
+    .logo{font-size:24px; font-weight:800; color:#22c55e}
+    .btn{padding:12px 24px; background:#22c55e; color:white; text-decoration:none; border-radius:12px; font-weight:700; margin-left:10px; border:none; cursor:pointer}
+    .btn-outline{background:transparent; border:2px solid #22c55e}
+    .hero{text-align:center; padding:60px 0}
+    .globe{font-size:80px; margin-bottom:20px}
+    h1{font-size:48px; margin-bottom:15px}
+    .tag{font-size:18px; color:#94a3b8; margin-bottom:30px}
+    .plans{margin-top:80px}
+    .plans h2{text-align:center; font-size:32px; margin-bottom:30px}
+    .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px}
+    .card{background:rgba(255,255,255,0.95); color:#0a192f; padding:30px; border-radius:18px; border-left:4px solid #22c55e}
+    .card h3{color:#22c55e; font-size:22px}
+    .price{font-size:32px; font-weight:800; margin:15px 0}
+    footer{text-align:center; padding:40px 0; color:#94a3b8; margin-top:60px}
+  </style>
 </head>
-<body style="background:#0a192f; color:white; text-align:center; padding:100px">
-  <h1>🌍 Wire Coincheap</h1>
-  <p>If you see this, the site is working!</p>
-  <a href="login.html">Go to Login</a>
+<body>
+  <div class="wrap">
+    <nav>
+      <div class="logo">🌍 Wire Coincheap</div>
+      <div>
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="register.html" class="btn">Sign Up</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="globe">🌍</div>
+      <h1>Trade Smarter. Invest Globally.</h1>
+      <p class="tag">Join thousands of investors worldwide earning daily ROI</p>
+      <a href="register.html" class="btn">Get Started Free</a>
+    </div>
+
+    <div class="plans">
+      <h2>Investment Plans</h2>
+      <div class="grid">
+        <div class="card"><h3>Starter</h3><div class="price">$100</div><p>5% Daily ROI • 7 Days</p><a href="register.html" class="btn" style="width:100%; text-align:center; margin-top:15px">Activate</a></div>
+        <div class="card"><h3>Pro</h3><div class="price">$500</div><p>7% Daily ROI • 14 Days</p><a href="register.html" class="btn" style="width:100%; text-align:center; margin-top:15px">Activate</a></div>
+        <div class="card"><h3>VIP</h3><div class="price">$2000</div><p>10% Daily ROI • 30 Days</p><a href="register.html" class="btn" style="width:100%; text-align:center; margin-top:15px">Activate</a></div>
+      </div>
+    </div>
+
+    <footer>© 2026 Wire Coincheap. Global Trading Platform.</footer>
+  </div>
 </body>
 </html>
