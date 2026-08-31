@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><title>Sign Up - Wire Coincheap</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>body{background:#0a192f; color:#fff; display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:Arial} .box{background:white; color:#0a192f; padding:30px; border-radius:16px; width:90%; max-width:380px} input{width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ccc} .btn{width:100%; padding:12px; background:#22c55e; color:white; border:none; border-radius:8px; font-weight:700; cursor:pointer} a{color:#22c55e; text-decoration:none}</style>
+</head>
+<body>
+<div class="box">
+<h2>Create Account</h2>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<input id="country" placeholder="Country e.g USA">
+<button class="btn" onclick="signUp()">Sign Up & Send OTP</button>
+<input id="otp" placeholder="Enter OTP from email" style="margin-top:15px">
+<button class="btn" onclick="verifyOtp()" style="background:#0a192f">Verify OTP</button>
+<p style="margin-top:15px">Have account? <a href="login.html">Login</a></p>
+</div>
+<script>
+const supabase = window.supabase.createClient('YOUR_SUPABASE_URL','YOUR_SUPABASE_ANON_KEY')
+async function signUp(){
+  const email=document.getElementById('email').value
+  const password=document.getElementById('password').value
+  const country=document.getElementById('country').value
+  const {data,error}=await supabase.auth.signUp({email,password})
+  if(error){alert(error.message); return}
+  await supabase.from('users').insert([{email,country,balance:0,otp_verified:false}])
+  alert('OTP sent to your email')
+}
+async function verifyOtp(){
+  const email=document.getElementById('email').value
+  const token=document.getElementById('otp').value
+  const {error}=await supabase.auth.verifyOtp({email,token,type:'signup'})
+  if(error){alert(error.message)} else {await supabase.from('users').update({otp_verified:true}).eq('email',email); alert('Verified! Go to Login'); location.href='login.html'}
+}
+</script></body></html>
