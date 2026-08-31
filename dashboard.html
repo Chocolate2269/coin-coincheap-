@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html><head><title>Dashboard</title><meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>body{background:#0a192f; color:#fff; padding:20px; font-family:Arial} .card{background:white; color:#0a192f; padding:20px; border-radius:12px; margin-bottom:15px} .btn{padding:10px 16px; background:#22c55e; color:white; border:none; border-radius:8px; margin:5px; cursor:pointer} select,input{padding:10px; width:100%; margin:8px 0; border-radius:8px; border:1px solid #ccc}</style>
+</head><body>
+<h2>🌍 My Dashboard</h2>
+<div class="card"><h3>Balance: $<span id="bal">00</span></h3><button class="btn" onclick="document.getElementById('dep').style.display='block'">Deposit</button><button class="btn" style="background:#0a192f" onclick="document.getElementById('wit').style.display='block'">Withdraw</button></div>
+
+<div id="dep" class="card" style="display:none"><h3>Deposit</h3><input id="depAmt" type="number" placeholder="Amount"><button class="btn" onclick="deposit()">Deposit Now</button></div>
+
+<div id="wit" class="card" style="display:none"><h3>Withdraw to Bank</h3>
+<select id="bank"><option>Huntington Bank - USA</option><option>GLCU Credit Union</option><option>Abri Credit Union</option><option>Navy Federal Credit Union</option><option>Alliant Credit Union</option></select>
+<input id="acc" placeholder="Account Number"><input id="witAmt" type="number" placeholder="Amount"><button class="btn" onclick="withdraw()">Request Withdrawal</button></div>
+
+<script>
+const supabase=window.supabase.createClient('YOUR_SUPABASE_URL','YOUR_SUPABASE_ANON_KEY')
+async function load(){const {data:{user}}=await supabase.auth.getUser(); if(!user) location.href='login.html'; const {data}=await supabase.from('users').select('balance').eq('email',user.email).single(); document.getElementById('bal').innerText=data?.balance||'00'}
+async function deposit(){const amt=Number(document.getElementById('depAmt').value); const {data:{user}}=await supabase.auth.getUser(); const {data}=await supabase.from('users').select('balance').eq('email',user.email).single(); await supabase.from('users').update({balance:data.balance+amt}).eq('email',user.email); alert('Deposited'); load()}
+async function withdraw(){const amt=document.getElementById('witAmt').value; const bank=document.getElementById('bank').value; alert(`Withdrawal $${amt} to ${bank} requested. Admin will approve.`)}
+load()
+</script></body></html>
