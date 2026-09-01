@@ -1,35 +1,60 @@
 <!DOCTYPE html>
-<html><head><title>Sign Up - Wire Coincheap</title>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Register - Coincheap Investment</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>body{background:#0a192f; color:#fff; display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:Arial} .box{background:white; color:#0a192f; padding:30px; border-radius:16px; width:90%; max-width:380px} input{width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ccc} .btn{width:100%; padding:12px; background:#22c55e; color:white; border:none; border-radius:8px; font-weight:700; cursor:pointer} a{color:#22c55e; text-decoration:none}</style>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}body{background:#0a192f;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.box{background:#fff;color:#0a192f;padding:30px;border-radius:16px;width:92%;max-width:400px;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+input{width:100%;padding:14px;margin:10px 0;border-radius:10px;border:2px solid #c7d2fe;font-size:16px}
+.btn{width:100%;padding:14px;background:linear-gradient(90deg,#1e3a8a,#3b82f6);color:#fff;border:none;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer;margin-top:10px}
+a{color:#1e3a8a;font-weight:700;text-decoration:none}
+</style>
 </head>
 <body>
 <div class="box">
-<h2>Create Account</h2>
-<input id="email" type="email" placeholder="Email">
+<h2 style="text-align:center;color:#1e3a8a">💎 Create Account</h2>
+<p style="text-align:center;color:#64748b;font-size:13px">Coincheap Investment - USA</p>
+<input id="email" type="email" placeholder="Email - akagaviani74@gmail.com">
 <input id="password" type="password" placeholder="Password">
-<input id="country" placeholder="Country e.g USA">
-<button class="btn" onclick="signUp()">Sign Up & Send OTP</button>
-<input id="otp" placeholder="Enter OTP from email" style="margin-top:15px">
-<button class="btn" onclick="verifyOtp()" style="background:#0a192f">Verify OTP</button>
-<p style="margin-top:15px">Have account? <a href="login.html">Login</a></p>
+<input id="country" placeholder="Country - USA" value="USA">
+<button class="btn" onclick="signUp()">CREATE ACCOUNT</button>
+<p id="msg" style="text-align:center;font-weight:900;margin-top:12px"></p>
+<p style="text-align:center;margin-top:15px">Have account? <a href="login.html">Login</a></p>
+<p style="text-align:center;margin-top:8px"><a href="index.html">← Home</a></p>
 </div>
-<script>
-const supabase = window.supabase.createClient('YOUR_SUPABASE_URL','YOUR_SUPABASE_ANON_KEY')
-async function signUp(){
-  const email=document.getElementById('email').value
-  const password=document.getElementById('password').value
-  const country=document.getElementById('country').value
-  const {data,error}=await supabase.auth.signUp({email,password})
-  if(error){alert(error.message); return}
-  await supabase.from('users').insert([{email,country,balance:0,otp_verified:false}])
-  alert('OTP sent to your email')
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",
+  authDomain: "coincheap-investment.firebaseapp.com",
+  databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
+  projectId: "coincheap-investment",
+  storageBucket: "coincheap-investment.firebasestorage.app",
+  messagingSenderId: "1065612358336",
+  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.signUp = async function(){
+ let email=document.getElementById('email').value.trim().toLowerCase();
+ let password=document.getElementById('password').value;
+ let country=document.getElementById('country').value||"USA";
+ if(!email||!password){document.getElementById('msg').innerText='Fill email & password';return;}
+ document.getElementById('msg').innerText='Creating...'; document.getElementById('msg').style.color='#1e3a8a';
+ try{
+   let key=email.replace(/[^a-zA-Z0-9]/g,'_');
+   let snap=await get(ref(db,'users/'+key));
+   if(snap.exists()){document.getElementById('msg').innerText='Account exists! Go to Login'; setTimeout(()=>location.href='login.html',1000); return;}
+   await set(ref(db,'users/'+key),{email,password,country,balance:0,created:new Date().toLocaleString()});
+   document.getElementById('msg').innerText='✅ Created! Opening Login...'; document.getElementById('msg').style.color='green';
+   setTimeout(()=>location.href='login.html?email='+email,1500);
+ }catch(err){document.getElementById('msg').innerText='Error: '+err.message; document.getElementById('msg').style.color='red';}
 }
-async function verifyOtp(){
-  const email=document.getElementById('email').value
-  const token=document.getElementById('otp').value
-  const {error}=await supabase.auth.verifyOtp({email,token,type:'signup'})
-  if(error){alert(error.message)} else {await supabase.from('users').update({otp_verified:true}).eq('email',email); alert('Verified! Go to Login'); location.href='login.html'}
-}
-</script></body></html>
+</script>
+</body>
+</html>
