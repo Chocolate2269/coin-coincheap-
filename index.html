@@ -8,38 +8,20 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}body{background:#080C18;color:#E8EAF0;font-family:'Inter',sans-serif}
 h1,h2{font-family:'Playfair Display',serif}
-.card{background:linear-gradient(145deg,#121A2F,#0F172A);border:1px solid rgba(212,175,55,0.15);padding:28px;border-radius:24px;margin:14px;box-shadow:0 20px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05)}
-.card-gold{border:1px solid rgba(212,175,55,0.35);background:linear-gradient(145deg,#161F37,#121A2F);box-shadow:0 20px 60px rgba(0,0,0,.5), 0 0 30px rgba(212,175,55,.08)}
-input,select{width:100%;padding:16px;margin:10px 0;border:1px solid rgba(255,255,255,.08);border-radius:14px;font-size:15px;background:#080C18;color:#E8EAF0;outline:none}
-input:focus{border-color:#D4AF37;box-shadow:0 0 0 3px rgba(212,175,55,.1)}
+.card{background:linear-gradient(145deg,#121A2F,#0F172A);border:1px solid rgba(212,175,55,0.15);padding:28px;border-radius:24px;margin:14px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.card-gold{border:1px solid rgba(212,175,55,0.35);background:linear-gradient(145deg,#161F37,#121A2F)}
+input,select,textarea{width:100%;padding:16px;margin:10px 0;border:1px solid rgba(255,255,255,.08);border-radius:14px;font-size:15px;background:#080C18;color:#E8EAF0;outline:none}
+input:focus,textarea:focus{border-color:#D4AF37}
 .btn{padding:16px;background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;border:none;border-radius:14px;font-weight:700;width:100%;margin-top:14px;cursor:pointer;letter-spacing:0.8px;font-size:14px;text-transform:uppercase}
 .btnDark{background:linear-gradient(145deg,#1E293B,#121A2F);color:#E8EAF0;border:1px solid rgba(255,255,255,.1)}
 .tab{display:none}.tab.active{display:block}
 .nav{display:flex;gap:8px;padding:16px 14px;background:rgba(8,12,24,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(212,175,55,.12);position:sticky;top:0;z-index:99}
-.nav button{padding:12px;border:none;border-radius:12px;background:#121A2F;color:#8B95B0;font-weight:500;flex:1;border:1px solid rgba(255,255,255,.06);font-size:13px;text-transform:uppercase}
-.nav button.active{background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;border-color:#D4AF37;font-weight:700}
-.hero{background:radial-gradient(120% 120% at 50% 0%, #1A2340 0%, #080C18 60%);padding:60px 22px;text-align:center;position:relative;overflow:hidden}
+.nav button{padding:12px;border:none;border-radius:12px;background:#121A2F;color:#8B95B0;flex:1;border:1px solid rgba(255,255,255,.06);font-size:13px;text-transform:uppercase}
+.nav button.active{background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;font-weight:700}
+.hero{background:radial-gradient(120% 120% at 50% 0%, #1A2340 0%, #080C18 60%);padding:60px 22px;text-align:center}
 .balCard{background:linear-gradient(135deg,#121A2F 0%, #1A2340 100%);border:1px solid rgba(212,175,55,.25);padding:30px;border-radius:28px;margin:14px;position:relative;overflow:hidden}
 .bankItem{background:rgba(8,12,24,.6);border:1px solid rgba(255,255,255,.06);padding:16px;border-radius:16px;margin:12px 0;display:flex;justify-content:space-between;align-items:center}
 .goldText{background:linear-gradient(90deg,#D4AF37,#F5E6A3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .testimonial{background:rgba(8,12,24,.7);border-left:2px solid #D4AF37;padding:16px;margin:12px 0;border-radius:0 16px 16px 0;font-size:13.5px;color:#8B95B0}
 .divider{height:1px;background:linear-gradient(90deg, transparent, rgba(212,175,55,.2), transparent);margin:20px 0}
-/* ANIMATION */
-@keyframes goldPulse{0%{box-shadow:0 0 0 0 rgba(212,175,55,.4)}50%{box-shadow:0 0 0 20px rgba(212,175,55,0), 0 0 60px rgba(212,175,55,.35);transform:scale(1.02)}100%{box-shadow:0 0 0 0 rgba(212,175,55,0);transform:scale(1)}}.credit-animate{animation:goldPulse 1.2s ease-out 2;border-color:#D4AF37 !important}
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}.shimmer::before{content:'';position:absolute;top:0;left:0;width:50%;height:100%;background:linear-gradient(90deg, transparent, rgba(212,175,55,.25), transparent);animation:shimmer 1.5s ease-in-out}
-.confetti{position:absolute;width:6px;height:6px;background:#D4AF37;animation:confettiFall 1.2s ease-out forwards}@keyframes confettiFall{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}100%{transform:translateY(120px) rotate(720deg) scale(0);opacity:0}}
-.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;padding:12px 20px;border-radius:30px;font-weight:700;font-size:13px;box-shadow:0 15px 40px rgba(212,175,55,.35);z-index:10000;animation:toastIn .5s ease-out, toastOut .5s ease-in 2.5s forwards}
-@keyframes toastIn{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}@keyframes toastOut{to{transform:translateX(-50%) translateY(-20px);opacity:0}}
-</style>
-</head>
-<body>
-<div style="background:rgba(8,12,24,0.8);padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(212,175,55,.12)"><div style="font-family:'Playfair Display';font-size:20px">COINCHEAP <span class="goldText">INVESTMENT</span><span style="font-family:'Inter';font-size:9px;background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.3);padding:4px 10px;border-radius:20px;margin-left:12px;color:#D4AF37">PRIVATE • USA</span></div><div id="topEmail" style="font-size:11px;color:#D4AF37"></div></div>
-<div class="nav"><button id="b1" class="active" onclick="showTab('home')">Private</button><button id="b2" onclick="showTab('register')">Join</button><button id="b3" onclick="showTab('login')">Access</button><button id="b4" onclick="showTab('dashboard')">Vault</button></div>
-
-<div id="home" class="tab active">
-<div class="hero"><p style="letter-spacing:4px;font-size:10px;color:#D4AF37;margin-bottom:18px">EST. 2019 • DELAWARE, USA</p><h1 style="font-size:38px;line-height:1.1">Private Wealth<br><span class="goldText">Management</span></h1><p style="color:#8B95B0;margin-top:18px;font-size:14.5px;line-height:1.8;max-width:520px;margin:auto;font-weight:300">Where discerning USA investors preserve and grow capital through direct banking integration. Not a trading app. A private vault.</p><button class="btn" style="max-width:300px;margin:32px auto 0;display:block" onclick="showTab('register')">Request Private Access →</button></div>
-<div class="card card-gold"><h2>Wealth, <span class="goldText">Simplified</span></h2><div class="divider"></div><p style="color:#C2C9D6;line-height:1.9;font-size:14px;font-weight:300">Delaware-registered private wealth boutique serving USA investors. <b style="color:#D4AF37">Admin-credited vault system</b> — returns manually reviewed and credited by USA treasury team. ACH-direct to Huntington, GLCU, Abri, Navy Federal, Alliant, Chase, Bank of America.<br><br><span style="font-size:11px;letter-spacing:1px;color:#D4AF37">● MILITARY-GRADE • ZERO FEES • 2-12H SETTLEMENT • INSURED CUSTODY</span></p></div>
-<div class="card"><h3 style="font-family:'Playfair Display';color:#E8EAF0">Client Notes • USA</h3><div class="testimonial"><span style="color:#E8EAF0">S.M. — Austin, TX</span> <span style="font-size:10px;color:#D4AF37">• HUNTINGTON • $4,500</span><br>"The only platform where withdrawal feels like a private bank wire."</div><div class="testimonial"><span style="color:#E8EAF0">J.K. — Miami, FL</span> <span style="font-size:10px;color:#D4AF37">• GLCU • $12,000</span><br>"I have moved my family office allocation here."</div><div class="testimonial"><span style="color:#E8EAF0">A.R. — Napa, CA</span> <span style="font-size:10px;color:#D4AF37">• ABRI • $8,200</span><br>"Design says it all — not loud, just wealthy."</div></div>
-</div>
-
-<div id="register" class="tab"><div class="card card-gold" style="max-width:440px
+@keyframes goldPulse{0%{box-shadow:0 0 0 
