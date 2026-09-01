@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test - Wire Coincheap</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{font-family:Arial;padding:20px;background:#050e22;color:#fff;text-align:center} .btn{padding:15px 25px;background:#22c55e;color:#fff;border:none;border-radius:10px;font-weight:800;margin:10px;cursor:pointer;font-size:18px} .ok{color:#22c55e;font-weight:800;font-size:20px;margin:20px}</style>
+</head>
+<body>
+
+<h1>Wire Coincheap - TEST PAGE</h1>
+<p class="ok">✅ If you see this, file uploaded OK</p>
+
+<button class="btn" onclick="alert('Button 1 Working!')">Test Button 1</button>
+<button class="btn" onclick="alert('Button 2 Working!')">Test Button 2</button>
+<button class="btn" onclick="window.location.href='index.html'">Go to Main Site</button>
+
+<h3 style="margin-top:30px">Live Support Test:</h3>
+<p>Look bottom-right — chat bubble should show in 3 seconds</p>
+<p id="status">Checking chat...</p>
+
+<script>
+setTimeout(()=>{
+ let chat = document.getElementById('chatway') || document.querySelector('[id*=chatway]');
+ if(document.body.innerHTML.includes('chatway')){
+   document.getElementById('status').innerText = '✅ Chatway script loaded';
+   document.getElementById('status').style.color = '#22c55e';
+ } else {
+   document.getElementById('status').innerText = '❌ Chatway not loaded - check ID';
+   document.getElementById('status').style.color = 'red';
+ }
+}, 3000);
+
+function showTab(t){ alert('showTab '+t+' works!'); }
+</script>
+
+<!-- LIVE SUPPORT WIDGET -->
+<script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+
+</body>
+</html>
