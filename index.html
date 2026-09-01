@@ -2,26 +2,73 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Coincheap Investment | Private Wealth Management - USA</title>
+<title>Coincheap Investment | Private Vault - USA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}body{background:#080C18;color:#E8EAF0;font-family:'Inter',sans-serif}
 h1,h2{font-family:'Playfair Display',serif}
-.card{background:linear-gradient(145deg,#121A2F,#0F172A);border:1px solid rgba(212,175,55,0.15);padding:28px;border-radius:24px;margin:14px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.card-gold{border:1px solid rgba(212,175,55,0.35);background:linear-gradient(145deg,#161F37,#121A2F)}
-input,select,textarea{width:100%;padding:16px;margin:10px 0;border:1px solid rgba(255,255,255,.08);border-radius:14px;font-size:15px;background:#080C18;color:#E8EAF0;outline:none}
-input:focus,textarea:focus{border-color:#D4AF37}
-.btn{padding:16px;background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;border:none;border-radius:14px;font-weight:700;width:100%;margin-top:14px;cursor:pointer;letter-spacing:0.8px;font-size:14px;text-transform:uppercase}
-.btnDark{background:linear-gradient(145deg,#1E293B,#121A2F);color:#E8EAF0;border:1px solid rgba(255,255,255,.1)}
+.card{background:linear-gradient(145deg,#121A2F,#0F172A);border:1px solid rgba(212,175,55,0.15);padding:24px;border-radius:22px;margin:12px}
+.card-gold{border:1px solid rgba(212,175,55,0.3)}
+input,select,textarea{width:100%;padding:14px;margin:8px 0;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:#080C18;color:#fff;outline:none}
+.btn{padding:15px;background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;border:none;border-radius:12px;font-weight:700;width:100%;margin-top:12px;cursor:pointer;text-transform:uppercase}
+.btnDark{background:#1E293B;color:#E8EAF0;border:1px solid rgba(255,255,255,.1)}
 .tab{display:none}.tab.active{display:block}
-.nav{display:flex;gap:8px;padding:16px 14px;background:rgba(8,12,24,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(212,175,55,.12);position:sticky;top:0;z-index:99}
-.nav button{padding:12px;border:none;border-radius:12px;background:#121A2F;color:#8B95B0;flex:1;border:1px solid rgba(255,255,255,.06);font-size:13px;text-transform:uppercase}
-.nav button.active{background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;font-weight:700}
-.hero{background:radial-gradient(120% 120% at 50% 0%, #1A2340 0%, #080C18 60%);padding:60px 22px;text-align:center}
-.balCard{background:linear-gradient(135deg,#121A2F 0%, #1A2340 100%);border:1px solid rgba(212,175,55,.25);padding:30px;border-radius:28px;margin:14px;position:relative;overflow:hidden}
-.bankItem{background:rgba(8,12,24,.6);border:1px solid rgba(255,255,255,.06);padding:16px;border-radius:16px;margin:12px 0;display:flex;justify-content:space-between;align-items:center}
-.goldText{background:linear-gradient(90deg,#D4AF37,#F5E6A3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.testimonial{background:rgba(8,12,24,.7);border-left:2px solid #D4AF37;padding:16px;margin:12px 0;border-radius:0 16px 16px 0;font-size:13.5px;color:#8B95B0}
-.divider{height:1px;background:linear-gradient(90deg, transparent, rgba(212,175,55,.2), transparent);margin:20px 0}
-@keyframes goldPulse{0%{box-shadow:0 0 0 
+.nav{display:flex;gap:6px;padding:12px;background:#080C18;border-bottom:1px solid rgba(212,175,55,.15);position:sticky;top:0;z-index:99}
+.nav button{padding:11px;border-radius:10px;background:#121A2F;color:#8B95B0;flex:1;border:1px solid rgba(255,255,255,.06);font-size:12px;text-transform:uppercase}
+.nav button.active{background:#D4AF37;color:#080C18;font-weight:700}
+.hero{background:radial-gradient(at top,#1A2340,#080C18);padding:50px 20px;text-align:center}
+.balCard{background:linear-gradient(135deg,#121A2F,#1A2340);border:1px solid rgba(212,175,55,.25);padding:26px;border-radius:24px;margin:12px;position:relative;overflow:hidden}
+.bankItem{background:rgba(8,12,24,.6);border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:14px;margin:10px 0;display:flex;justify-content:space-between}
+.goldText{background:linear-gradient(90deg,#D4AF37,#F5E6A3);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.2),transparent);margin:16px 0}
+@keyframes goldPulse{0%{box-shadow:0 0 0 0 rgba(212,175,55,.4)}50%{box-shadow:0 0 0 18px rgba(212,175,55,0),0 0 50px rgba(212,175,55,.3);transform:scale(1.02)}100%{box-shadow:0 0 0 0 rgba(212,175,55,0);transform:scale(1)}}.credit-animate{animation:goldPulse 1.2s ease-out 2}
+.confetti{position:absolute;width:5px;height:5px;background:#D4AF37;animation:fall 1.2s ease-out forwards}@keyframes fall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(110px) rotate(720deg);opacity:0}}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;padding:10px 18px;border-radius:30px;font-weight:700;font-size:12px;z-index:10000;box-shadow:0 10px 30px rgba(212,175,55,.35)}
+</style>
+</head>
+<body>
+<div style="padding:16px 18px;display:flex;justify-content:space-between;border-bottom:1px solid rgba(212,175,55,.12)"><div style="font-family:'Playfair Display';font-size:18px">COINCHEAP <span class="goldText">INVESTMENT</span></div><div id="topEmail" style="font-size:11px;color:#D4AF37"></div></div>
+<div class="nav"><button id="b1" class="active" onclick="showTab('home')">Private</button><button id="b2" onclick="showTab('register')">Join</button><button id="b3" onclick="showTab('login')">Access</button><button id="b4" onclick="showTab('dashboard')">Vault</button></div>
+
+<div id="home" class="tab active">
+<div class="hero"><p style="letter-spacing:3px;font-size:10px;color:#D4AF37">EST. 2019 • DELAWARE, USA</p><h1 style="font-size:34px;margin-top:10px">Private Wealth<br><span class="goldText">Management</span></h1><p style="color:#8B95B0;margin-top:14px;font-size:14px;line-height:1.7">USA private vault. Admin-credited. Direct to Huntington, GLCU, Abri, Navy Federal, Alliant, Chase, BoA.</p><button class="btn" style="max-width:280px;margin:24px auto 0;display:block" onclick="showTab('register')">Request Access →</button></div>
+<div class="card card-gold"><h2>Why Matured Investors Choose Us</h2><div class="divider"></div><p style="color:#C2C9D6;font-size:13px;line-height:1.8">Delaware-registered boutique. Balance credited by treasury team. Withdrawals 2-12h to verified USA banks. Midnight + Champagne Gold design for serious wealth.</p></div>
+<div class="card"><h3 style="font-family:'Playfair Display'">Live Support • USA</h3><p style="color:#8B95B0;font-size:12px;margin-top:6px">Click the gold chat bubble bottom-right → Chat with treasury</p></div>
+</div>
+
+<div id="register" class="tab"><div class="card card-gold" style="max-width:420px;margin:30px auto"><h2 style="text-align:center">Join The Vault</h2><div class="divider"></div><input id="rEmail" placeholder="Private Email"><input id="rPass" type="password" placeholder="Vault Passcode"><input id="rCountry" value="USA"><button class="btn" onclick="signup()">Submit Application</button><p id="rMsg" style="text-align:center;color:#D4AF37;margin-top:10px;font-weight:600"></p></div></div>
+
+<div id="login" class="tab"><div class="card" style="max-width:420px;margin:30px auto"><h2 style="text-align:center">Vault Access</h2><div class="divider"></div><input id="lEmail" placeholder="Vault Email"><input id="lPass" type="password" placeholder="Passcode"><button class="btn" onclick="login()">Access Vault</button><p id="lMsg" style="text-align:center;color:#D4AF37;margin-top:10px;font-weight:600"></p></div></div>
+
+<div id="dashboard" class="tab">
+<div class="balCard" id="balCard"><div id="confettiBox" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none"></div><p id="dashEmail" style="color:#D4AF37;font-size:11px;font-weight:600"></p><p style="color:#8B95B0;font-size:10px;letter-spacing:1px;margin-top:6px">VAULT BALANCE • ADMIN CREDITED</p><h1 style="margin-top:10px;font-size:38px;font-family:'Playfair Display'">$<span id="bal">0</span>.00</h1><div style="display:flex;gap:8px;margin-top:14px"><span style="font-size:10px;padding:5px 10px;border-radius:20px;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.25);color:#D4AF37">● LIVE VAULT</span><span id="creditBadge" style="font-size:10px;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.05);color:#8B95B0">INSURED</span></div></div>
+<div class="card"><h3>Linked USA Banks</h3><div id="myBanks" style="margin-top:10px;color:#8B95B0">No bank yet</div><button class="btn btnDark" onclick="openBank()">+ Link USA Bank</button></div>
+<div class="card card-gold"><h3>Request Settlement</h3><input id="wAmount" type="number" placeholder="Amount e.g 1500"><button class="btn" onclick="requestWithdraw()">Initiate Wire →</button><p id="wMsg" style="color:#D4AF37;font-weight:600;margin-top:8px;font-size:12px"></p></div>
+<div style="text-align:center"><button class="btn btnDark" style="max-width:180px" onclick="logout()">Sign Out</button></div>
+</div>
+
+<div id="bankModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(8,12,24,0.92);z-index:9999;padding:20px"><div style="background:#121A2F;border:1px solid rgba(212,175,55,.2);padding:20px;border-radius:20px;max-width:380px;margin:40px auto"><div style="display:flex;justify-content:space-between"><h3>Link USA Bank</h3><button onclick="document.getElementById('bankModal').style.display='none'" style="background:#ef4444;color:#fff;border:none;padding:5px 10px;border-radius:8px">X</button></div><select id="mBank"><option>Huntington Bank</option><option>GLCU</option><option>Abri Credit Union</option><option>Navy Federal</option><option>Alliant</option><option>Chase</option><option>Bank of America</option></select><input id="mAcc" placeholder="Account Number"><input id="mRouting" placeholder="Routing"><input id="mName" placeholder="Holder Name"><select id="mType"><option>Checking</option><option>Savings</option></select><button class="btn" onclick="saveBank()">Link Bank</button><p id="mMsg" style="color:#D4AF37"></p></div></div>
+
+<!-- SUPPORT CHAT BUBBLE -->
+<div id="supportBubble" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:linear-gradient(90deg,#D4AF37,#B8962E);color:#080C18;padding:14px 20px;border-radius:30px;font-weight:800;box-shadow:0 10px 30px rgba(212,175,55,.4);cursor:pointer;display:flex;align-items:center;gap:8px" onclick="toggleSupport()">💬 Support</div>
+<div id="supportChat" style="display:none;position:fixed;bottom:85px;right:18px;width:330px;max-width:92vw;background:#121A2F;border:1px solid rgba(212,175,55,.25);border-radius:20px;z-index:10000;box-shadow:0 20px 60px rgba(0,0,0,.6)">
+<div style="background:linear-gradient(90deg,#1A2340,#121A2F);padding:14px 16px;border-radius:20px 20px 0 0;display:flex;justify-content:space-between"><div><b style="color:#E8EAF0">🇺🇸 Treasury Support</b><p style="font-size:11px;color:#8B95B0">Reply in 2-5 mins</p></div><button onclick="toggleSupport()" style="background:rgba(239,68,68,.2);color:#ef4444;border:1px solid rgba(239,68,68,.3);padding:5px 10px;border-radius:8px">X</button></div>
+<div style="padding:14px"><p style="font-size:12px;color:#C2C9D6">Hi! How can treasury help your USA bank settlement?</p><input id="chatEmail" placeholder="Your email (auto if logged in)" style="margin-top:10px"><textarea id="chatMsg" placeholder="Type your question about withdrawal, balance, banks..." style="min-height:70px"></textarea><button class="btn" style="margin-top:8px" onclick="sendSupport()">Send to Treasury →</button><p id="chatStatus" style="font-size:12px;color:#D4AF37;margin-top:8px;font-weight:600"></p><p style="font-size:9px;color:#5A667F;text-align:center;margin-top:8px">Avg reply 3 mins • support@coincheap-investment.com</p></div>
+</div>
+
+<script>
+function showTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.getElementById(t).classList.add('active');let m={home:'b1',register:'b2',login:'b3',dashboard:'b4'};if(document.getElementById(m[t]))document.getElementById(m[t]).classList.add('active');if(t=='dashboard')loadDash();}
+function openBank(){document.getElementById('bankModal').style.display='block';}
+function logout(){localStorage.removeItem('current_user');showTab('home');document.getElementById('topEmail').innerText='';}
+function toggleSupport(){let c=document.getElementById('supportChat');c.style.display=c.style.display==='none'?'block':'none';let em=localStorage.getItem('current_user');if(em)document.getElementById('chatEmail').value=em;}
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getDatabase, ref, set, get, push } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325"};
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+let lastBalance=0;
+function animateCount(from,to){let s=from;let dur=1200;let st=null;function step(ts){if(!st)st=ts;let p=Math
