@@ -1,62 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoinCheap - Invest</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoinCheap - Cheap Coins, Huge Returns</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <style>
-body{font-family:Arial;background:#0f172a;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px}
-.card{background:#1e293b;padding:25px;border-radius:15px;width:100%;max-width:400px}
-h2{text-align:center;color:#f59e0b}
-input{width:100%;padding:14px;margin:8px 0;border-radius:10px;border:1px solid #334155;background:#0f172a;color:#fff;box-sizing:border-box;font-size:16px}
-button{width:100%;padding:14px;margin-top:10px;border-radius:10px;border:none;background:#f59e0b;color:#000;font-weight:bold;font-size:16px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0a0f1f;color:#fff}
+nav{padding:15px 20px;display:flex;justify-content:space-between;background:#0f172a;position:sticky;top:0}
+.logo{color:#f59e0b;font-weight:bold;font-size:22px}
+.hero{padding:60px 20px;text-align:center}
+.hero h1{font-size:36px}.hero h1 span{color:#f59e0b}
+.coins{display:flex;gap:10px;padding:20px;overflow:auto;justify-content:center}
+.coin{background:#1e293b;padding:12px 18px;border-radius:10px}
+.plans{padding:20px;display:grid;gap:15px;max-width:500px;margin:0 auto}
+.plan{background:#1e293b;padding:20px;border-radius:15px;border:1px solid #334155}
+.plan h3{color:#f59e0b}
+.auth{padding:30px 20px}
+.card{background:#1e293b;padding:25px;border-radius:15px;max-width:380px;margin:0 auto}
+input{width:100%;padding:14px;margin:8px 0;border-radius:10px;border:1px solid #334155;background:#0f172a;color:#fff}
+button{width:100%;padding:14px;margin-top:10px;border-radius:10px;border:none;background:#f59e0b;font-weight:bold}
+.btn2{background:#334155;color:#fff}
 .small{font-size:12px;color:#94a3b8;text-align:center;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="card">
-<h2>CoinCheap 💎</h2>
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-<button onclick="signup()">Create Account</button>
-<button onclick="login()" style="background:#334155;color:#fff">Login</button>
-<p id="msg" class="small"></p>
-<p class="small">Balance: <span id="bal">$0</span></p>
+<nav><div class="logo">CoinCheap 💎</div><div style="font-size:13px;color:#94a3b8">Support</div></nav>
+<div class="hero"><h1>Buy Cheap Coins,<br><span>Earn Huge Returns</span></h1><p style="color:#94a3b8;margin-top:10px">USA investors dey trust CoinCheap</p></div>
+<div class="coins"><div class="coin">₿ BTC +2.4%</div><div class="coin">Ξ ETH +1.8%</div><div class="coin">◎ SOL +5.2%</div></div>
+<div class="plans">
+<div class="plan"><h3>Starter $100</h3><p class="small">10% daily for 7 days</p><b>$10/day</b></div>
+<div class="plan" style="border-color:#f59e0b"><h3>Pro $500 ⭐</h3><p class="small">15% daily</p><b>$75/day</b></div>
+<div class="plan"><h3>Whale $1000</h3><p class="small">20% daily</p><b>$200/day</b></div>
 </div>
+<div class="auth"><div class="card">
+<h2 style="text-align:center;color:#f59e0b">CoinCheap 💎</h2>
+<input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password">
+<button onclick="signup()">Create Account</button><button class="btn2" onclick="login()">Login</button>
+<p id="msg" class="small"></p><p class="small">Balance: <span id="bal">$0</span></p>
+</div></div>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCLD9yedNA-l1M6VU01L9gZ40jv36PlSsw",
-  authDomain: "coincheap-investment.firebaseapp.com",
-  databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
-  projectId: "coincheap-investment",
-  storageBucket: "coincheap-investment.firebasestorage.app",
-  messagingSenderId: "1065612358336",
-  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325",
-  measurementId: "G-EM6F4CS1C6"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.database();
-function signup(){
-  const email=document.getElementById('email').value.trim();
-  const pass=document.getElementById('password').value;
-  document.getElementById('msg').innerText='Creating...';
-  auth.createUserWithEmailAndPassword(email,pass).then(cred=>{
-    return db.ref('users/'+cred.user.uid).set({email:email.toLowerCase(),balance:0,created:new Date().toISOString()});
-  }).then(()=>{document.getElementById('msg').innerText='✅ Created! Now Login';}).catch(e=>{document.getElementById('msg').innerText='❌ '+e.message;});
-}
-function login(){
-  const email=document.getElementById('email').value.trim();
-  const pass=document.getElementById('password').value;
-  document.getElementById('msg').innerText='Logging in...';
-  auth.signInWithEmailAndPassword(email,pass).then(cred=>{
-    db.ref('users/'+cred.user.uid+'/balance').on('value',s=>{document.getElementById('bal').innerText='$'+(s.val()||0);});
-    document.getElementById('msg').innerText='✅ Welcome '+email;
-  }).catch(e=>{document.getElementById('msg').innerText='❌ '+e.message;});
-}
+const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-l1M6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325"};
+firebase.initializeApp(firebaseConfig);const auth=firebase.auth();const db=firebase.database();
+function signup(){const e=document.getElementById('email').value.trim();const p=document.getElementById('password').value;document.getElementById('msg').innerText='Creating...';auth.createUserWithEmailAndPassword(e,p).then(c=>db.ref('users/'+c.user.uid).set({email:e.toLowerCase(),balance:0})).then(()=>document.getElementById('msg').innerText='✅ Created!').catch(x=>document.getElementById('msg').innerText='❌ '+x.message)}
+function login(){const e=document.getElementById('email').value.trim();const p=document.getElementById('password').value;document.getElementById('msg').innerText='Logging...';auth.signInWithEmailAndPassword(e,p).then(c=>{db.ref('users/'+c.user.uid+'/balance').on('value',s=>document.getElementById('bal').innerText='$'+(s.val()||0));document.getElementById('msg').innerText='✅ Welcome'}) .catch(x=>document.getElementById('msg').innerText='❌ '+x.message)}
 </script>
+<!-- CHATWAY LIVE SUPPORT -->
+<script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=Q8l2Bv8y0f5k"></script>
 </body>
 </html>
