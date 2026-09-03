@@ -1,18 +1,41 @@
-<!DOCTYPE html><html><head><title>Sign Up</title><script src="https://cdn.tailwindcss.com"></script>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sign Up</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0B1120] text-white flex items-center justify-center h-screen">
+<div class="bg-gray-900 p-8 rounded-xl w-96 border-gray-800">
+<h2 class="text-2xl font-bold mb-4">Create Demo Account</h2>
+<input id="email" type="email" placeholder="Email" class="w-full p-3 bg-gray-800 rounded mb-3">
+<input id="pass" type="password" placeholder="Password" class="w-full p-3 bg-gray-800 rounded mb-3">
+<button type="button" id="signupBtn" class="w-full bg-green-500 text-black py-3 rounded font-bold">Sign Up</button>
+<p class="text-center mt-4 text-gray-400">Already have an account? <a href="login.html" class="text-green-400">Login</a></p>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 const firebaseConfig = {apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain: "coincheap-investment.firebaseapp.com",projectId: "coincheap-investment",storageBucket: "coincheap-investment.firebasestorage.app",messagingSenderId: "1065612358336",appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"};
-const app = initializeApp(firebaseConfig); const db = getFirestore(app);
-window.signup = async function(){
-  const email = document.getElementById('email').value; const pass = document.getElementById('pass').value;
-  const q = query(collection(db, "users"), where("email", "==", email)); if(!(await getDocs(q)).empty) return alert('User exists');
-  await addDoc(collection(db, "users"), {email, pass, balance: 0, country: "NG", created: new Date()});
-  localStorage.setItem('currentUser', email); window.location = 'dashboard.html';
-}
-</script></head>
-<body class="bg-[#0B1120] text-white flex items-center justify-center h-screen"><div class="bg-gray-900 p-8 rounded-xl w-96 border-gray-800">
-<h2 class="text-2xl font-bold mb-4">Create Simulator Account</h2>
-<input id="email" placeholder="Email" class="w-full p-3 bg-gray-800 rounded mb-3">
-<input id="pass" type="password" placeholder="Password" class="w-full p-3 bg-gray-800 rounded mb-3">
-<button onclick="signup()" class="w-full bg-green-500 text-black py-3 rounded font-bold">Sign Up</button></div></body></html>
+const app = initializeApp(firebaseConfig); 
+const db = getFirestore(app);
+
+document.getElementById('signupBtn').addEventListener('click', async function(){
+  const email = document.getElementById('email').value; 
+  const pass = document.getElementById('pass').value;
+  
+  if(!email || !pass) return alert('Fill all fields');
+  
+  const q = query(collection(db, "users"), where("email", "==", email)); 
+  const exists = await getDocs(q); 
+  if(!exists.empty) return alert('User already exists');
+  
+  await addDoc(collection(db, "users"), {email, pass, balance: 0, created: new Date()});
+  localStorage.setItem('currentUser', email); 
+  alert('Account Created!'); 
+  window.location.href = 'dashboard.html'; // <-- goes to dashboard
+});
+</script>
+</body>
+</html>
