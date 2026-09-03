@@ -105,4 +105,22 @@ if(!allUsers.includes(em)) allUsers.push(em);
 let total=0;
 if(allUsers.length===0){
 list.innerHTML='<p style="color:#64748b">No users yet.<br><br>👉 Open HOME in <b>Chrome</b> (not Messenger), create account, then come back here and click LOAD.</p>';
-document.getElementById('totalUsers
+document.getElementById('totalUsers').innerText='0';
+document.getElementById('totalBal').innerText='$0';
+return;
+}
+allUsers.forEach(email=>{
+let bal=localStorage.getItem('bal_'+email)||'0';
+let name=allNames[email]||localStorage.getItem('name_'+email)||'No Name Saved';
+total+=parseFloat(bal);
+let div=document.createElement('div');div.className='u';
+div.innerHTML='<div><div>👤 <b style="color:#fff;font-size:15px">'+name+'</b></div><div style="font-size:12px;margin-top:4px;color:#94a3b8">📧 '+email+'</div><div style="margin-top:4px">💰 <b style="color:#f59e0b">$'+parseFloat(bal).toLocaleString()+'</b></div></div><div style="display:flex;gap:6px"><button class="btn y" style="padding:8px 12px" onclick="document.getElementById(\'userEmail\').value=\''+email+'\';window.scrollTo(0,0);">Select</button></div>';
+list.appendChild(div);
+});
+document.getElementById('totalUsers').innerText=allUsers.length;
+document.getElementById('totalBal').innerText='$'+total.toLocaleString();
+}
+</script>
+
+</body>
+</html>
