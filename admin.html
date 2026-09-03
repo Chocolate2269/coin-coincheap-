@@ -8,66 +8,72 @@ body{background:#020617;color:#e2e8f0;padding:10px}
 .header{background:#0f172a;border:1px solid #1e293b;padding:12px 15px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .logo{font-weight:900;color:#fff;font-size:18px}.logo span{color:#f59e0b}
 .card{background:#fff;color:#0f172a;padding:14px;border-radius:12px;margin:8px 0}
-input{padding:11px;border-radius:8px;border:2px solid #cbd5e1;width:100%;margin:5px 0}
+input{padding:12px;border-radius:8px;border:2px solid #cbd5e1;width:100%;margin:5px 0}
 .btn{padding:11px 14px;border:none;border-radius:8px;font-weight:900;cursor:pointer;color:#fff;font-size:12px}
-.blue{background:#1e3a8a}.green{background:#16a34a}.red{background:#dc2626}.orange{background:#ea580c}.dark{background:#0f172a}
+.blue{background:#1e3a8a}.green{background:#16a34a}.red{background:#dc2626}.orange{background:#ea580c}
 table{width:100%;border-collapse:collapse;font-size:11px}
 th,td{padding:8px;border-bottom:1px solid #e2e8f0;text-align:left;word-break:break-all}
 th{background:#1e3a8a;color:#fff;position:sticky;top:0}
 .bal{color:#f59e0b;font-weight:900}
 .badge{padding:3px 7px;border-radius:10px;font-size:10px;font-weight:700;background:#dbeafe;color:#1e3a8a}
-.pending{color:red;font-weight:900;animation:blink 1s infinite}
-@keyframes blink{0%{opacity:1}50%{opacity:.4}}
+.pending{color:red;font-weight:900}
 </style>
 </head><body>
-
 <div class="header">
 <div class="logo">CoinCheap <span>USA</span> ADMIN 🔐</div>
-<a href="index.html" style="background:#f59e0b;color:#000;padding:8px 14px;border-radius:8px;font-weight:800;font-size:12px;text-decoration:none">← Home Page</a>
+<div style="display:flex;gap:6px">
+<a href="index.html" style="background:#f59e0b;color:#000;padding:8px 12px;border-radius:8px;font-weight:800;font-size:12px;text-decoration:none">← Home</a>
+<button class="btn orange" onclick="loadUsers()" id="refreshBtn" style="display:none">🔄 Refresh</button>
+</div>
 </div>
 
-<div id="loginBox" class="card" style="max-width:400px;margin:30px auto">
-<h3 style="text-align:center">🔑 Admin Login</h3>
-<p style="font-size:11px;text-align:center;color:#64748b">Enter admin password to unlock all users</p>
-<input id="aPass" type="password" placeholder="Password: admin123">
-<button class="btn blue" style="width:100%" onclick="adminLogin()">Unlock Dashboard</button>
-<p id="adminMsg" style="font-weight:800;text-align:center;margin-top:8px"></p>
+<div id="loginBox" class="card" style="max-width:380px;margin:50px auto;text-align:center">
+<h3>🔐 Admin Login</h3>
+<p style="font-size:11px;color:#64748b;margin:6px 0">Enter your secure password</p>
+<input id="aPass" type="password" placeholder="Password">
+<button class="btn blue" style="width:100%;margin-top:6px" onclick="adminLogin()">Unlock Dashboard</button>
+<p id="adminMsg" style="font-weight:800;margin-top:10px;min-height:18px"></p>
 </div>
 
-<div id="adminPanel" style="display:none;max-width:1100px;margin:0 auto">
+<div id="adminPanel" style="display:none;max-width:1150px;margin:0 auto">
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px">
 <div class="card" style="background:#1e3a8a;color:#fff;text-align:center"><small>Total Users</small><br><b id="statTotal" style="font-size:22px">0</b></div>
 <div class="card" style="background:#f59e0b;color:#000;text-align:center"><small>Total Balance</small><br><b id="statBal" style="font-size:22px">$0</b></div>
 <div class="card" style="background:#16a34a;color:#fff;text-align:center"><small>USA Users</small><br><b id="statUSA" style="font-size:22px">0</b></div>
-<div class="card" style="background:#dc2626;color:#fff;text-align:center"><small>Pending Withdrawals</small><br><b id="statPend" style="font-size:22px">0</b></div>
+<div class="card" style="background:#dc2626;color:#fff;text-align:center"><small>Pending Withdraw</small><br><b id="statPend" style="font-size:22px">0</b></div>
 </div>
 
 <div class="card">
-<h3>💰 Credit / Debit Any User (All Countries)</h3>
+<h3>💰 Credit / Debit Any User - All Countries</h3>
 <div style="display:grid;grid-template-columns:2fr 1fr;gap:8px">
 <input id="cEmail" placeholder="Client email e.g akagaviani@gmail.com">
-<input id="cAmt" type="number" placeholder="Amount">
+<input id="cAmt" type="number" placeholder="Amount e.g 1000">
 </div>
-<div style="display:flex;gap:6px;margin-top:6px">
+<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
 <button class="btn green" onclick="creditUser()">+ Add Balance</button>
 <button class="btn red" onclick="removeBalance()">- Remove Balance</button>
-<button class="btn orange" onclick="loadUsers()">🔄 Refresh All</button>
+<button class="btn orange" onclick="loadUsers()">🔄 Refresh All Users</button>
+<button class="btn blue" onclick="logoutAdmin()">Logout</button>
 </div>
-<p id="creditMsg" style="font-weight:800;margin-top:8px"></p>
+<p id="creditMsg" style="font-weight:800;margin-top:8px;min-height:18px"></p>
 </div>
 
 <div class="card">
 <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center">
-<h3>👥 All Users - USA Banks: Huntington, BoA, Abri, GLCU</h3>
-<input id="search" placeholder="Search email / bank / country..." onkeyup="filterUsers()" style="max-width:250px">
+<h3>👥 All Users - Country Auto + USA Banks: Huntington, BoA, Abri, GLCU</h3>
+<input id="search" placeholder="Search email / country / bank..." onkeyup="filterUsers()" style="max-width:240px">
 </div>
 <div style="overflow:auto;max-height:75vh;margin-top:10px;border:1px solid #e2e8f0;border-radius:8px">
 <table>
-<thead><tr><th>#</th><th>Email / Date</th><th>Country</th><th>Balance</th><th>Bank & Withdrawal Info</th><th>Pass</th><th>Action</th></tr></thead>
-<tbody id="usersTable"><tr><td colspan="7" style="text-align:center;padding:20px">Click Refresh</td></tr></tbody>
+<thead><tr><th>#</th><th>Email / Date</th><th>Country</th><th>Balance</th><th>Withdrawal Bank Info</th><th>Password</th><th>Quick Add</th></tr></thead>
+<tbody id="usersTable"><tr><td colspan="7" style="text-align:center;padding:20px">Loading...</td></tr></tbody>
 </table>
 </div>
+</div>
+
+<div class="card" style="background:#fef3c7;border:1px solid #f59e0b">
+<small><b>Admin Access:</b> Password is <b>coincheap2024</b> - Keep this link secret: <b>ate2269.github.io/admin.html</b></small>
 </div>
 
 </div>
@@ -75,4 +81,11 @@ th{background:#1e3a8a;color:#fff;position:sticky;top:0}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
-const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-l1M6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b
+const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-l1M6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325"};
+const app=initializeApp(firebaseConfig);const db=getDatabase(app);
+function keyFromEmail(e){return e.replace(/[^a-zA-Z0-9]/g,'_');}
+
+window.adminLogin=function(){
+let p=document.getElementById('aPass').value;
+if(p==='coincheap2024'){
+local
