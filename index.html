@@ -1,27 +1,32 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ADMIN</title>
-<style>body{margin:0;background:#020617;color:#e2e8f0;padding:12px;font-family:Arial}.btn{padding:10px;border:none;border-radius:8px;font-weight:800;cursor:pointer}.y{background:#f59e0b}.bl{background:#1e3a8a;color:#fff}.card{background:#fff;color:#000;padding:16px;border-radius:12px;margin:10px 0}input{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:2px solid #ccc}.u{background:#0f172a;color:#fff;padding:12px;border-radius:10px;margin:8px 0;display:flex;justify-content:space-between}</style></head><body>
-<div id="loginBox" class="card" style="max-width:380px;margin:80px auto"><h2>ADMIN</h2><input id="aPass" type="password" placeholder="coincheap2024"><button class="btn bl" style="width:100%" onclick="login()">Unlock</button><p id="msg"></p></div>
-<div id="panel" style="display:none;max-width:650px;margin:0 auto"><h2>ADMIN - ONLINE</h2><div style="display:flex;gap:8px"><div class="card" style="flex:1;text-align:center"><b id="totalUsers">0</b><br>Users</div><div class="card" style="flex:1;text-align:center"><b id="totalBal">$0</b><br>Balance</div></div><button class="btn y" onclick="loadUsers()" style="width:100%;margin:10px 0">🔄 LOAD ALL USERS NOW (Online)</button><div id="usersList"></div><div class="card"><h3>Add Balance</h3><input id="uEmail" placeholder="User Email"><input id="uAmount" type="number" placeholder="Amount"><button class="btn bl" style="width:100%" onclick="addBal()">Add Balance Online</button><p id="addMsg"></p></div></div>
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CoinCheap USA</title>
+<style>*{box-sizing:border-box;font-family:system-ui,Arial}body{margin:0;background:#020617;color:#e2e8f0}.nav{position:sticky;top:0;background:#020617f2;padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #1e293b}.btn{padding:11px 18px;border:none;border-radius:12px;font-weight:800;cursor:pointer}.y{background:#f59e0b;color:#000}.d{background:#0f172a;color:#fff;border:1px solid #334155}.b{background:#1e3a8a;color:#fff;width:100%}.hero{padding:60px 16px;text-align:center}.grid{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;max-width:1050px;margin:0 auto}@media(min-width:750px){.grid{grid-template-columns:repeat(3,1fr)}}.card{background:#0f172a;border:1px solid #1e293b;border-radius:18px;padding:18px}.price{font-size:26px;font-weight:900;color:#f59e0b}.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}.box{background:#fff;color:#0f172a;border-radius:18px;padding:22px;max-width:400px;width:100%}input{width:100%;padding:13px;margin:7px 0;border:2px solid #e2e8f0;border-radius:12px}</style></head><body>
+<div class="nav"><b>CoinCheap USA 🇺🇸</b><div style="display:flex;gap:8px"><button class="btn d" onclick="openLogin()">Login</button><button class="btn y" onclick="openSignup()">Get Started</button></div></div>
+<div class="hero"><h1>Invest Smarter, <span style="color:#f59e0b">Grow Faster</span></h1><button class="btn y" onclick="openSignup()" style="padding:14px 28px">Start Now</button></div>
+<div class="grid"><div class="card"><h3>Starter</h3><div class="price">$50-$499</div><button class="btn b" onclick="openSignup()">Choose</button></div><div class="card" style="border-color:#f59e0b"><h3>Professional</h3><div class="price">$500-$4,999</div><button class="btn y" style="width:100%" onclick="openSignup()">Choose</button></div><div class="card"><h3>Enterprise</h3><div class="price">$5000+</div><button class="btn b" onclick="openSignup()">Choose</button></div></div>
+<div id="suModal" class="modal"><div class="box"><h2>Create Account</h2><input id="suName" placeholder="Username"><input id="suEmail" placeholder="Email"><input id="suPass" type="password" placeholder="Password"><button class="btn y" style="width:100%" onclick="doSignup()">Create</button><p id="suMsg"></p></div></div>
+<div id="liModal" class="modal"><div class="box"><h2>Login</h2><input id="liEmail" placeholder="Email"><input id="liPass" type="password" placeholder="Password"><button class="btn b" onclick="doLogin()">Login</button><p id="liMsg"></p></div></div>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {getFirestore,collection,getDocs,doc,getDoc,setDoc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {getFirestore,doc,setDoc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325",measurementId:"G-EM6F4CS1C6"};
-const app=initializeApp(firebaseConfig);const db=getFirestore(app);window.db=db;window.fb={collection,getDocs,doc,getDoc,setDoc};
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);window.db=db;window.fb_setDoc=setDoc;window.fb_doc=doc;
 </script>
 <script>
-function login(){if(document.getElementById('aPass').value==='coincheap2024'){document.getElementById('loginBox').style.display='none';document.getElementById('panel').style.display='block';loadUsers();}else{document.getElementById('msg').innerText='Wrong';}}
-async function loadUsers(){
-let list=document.getElementById('usersList');list.innerHTML='Loading online...';
-try{
-let snap=await fb.getDocs(fb.collection(db,"users"));let html='';let count=0;let total=0;
-snap.forEach(d=>{let u=d.data();count++;total+=(u.balance||0);html+=`<div class="u"><div><b>${u.name||'No name'}</b><br><small>${u.email}</small></div><b>$${(u.balance||0).toLocaleString()}</b></div>`;});
-if(count==0)html='<div class="card">No users yet online - create account first</div>';
-list.innerHTML=html;document.getElementById('totalUsers').innerText=count;document.getElementById('totalBal').innerText='$'+total.toLocaleString();
-}catch(e){list.innerHTML='Error: '+e.message+'<br>Check Rules published!';}
+function openSignup(){document.getElementById('suModal').style.display='flex';}
+function openLogin(){document.getElementById('liModal').style.display='flex';}
+async function doSignup(){
+let n=document.getElementById('suName').value.trim(),e=document.getElementById('suEmail').value.trim(),p=document.getElementById('suPass').value.trim();
+if(!n||!e||!p){document.getElementById('suMsg').innerText='Fill all';return;}
+document.getElementById('suMsg').innerText='Creating...';
+localStorage.setItem('userEmail',e);localStorage.setItem('userName',n);localStorage.setItem('name_'+e,n);
+let all=JSON.parse(localStorage.getItem('allUsers')||'[]');let allNames=JSON.parse(localStorage.getItem('allUsersNames')||'{}');
+if(!all.includes(e))all.push(e);allNames[e]=n;localStorage.setItem('allUsers',JSON.stringify(all));localStorage.setItem('allUsersNames',JSON.stringify(allNames));
+try{await fb_setDoc(fb_doc(db,"users",e),{name:n,email:e,balance:0,created:new Date().toISOString()},{merge:true});document.getElementById('suMsg').innerText='✅ Created & Saved Online!';}catch(err){document.getElementById('suMsg').innerText='✅ Created! (offline) '+err.message;}
+setTimeout(()=>{location.href='dashboard.html';},800);
 }
-async function addBal(){
-let e=document.getElementById('uEmail').value.trim(),a=parseFloat(document.getElementById('uAmount').value);
-if(!e||!a)return;document.getElementById('addMsg').innerText='Updating...';
-try{let ref=fb.doc(db,"users",e);let snap=await fb.getDoc(ref);let cur=snap.exists()?(snap.data().balance||0):0;await fb.setDoc(ref,{balance:cur+a,email:e},{merge:true});localStorage.setItem('bal_'+e,cur+a);document.getElementById('addMsg').innerText='✅ $'+a+' added to '+e;loadUsers();}catch(err){document.getElementById('addMsg').innerText=err.message;}
-}
-</script></body></html>
+function doLogin(){let e=document.getElementById('liEmail').value.trim();if(!e)return;localStorage.setItem('userEmail',e);location.href='dashboard.html';}
+</script>
+<!-- CHATWAY - REPLACE ID -->
+<script id="chatway" async src="https://cdn.chatway.app/widget.js?id=YOUR_CHATWAY_ID"></script>
+</body></html>
