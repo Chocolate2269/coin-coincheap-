@@ -9,84 +9,58 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <style>
 body{font-family:Arial;background:#0f172a;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}
-.card{background:#1e293b;padding:25px;border-radius:15px;width:90%;max-width:380px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.card{background:#1e293b;padding:25px;border-radius:15px;width:90%;max-width:380px}
 h2{text-align:center;color:#f59e0b}
 input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#fff;box-sizing:border-box}
-button{width:100%;padding:12px;margin-top:10px;border-radius:8px;border:none;background:#f59e0b;color:#000;font-weight:bold;cursor:pointer}
-.small{font-size:12px;color:#94a3b8;text-align:center;margin-top:10px}
-a{color:#f59e0b}
+button{width:100%;padding:12px;margin-top:10px;border-radius:8px;border:none;background:#f59e0b;color:#000;font-weight:bold}
+.small{font-size:12px;color:#94a3b8;text-align:center}
 </style>
 </head>
 <body>
 <div class="card">
 <h2>CoinCheap 💎</h2>
-<p class="small">Invest & Earn</p>
 <input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password (6+ chars)">
+<input id="password" type="password" placeholder="Password">
 <button onclick="signup()">Create Account</button>
 <button onclick="login()" style="background:#334155;color:#fff">Login</button>
 <p id="msg" class="small"></p>
 <p class="small">Balance: <span id="bal">$0</span></p>
 </div>
-
 <script>
-// ⚠️ REPLACE THIS WITH YOUR REAL CONFIG FROM Firebase Console > Project Settings
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",
+  apiKey: "AIzaSyCLD9yedNA-l1M6VU81L9gZ40jv36PL3sw",
   authDomain: "coincheap-investment.firebaseapp.com",
   databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
   projectId: "coincheap-investment",
-  storageBucket: "coincheap-investment.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  storageBucket: "coincheap-investment.firebasestorage.app",
+  messagingSenderId: "1065612358336",
+  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325",
+  measurementId: "G-EM6F4CS1C6"
 };
-
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
 function signup(){
-  const email = document.getElementById('email').value.trim();
-  const pass = document.getElementById('password').value;
-  document.getElementById('msg').innerText = 'Creating...';
-  auth.createUserWithEmailAndPassword(email, pass)
-  .then(cred=>{
-    const uid = cred.user.uid;
-    // THIS IS THE FIX - Save to Realtime Database so admin go see am
-    return db.ref('users/'+uid).set({
-      email: email.toLowerCase(),
-      balance: 0,
-      created: new Date().toISOString()
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('password').value;
+  document.getElementById('msg').innerText='Creating...';
+  auth.createUserWithEmailAndPassword(email,pass).then(cred=>{
+    return db.ref('users/'+cred.user.uid).set({
+      email:email.toLowerCase(),
+      balance:0,
+      created:new Date().toISOString()
     });
-  })
-  .then(()=>{
-    document.getElementById('msg').innerText = '✅ Account created! You fit login now.';
-  })
-  .catch(e=> document.getElementById('msg').innerText = '❌ '+e.message);
+  }).then(()=>{document.getElementById('msg').innerText='✅ Created! Now login.'}).catch(e=>{document.getElementById('msg').innerText='❌ '+e.message});
 }
-
 function login(){
-  const email = document.getElementById('email').value.trim();
-  const pass = document.getElementById('password').value;
-  document.getElementById('msg').innerText = 'Logging in...';
-  auth.signInWithEmailAndPassword(email, pass)
-  .then(cred=>{
-    db.ref('users/'+cred.user.uid+'/balance').on('value', s=>{
-      document.getElementById('bal').innerText = '$'+(s.val()||0);
-    });
-    document.getElementById('msg').innerText = '✅ Welcome '+email;
-  })
-  .catch(e=> document.getElementById('msg').innerText = '❌ '+e.message);
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('password').value;
+  auth.signInWithEmailAndPassword(email,pass).then(cred=>{
+    db.ref('users/'+cred.user.uid+'/balance').on('value',s=>{document.getElementById('bal').innerText='$'+(s.val()||0)});
+    document.getElementById('msg').innerText='✅ Welcome '+email;
+  }).catch(e=>{document.getElementById('msg').innerText='❌ '+e.message});
 }
-
-// Auto show balance if already logged in
-auth.onAuthStateChanged(user=>{
-  if(user){
-    db.ref('users/'+user.uid+'/balance').on('value', s=>{
-      document.getElementById('bal').innerText = '$'+(s.val()||0);
-    });
-  }
-});
 </script>
 </body>
 </html>
