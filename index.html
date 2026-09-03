@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CoinCheap - Premium</title>
+<title>CoinCheap 💎 - Buy Cheap Coins</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
@@ -12,10 +12,10 @@ body{background:#0a0f1f;color:#fff}
 nav{display:flex;justify-content:space-between;padding:14px 20px;background:#0f172a;border-bottom:1px solid #1e293b}
 .logo{color:#fbbf24;font-weight:900;font-size:20px}
 .badge{font-size:11px;background:#f59e0b22;border:1px solid #f59e0b44;color:#fbbf24;padding:5px 10px;border-radius:20px}
-.hero{padding:50px 20px 20px;text-align:center}
-.hero h1{font-size:36px;font-weight:900}
+.hero{padding:45px 20px 15px;text-align:center}
+.hero h1{font-size:36px;font-weight:900;line-height:1.1}
 .hero h1 span{color:#fbbf24}
-.coins{display:flex;gap:8px;justify-content:center;padding:15px;flex-wrap:wrap}
+.coins{display:flex;gap:8px;justify-content:center;padding:12px;flex-wrap:wrap}
 .coin{background:#1e293b;border:1px solid #2a364f;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:700}
 .plans{padding:10px 16px;display:grid;gap:12px;max-width:460px;margin:0 auto}
 .plan{background:#1e293b;border:1px solid #2a364f;border-radius:14px;padding:16px}
@@ -41,59 +41,56 @@ button{width:100%;padding:14px;margin-top:10px;border-radius:10px;border:none;ba
 <div class="plan"><h3>Whale 🐋</h3><div class="price">$1000</div><div style="font-size:12px;color:#94a3b8">20% daily → $200/day</div></div>
 </div>
 <div class="auth"><div class="card">
-<h2>CoinCheap 💎</h2><div class="sub">Old & new users connected</div>
-<input id="userEmail" type="email" placeholder="Email e.g. you@gmail.com" autocomplete="email">
-<input id="userPass" type="password" placeholder="Password 6+ chars" autocomplete="current-password">
+<h2>CoinCheap 💎</h2><div class="sub">Login to access dashboard</div>
+<input id="userEmail" type="email" placeholder="Email">
+<input id="userPass" type="password" placeholder="Password (6+ chars)">
 <button id="btnSignup">Create Account →</button>
-<button id="btnLogin">Login</button>
+<button id="btnLogin">Login → Dashboard</button>
 <p id="msg" class="small"></p>
-<p class="small">Balance: <span id="bal">$0.00</span></p>
 </div></div>
 
 <script>
-// FIXED FIREBASE + CLICK
-const firebaseConfig={
-  apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",
-  authDomain:"coincheap-investment.firebaseapp.com",
-  databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",
-  projectId:"coincheap-investment",
-  storageBucket:"coincheap-investment.firebasestorage.app",
-  messagingSenderId:"1065612358336",
-  appId:"1:1065612358336:web:1e9b4678e5df622bc9f325"
+const firebaseConfig = {
+  apiKey: "AIzaSyCLD9yedNA-lLM6VU01l9gZ40jv36PlSsw",
+  authDomain: "coincheap-investment.firebaseapp.com",
+  databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
+  projectId: "coincheap-investment",
+  storageBucket: "coincheap-investment.firebasestorage.app",
+  messagingSenderId: "1065612358336",
+  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325",
+  measurementId: "G-EM6F4CS1C6"
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.database();
 
-const eInput = document.getElementById('userEmail');
-const pInput = document.getElementById('userPass');
-const msg = document.getElementById('msg');
-const bal = document.getElementById('bal');
+auth.onAuthStateChanged(user=>{
+  if(user){ location.href="dashboard.html"; }
+});
 
-document.getElementById('btnSignup').addEventListener('click', function(){
-  const e = eInput.value.trim();
-  const p = pInput.value.trim();
-  if(!e.includes('@')){msg.textContent='⚠️ Enter correct email';return}
-  if(p.length<6){msg.textContent='⚠️ Password 6+ chars';return}
-  msg.textContent='Creating...';
+document.getElementById('btnSignup').onclick=()=>{
+  const e=document.getElementById('userEmail').value.trim();
+  const p=document.getElementById('userPass').value.trim();
+  const m=document.getElementById('msg');
+  if(!e.includes('@')){m.textContent='⚠️ Enter email';return}
+  if(p.length<6){m.textContent='⚠️ Password 6+';return}
+  m.textContent='Creating...';
   auth.createUserWithEmailAndPassword(e,p)
-    .then(c=>db.ref('users/'+c.user.uid).set({email:e.toLowerCase(),balance:0,created:new Date().toISOString()}))
-    .then(()=>msg.textContent='✅ Created! Now click Login')
-    .catch(err=>msg.textContent='❌ '+err.message);
-});
+    .then(c=>db.ref('users/'+c.user.uid).set({email:e.toLowerCase(),balance:0,created:Date.now()}))
+    .then(()=>{m.textContent='✅ Created! Redirecting...'; setTimeout(()=>location.href="dashboard.html",1000);})
+    .catch(err=>m.textContent='❌ '+err.message);
+};
 
-document.getElementById('btnLogin').addEventListener('click', function(){
-  const e = eInput.value.trim();
-  const p = pInput.value.trim();
-  if(!e||!p){msg.textContent='⚠️ Enter email & password';return}
-  msg.textContent='Logging...';
+document.getElementById('btnLogin').onclick=()=>{
+  const e=document.getElementById('userEmail').value.trim();
+  const p=document.getElementById('userPass').value.trim();
+  const m=document.getElementById('msg');
+  if(!e||!p){m.textContent='⚠️ Enter email & password';return}
+  m.textContent='Logging in...';
   auth.signInWithEmailAndPassword(e,p)
-    .then(c=>{
-      msg.textContent='✅ Welcome '+e;
-      db.ref('users/'+c.user.uid+'/balance').on('value',s=>bal.textContent='$'+(s.val()||0)+'.00');
-    })
-    .catch(err=>msg.textContent='❌ '+err.message);
-});
+    .then(()=>{m.textContent='✅ Success! Redirecting...'; setTimeout(()=>location.href="dashboard.html",800);})
+    .catch(err=>m.textContent='❌ '+err.message);
+};
 </script>
 <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
 </body>
