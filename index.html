@@ -1,60 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoinCheap - Premium Crypto Returns</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CoinCheap - Premium</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
-body{background:radial-gradient(1200px at 20% -10%, #1a2a4a 0%, #0a0f1f 50%), #0a0f1f;color:#fff}
-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;background:rgba(15,23,42,.8);backdrop-filter:blur(12px);border-bottom:1px solid #1e293b;position:sticky;top:0;z-index:10}
-.logo{font-weight:900;font-size:22px;color:#fbbf24}
-.badge{font-size:11px;background:#f59e0b22;border:1px solid #f59e0b44;color:#fbbf24;padding:6px 10px;border-radius:20px}
-.hero{padding:60px 20px 20px;text-align:center}
-.hero h1{font-size:38px;line-height:1.1;font-weight:900}
-.hero h1 span{background:linear-gradient(90deg,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:#94a3b8;margin-top:10px}
-.coins{display:flex;gap:10px;justify-content:center;padding:20px 15px;flex-wrap:wrap}
-.coin{background:#1e293b;border:1px solid #2a364f;padding:10px 16px;border-radius:10px;font-weight:700;font-size:13px}
-.plans{padding:10px 18px;display:grid;gap:14px;max-width:480px;margin:0 auto}
-.plan{background:linear-gradient(180deg,#1e293b,#151e32);border:1px solid #2a364f;border-radius:16px;padding:18px;position:relative}
-.plan.pop{border-color:#f59e0b;box-shadow:0 0 0 1px #f59e0b55, 0 12px 30px #f59e0b22}
-.plan.pop::after{content:'MOST POPULAR';position:absolute;top:10px;right:-26px;background:#f59e0b;color:#000;font-size:9px;font-weight:900;padding:4px 28px;transform:rotate(35deg)}
-.plan h3{color:#fbbf24}.plan .price{font-size:30px;font-weight:900;margin:6px 0}
-.auth{padding:30px 18px 70px}
-.card{background:linear-gradient(180deg,#1f2c45,#162032);border:1px solid #2a3a5a;padding:24px;border-radius:20px;max-width:400px;margin:0 auto;box-shadow:0 20px 60px #0006}
-.card h2{text-align:center;color:#fbbf24;font-weight:900}
-.card .sub{text-align:center;color:#64748b;font-size:12px;margin-bottom:14px}
-input{width:100%;padding:14px;margin:7px 0;border-radius:11px;border:1px solid #2a3a5a;background:#0f172a;color:#fff;outline:none}
-input:focus{border-color:#f59e0b}
-button{width:100%;padding:14px;margin-top:10px;border-radius:11px;border:none;background:linear-gradient(90deg,#f59e0b,#fbbf24);color:#000;font-weight:900;cursor:pointer}
-.btn2{background:#233044;color:#cbd5e1;border:1px solid #2a3a5a}
-.small{font-size:12px;color:#94a3b8;text-align:center;margin-top:8px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0a0f1f;color:#fff}
+nav{display:flex;justify-content:space-between;padding:14px 20px;background:#0f172a;border-bottom:1px solid #1e293b}
+.logo{color:#fbbf24;font-weight:900;font-size:20px}
+.badge{font-size:11px;background:#f59e0b22;border:1px solid #f59e0b44;color:#fbbf24;padding:5px 10px;border-radius:20px}
+.hero{padding:50px 20px 20px;text-align:center}
+.hero h1{font-size:36px;font-weight:900}
+.hero h1 span{color:#fbbf24}
+.coins{display:flex;gap:8px;justify-content:center;padding:15px;flex-wrap:wrap}
+.coin{background:#1e293b;border:1px solid #2a364f;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:700}
+.plans{padding:10px 16px;display:grid;gap:12px;max-width:460px;margin:0 auto}
+.plan{background:#1e293b;border:1px solid #2a364f;border-radius:14px;padding:16px}
+.plan.pop{border-color:#f59e0b}
+.plan h3{color:#fbbf24}.price{font-size:28px;font-weight:900}
+.auth{padding:25px 16px 80px}
+.card{background:#1f2c45;border:1px solid #2a3a5a;padding:22px;border-radius:18px;max-width:380px;margin:0 auto}
+.card h2{text-align:center;color:#fbbf24}
+.sub{text-align:center;color:#64748b;font-size:12px;margin-bottom:12px}
+input{width:100%;padding:14px;margin:6px 0;border-radius:10px;border:1px solid #2a3a5a;background:#0f172a;color:#fff}
+button{width:100%;padding:14px;margin-top:10px;border-radius:10px;border:none;background:#fbbf24;color:#000;font-weight:900;cursor:pointer}
+#btnLogin{background:#233044;color:#fff;border:1px solid #2a3a5a}
+.small{font-size:12px;color:#94a3b8;text-align:center;margin-top:8px;min-height:18px}
 </style>
 </head>
 <body>
 <nav><div class="logo">CoinCheap 💎</div><div class="badge">● Live Trading</div></nav>
-<div class="hero"><h1>Buy Cheap Coins,<br><span>Earn Huge Returns</span></h1><p>Join 12,400+ USA investors daily</p></div>
-<div class="coins"><div class="coin">₿ BTC +2.4%</div><div class="coin">Ξ ETH +1.8%</div><div class="coin">◎ SOL +5.2% 🚀</div></div>
+<div class="hero"><h1>Buy Cheap Coins,<br><span>Earn Huge Returns</span></h1></div>
+<div class="coins"><div class="coin">₿ BTC</div><div class="coin">Ξ ETH</div><div class="coin">◎ SOL 🚀</div></div>
 <div class="plans">
-<div class="plan"><h3>Starter</h3><div class="price">$100</div><div style="color:#94a3b8;font-size:13px">10% daily → <b style="color:#fff">$10/day</b></div></div>
-<div class="plan pop"><h3>Pro ⭐</h3><div class="price">$500</div><div style="color:#94a3b8;font-size:13px">15% daily → <b style="color:#fff">$75/day</b></div></div>
-<div class="plan"><h3>Whale 🐋</h3><div class="price">$1000</div><div style="color:#94a3b8;font-size:13px">20% daily → <b style="color:#fff">$200/day</b></div></div>
+<div class="plan"><h3>Starter</h3><div class="price">$100</div><div style="font-size:12px;color:#94a3b8">10% daily → $10/day</div></div>
+<div class="plan pop"><h3>Pro ⭐ MOST POPULAR</h3><div class="price">$500</div><div style="font-size:12px;color:#94a3b8">15% daily → $75/day</div></div>
+<div class="plan"><h3>Whale 🐋</h3><div class="price">$1000</div><div style="font-size:12px;color:#94a3b8">20% daily → $200/day</div></div>
 </div>
 <div class="auth"><div class="card">
-<h2>CoinCheap 💎</h2><div class="sub">Secure investor access - old & new users</div>
-<input id="email" type="email" placeholder="Email address (e.g. you@gmail.com)">
-<input id="password" type="password" placeholder="Password (6+ chars)">
-<button onclick="signup()">Create Account →</button>
-<button class="btn2" onclick="login()">Login</button>
-<p id="msg" class="small" style="min-height:18px"></p>
-<p class="small">Balance: <span id="bal">$0.00</span> • Protected by Firebase</p>
+<h2>CoinCheap 💎</h2><div class="sub">Old & new users connected</div>
+<input id="userEmail" type="email" placeholder="Email e.g. you@gmail.com" autocomplete="email">
+<input id="userPass" type="password" placeholder="Password 6+ chars" autocomplete="current-password">
+<button id="btnSignup">Create Account →</button>
+<button id="btnLogin">Login</button>
+<p id="msg" class="small"></p>
+<p class="small">Balance: <span id="bal">$0.00</span></p>
 </div></div>
 
 <script>
-// FULLY CONNECTED FIREBASE - CORRECT KEY
+// FIXED FIREBASE + CLICK
 const firebaseConfig={
   apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",
   authDomain:"coincheap-investment.firebaseapp.com",
@@ -65,11 +62,39 @@ const firebaseConfig={
   appId:"1:1065612358336:web:1e9b4678e5df622bc9f325"
 };
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
-const db=firebase.database();
+const auth = firebase.auth();
+const db = firebase.database();
 
-function signup(){
-  const e=document.getElementById('email').value.trim();
-  const p=document.getElementById('password').value.trim();
-  const m=document.getElementById('msg');
-  if(!e || !e.includes('@') || !e.includes('.')){m.innerText='⚠️ Ab
+const eInput = document.getElementById('userEmail');
+const pInput = document.getElementById('userPass');
+const msg = document.getElementById('msg');
+const bal = document.getElementById('bal');
+
+document.getElementById('btnSignup').addEventListener('click', function(){
+  const e = eInput.value.trim();
+  const p = pInput.value.trim();
+  if(!e.includes('@')){msg.textContent='⚠️ Enter correct email';return}
+  if(p.length<6){msg.textContent='⚠️ Password 6+ chars';return}
+  msg.textContent='Creating...';
+  auth.createUserWithEmailAndPassword(e,p)
+    .then(c=>db.ref('users/'+c.user.uid).set({email:e.toLowerCase(),balance:0,created:new Date().toISOString()}))
+    .then(()=>msg.textContent='✅ Created! Now click Login')
+    .catch(err=>msg.textContent='❌ '+err.message);
+});
+
+document.getElementById('btnLogin').addEventListener('click', function(){
+  const e = eInput.value.trim();
+  const p = pInput.value.trim();
+  if(!e||!p){msg.textContent='⚠️ Enter email & password';return}
+  msg.textContent='Logging...';
+  auth.signInWithEmailAndPassword(e,p)
+    .then(c=>{
+      msg.textContent='✅ Welcome '+e;
+      db.ref('users/'+c.user.uid+'/balance').on('value',s=>bal.textContent='$'+(s.val()||0)+'.00');
+    })
+    .catch(err=>msg.textContent='❌ '+err.message);
+});
+</script>
+<script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+</body>
+</html>
