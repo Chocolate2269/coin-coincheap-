@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard - CoinCheap USA</title>
+<style>
+*{box-sizing:border-box;font-family:system-ui,Arial}
+body{margin:0;background:#020617;color:#e2e8f0;padding:12px}
+.top{display:flex;justify-content:space-between;align-items:center;background:#0f172a;padding:12px;border-radius:12px;border:1px solid #1e293b}
+.btn{padding:10px 14px;border:none;border-radius:8px;font-weight:800;cursor:pointer}
+.y{background:#f59e0b;color:#000}.g{background:#16a34a;color:#fff}.b{background:#1e3a8a;color:#fff}.r{background:#dc2626;color:#fff}.d{background:#0f172a;color:#fff;border:1px solid #334155}
+.card{background:#fff;color:#0f172a;padding:16px;border-radius:14px;margin:10px 0}
+.balance{background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;border:3px solid #f59e0b;text-align:center}
+h1{font-size:42px;color:#f59e0b;margin:8px 0}
+</style>
+</head>
+<body>
+
+<div class="top">
+<div><b>CoinCheap USA 🇺🇸</b><br><small id="userEmailSmall"></small></div>
+<div style="display:flex;gap:6px">
+<a href="index.html" style="text-decoration:none"><button class="btn y">Home</button></a>
+<button class="btn r" onclick="logout()">Logout</button>
+</div>
+</div>
+
+<div class="card balance">
+<p>Current Balance</p>
+<h1 id="bal">$0.00</h1>
+<p id="nameDisplay">Welcome!</p>
+<div style="display:flex;gap:8px;margin-top:14px">
+<button class="btn g" style="flex:1" onclick="deposit()">Deposit</button>
+<button class="btn b" style="flex:1" onclick="withdraw()">Withdraw</button>
+</div>
+</div>
+
+<div class="card">
+<h3>📧 Your Signup Email</h3>
+<p style="font-size:18px;font-weight:900" id="emailBig"></p>
+<p style="color:#64748b">You used this email to create account. Keep it for login.</p>
+</div>
+
+<div class="card">
+<h3>💼 My Investment</h3>
+<p>Plan: <b id="plan">No active plan yet</b></p>
+<p>Total Profit: <b style="color:#16a34a" id="profit">$0.00</b></p>
+<p>Status: <span style="background:#dcfce7;padding:4px 10px;border-radius:20px;font-size:12px">Active ✅</span></p>
+</div>
+
+<div class="card" style="background:#fef3c7;border:2px solid #f59e0b">
+<h3>🔥 Hot Deal For You</h3>
+<p>Deposit $500+ today and get $100 BONUS instantly!</p>
+<button class="btn y" style="width:100%;margin-top:8px" onclick="deposit()">Claim Bonus Now</button>
+</div>
+
+<script>
+// CHECK LOGIN
+let email = localStorage.getItem('userEmail');
+let name = localStorage.getItem('userName') || 'Investor';
+if(!email){
+  alert('Please login first!');
+  window.location.href='index.html';
+}
+
+// SHOW EMAIL EVERYWHERE
+document.getElementById('userEmailSmall').innerText = email;
+document.getElementById('emailBig').innerText = email;
+document.getElementById('nameDisplay').innerText = 'Welcome, ' + name + '!';
+
+// SHOW BALANCE FROM ADMIN
+let balKey = 'bal_' + email;
+let balance = localStorage.getItem(balKey) || '0.00';
+document.getElementById('bal').innerText = '$' + parseFloat(balance).toLocaleString();
+document.getElementById('profit').innerText = '$' + (parseFloat(balance)*0.2).toFixed(2);
+
+// FUNCTIONS
+function logout(){
+  localStorage.removeItem('userEmail');
+  window.location.href='index.html';
+}
+function deposit(){
+  alert('To Deposit:\n\n1. Contact Admin on WhatsApp\n2. Send to USA Bank\n3. Your balance will be updated in dashboard automatically\n\nYour Email: ' + email);
+}
+function withdraw(){
+  alert('Withdraw Request Sent!\n\nAdmin will process to your bank in 5 mins.\n\nEmail: ' + email + '\nBalance: $' + balance);
+}
+</script>
+
+</body>
+</html>
