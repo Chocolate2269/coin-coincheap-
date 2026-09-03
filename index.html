@@ -1,32 +1,26 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CoinCheap USA</title>
-<style>*{box-sizing:border-box;font-family:system-ui,Arial}body{margin:0;background:#020617;color:#e2e8f0}.nav{position:sticky;top:0;background:#020617f2;padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #1e293b}.btn{padding:11px 18px;border:none;border-radius:12px;font-weight:800;cursor:pointer}.y{background:#f59e0b;color:#000}.d{background:#0f172a;color:#fff;border:1px solid #334155}.b{background:#1e3a8a;color:#fff;width:100%}.hero{padding:60px 16px;text-align:center}.grid{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;max-width:1050px;margin:0 auto}@media(min-width:750px){.grid{grid-template-columns:repeat(3,1fr)}}.card{background:#0f172a;border:1px solid #1e293b;border-radius:18px;padding:18px}.price{font-size:26px;font-weight:900;color:#f59e0b}.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}.box{background:#fff;color:#0f172a;border-radius:18px;padding:22px;max-width:400px;width:100%}input{width:100%;padding:13px;margin:7px 0;border:2px solid #e2e8f0;border-radius:12px}</style></head><body>
-<div class="nav"><b>CoinCheap USA 🇺🇸</b><div style="display:flex;gap:8px"><button class="btn d" onclick="openLogin()">Login</button><button class="btn y" onclick="openSignup()">Get Started</button></div></div>
-<div class="hero"><h1>Invest Smarter, <span style="color:#f59e0b">Grow Faster</span></h1><button class="btn y" onclick="openSignup()" style="padding:14px 28px">Start Now</button></div>
-<div class="grid"><div class="card"><h3>Starter</h3><div class="price">$50-$499</div><button class="btn b" onclick="openSignup()">Choose</button></div><div class="card" style="border-color:#f59e0b"><h3>Professional</h3><div class="price">$500-$4,999</div><button class="btn y" style="width:100%" onclick="openSignup()">Choose</button></div><div class="card"><h3>Enterprise</h3><div class="price">$5000+</div><button class="btn b" onclick="openSignup()">Choose</button></div></div>
-<div id="suModal" class="modal"><div class="box"><h2>Create Account</h2><input id="suName" placeholder="Username"><input id="suEmail" placeholder="Email"><input id="suPass" type="password" placeholder="Password"><button class="btn y" style="width:100%" onclick="doSignup()">Create</button><p id="suMsg"></p></div></div>
-<div id="liModal" class="modal"><div class="box"><h2>Login</h2><input id="liEmail" placeholder="Email"><input id="liPass" type="password" placeholder="Password"><button class="btn b" onclick="doLogin()">Login</button><p id="liMsg"></p></div></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CoinCheap USA</title><style>body{margin:0;background:#020617;color:#e2e8f0;font-family:Arial}.nav{padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #1e293b}.btn{padding:11px 18px;border:none;border-radius:12px;font-weight:800;cursor:pointer}.y{background:#f59e0b}.b{background:#1e3a8a;color:#fff;width:100%}.hero{padding:50px 16px;text-align:center}.card{background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:18px;margin:10px}.price{color:#f59e0b;font-size:24px;font-weight:900}.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}.box{background:#fff;color:#000;padding:20px;border-radius:16px;max-width:380px;width:100%}input{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:2px solid #ddd}</style></head><body>
+<div class="nav"><b>CoinCheap USA 🇺🇸</b><button class="btn y" onclick="document.getElementById('su').style.display='flex'">Get Started</button></div>
+<div class="hero"><h1>Invest Smarter, <span style="color:#f59e0b">Grow Faster</span></h1><button class="btn y" onclick="document.getElementById('su').style.display='flex'">Start Now</button></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;max-width:900px;margin:auto;padding:10px"><div class="card"><h3>Starter $50</h3><button class="btn b" onclick="document.getElementById('su').style.display='flex'">Choose</button></div><div class="card" style="border-color:#f59e0b"><h3>Pro $500</h3><button class="btn y" style="width:100%" onclick="document.getElementById('su').style.display='flex'">Choose</button></div><div class="card"><h3>Enterprise $5000</h3><button class="btn b" onclick="document.getElementById('su').style.display='flex'">Choose</button></div></div>
+<div id="su" class="modal"><div class="box"><h2>Create Account</h2><input id="n" placeholder="Username"><input id="e" placeholder="Email"><input id="p" type="password" placeholder="Password"><button class="btn y" style="width:100%" onclick="signup()">Create</button><p id="m"></p></div></div>
+
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {getFirestore,doc,setDoc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {getFirestore,doc,setDoc} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325",measurementId:"G-EM6F4CS1C6"};
-const app=initializeApp(firebaseConfig);const db=getFirestore(app);window.db=db;window.fb_setDoc=setDoc;window.fb_doc=doc;
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);window.db=db;window.sd=setDoc;window.d=doc;
 </script>
+
 <script>
-function openSignup(){document.getElementById('suModal').style.display='flex';}
-function openLogin(){document.getElementById('liModal').style.display='flex';}
-async function doSignup(){
-let n=document.getElementById('suName').value.trim(),e=document.getElementById('suEmail').value.trim(),p=document.getElementById('suPass').value.trim();
-if(!n||!e||!p){document.getElementById('suMsg').innerText='Fill all';return;}
-document.getElementById('suMsg').innerText='Creating...';
-localStorage.setItem('userEmail',e);localStorage.setItem('userName',n);localStorage.setItem('name_'+e,n);
-let all=JSON.parse(localStorage.getItem('allUsers')||'[]');let allNames=JSON.parse(localStorage.getItem('allUsersNames')||'{}');
-if(!all.includes(e))all.push(e);allNames[e]=n;localStorage.setItem('allUsers',JSON.stringify(all));localStorage.setItem('allUsersNames',JSON.stringify(allNames));
-try{await fb_setDoc(fb_doc(db,"users",e),{name:n,email:e,balance:0,created:new Date().toISOString()},{merge:true});document.getElementById('suMsg').innerText='✅ Created & Saved Online!';}catch(err){document.getElementById('suMsg').innerText='✅ Created! (offline) '+err.message;}
-setTimeout(()=>{location.href='dashboard.html';},800);
+async function signup(){
+let name=document.getElementById('n').value.trim(),email=document.getElementById('e').value.trim();
+if(!name||!email){document.getElementById('m').innerText='Fill username & email';return;}
+document.getElementById('m').innerText='Creating...';
+localStorage.setItem('userEmail',email);localStorage.setItem('userName',name);
+try{await sd(d(db,"users",email),{name:name,email:email,balance:0,created:new Date().toISOString()},{merge:true});document.getElementById('m').innerText='✅ Saved Online!';setTimeout(()=>location.href='dashboard.html',700);}catch(err){document.getElementById('m').innerText='Error: '+err.message;}
 }
-function doLogin(){let e=document.getElementById('liEmail').value.trim();if(!e)return;localStorage.setItem('userEmail',e);location.href='dashboard.html';}
 </script>
-<!-- CHATWAY - REPLACE ID -->
-<script id="chatway" async src="https://cdn.chatway.app/widget.js?id=YOUR_CHATWAY_ID"></script>
+
+<!-- CHATWAY - Put your ID here -->
+<script id="chatway" async src="https://cdn.chatway.app/widget.js?id=YOUR_CHATWAY_ID_HERE"></script>
 </body></html>
