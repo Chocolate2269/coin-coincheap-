@@ -1,308 +1,113 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CoinCheap USA - Secure USA Investment Platform</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<title>CoinCheap USA</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family: 'Segoe UI',Arial}
-body{background:#020617;color:#e2e8f0;line-height:1.6}
-a{text-decoration:none}
-.header{position:fixed;top:0;width:100%;background:rgba(2,6,23,.95);backdrop-filter:blur(10px);padding:12px 5%;display:flex;justify-content:space-between;align-items:center;z-index:100;border-bottom:1px solid #1e293b}
-.logo{font-weight:900;color:#fff;font-size:20px}.logo span{color:#f59e0b}
-.navLinks{display:flex;gap:18px;font-size:13px;font-weight:700}
-.navLinks a{color:#94a3b8}.navLinks a:hover{color:#fff}
-.btn{padding:11px 18px;border-radius:10px;font-weight:900;border:none;cursor:pointer;font-size:13px}
-.btn-gold{background:#f59e0b;color:#000}.btn-blue{background:#1e3a8a;color:#fff}.btn-outline{border:1px solid #334155;color:#fff;background:transparent}
-.hero{padding:130px 5% 60px;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;min-height:90vh;background:radial-gradient(800px at 20% 20%,#1e3a8a33,transparent),#020617}
-.hero h1{font-size:42px;line-height:1.1;color:#fff}.hero h1 span{color:#f59e0b}
-.hero p{color:#94a3b8;margin:15px 0;font-size:14px}
-.badge{display:inline-block;background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b44;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;margin-bottom:10px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
-.statBox{background:#0f172a;border:1px solid #1e293b;padding:14px;border-radius:12px;text-align:center}
-.statBox b{font-size:20px;color:#fff;display:block}
-.ticker{background:#0f172a;border-top:1px solid #1e293b;border-bottom:1px solid #1e293b;padding:10px 0;overflow:hidden;white-space:nowrap}
-.ticker span{margin:0 25px;font-size:12px;font-weight:700}
-.ticker .up{color:#22c55e}.ticker .down{color:#ef4444}
-.section{padding:60px 5%}
-.section h2{text-align:center;font-size:28px;color:#fff;margin-bottom:8px}
-.section .sub{text-align:center;color:#64748b;font-size:13px;margin-bottom:30px}
-.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
-.plan{background:linear-gradient(180deg,#0f172a,#020617);border:1px solid #1e293b;border-radius:16px;padding:20px;position:relative;transition:.2s}
-.plan:hover{border-color:#f59e0b;transform:translateY(-4px)}
-.plan.popular{border-color:#f59e0b;box-shadow:0 0 30px #f59e0b22}
-.plan .tag{position:absolute;top:-10px;right:15px;background:#f59e0b;color:#000;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:900}
-.plan h3{color:#fff}.plan .price{font-size:32px;font-weight:900;color:#f59e0b;margin:10px 0}
-.plan ul{list-style:none;margin:12px 0}
-.plan li{font-size:12px;color:#94a3b8;padding:5px 0;border-bottom:1px solid #1e293b11}.plan li i{color:#22c55e;margin-right:6px}
-.deals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.dealCard{background:#0f172a;border:1px solid #1e293b;padding:18px;border-radius:14px}
-.about{display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:center}
-.footer{background:#020617;border-top:1px solid #1e293b;padding:30px 5%;text-align:center;font-size:11px;color:#475569}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:200;padding:12px}
-.modal.active{display:flex}
-.modalBox{background:#fff;color:#0f172a;padding:18px;border-radius:16px;width:100%;max-width:380px;max-height:95vh;overflow:auto}
-.modalBox input, .modalBox select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:2px solid #dbeafe}
-.tab{display:none}.tab.active{display:block}
-@media(max-width:800px){.hero,.about{grid-template-columns:1fr}.navLinks{display:none}.hero h1{font-size:32px}}
+*{box-sizing:border-box;font-family:system-ui,Arial}body{margin:0;background:#020617;color:#e2e8f0}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#020617;position:sticky;top:0;z-index:10;border-bottom:1px solid #1e293b}
+.logo{font-weight:900;font-size:22px}.logo span{color:#f59e0b}
+.btn{padding:10px 18px;border:none;border-radius:10px;font-weight:800;cursor:pointer}
+.btn-dark{background:#0f172a;color:#fff;border:1px solid #334155}
+.btn-yellow{background:#f59e0b;color:#000}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
+.stat{background:#0f172a;border-radius:16px;padding:14px;text-align:center;border:1px solid #1e293b}
+.stat b{font-size:22px;display:block}
+.preview{margin:12px;background:#fff;color:#0f172a;border-radius:20px;padding:16px;border:3px solid #f59e0b;position:relative}
+.most{position:absolute;top:-12px;right:12px;background:#f59e0b;color:#000;font-weight:900;padding:4px 12px;border-radius:20px;font-size:12px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99;align-items:center;justify-content:center;padding:12px}
+.modal.show{display:flex}.box{background:#fff;color:#0f172a;padding:18px;border-radius:16px;width:100%;max-width:380px}
+input{width:100%;padding:12px;margin:6px 0;border:2px solid #cbd5e1;border-radius:10px}
+.green{background:#16a34a;color:#fff}.blue{background:#1e3a8a;color:#fff}
 </style>
-</head><body>
+</head>
+<body>
 
 <div class="header">
 <div class="logo">CoinCheap <span>USA</span> 🇺🇸</div>
-<div class="navLinks">
-<a href="#about">About Us</a><a href="#plans">Plans</a><a href="#deals">Deals</a><a href="#trading">Live Trading</a>
-</div>
 <div style="display:flex;gap:8px">
-<button class="btn btn-outline" onclick="openAuth('log')">Login</button>
-<button class="btn btn-gold" onclick="openAuth('reg')">Get Started</button>
+<button class="btn btn-dark" onclick="openLogin()">Login</button>
+<button class="btn btn-yellow" onclick="openSignup()">Get Started</button>
 </div>
 </div>
 
-<div class="hero">
-<div>
-<span class="badge"><i class="fa fa-shield-alt"></i> SECURE & VERIFIED USA PLATFORM</span>
-<h1>Invest Smart in <span>USA Markets</span> With Confidence</h1>
-<p>CoinCheap USA provides secure digital asset investment solutions with transparent USA banking - Huntington, Bank of America, Abri & GLCU Credit Unions supported for deposits & withdrawals.</p>
-<div style="display:flex;gap:10px;flex-wrap:wrap">
-<button class="btn btn-gold" onclick="openAuth('reg')">Start Investing <i class="fa fa-arrow-right"></i></button>
-<button class="btn btn-outline" onclick="document.getElementById('plans').scrollIntoView({behavior:'smooth'})">View Plans</button>
-</div>
 <div class="stats">
-<div class="statBox"><b>12K+</b><small>Active Investors</small></div>
-<div class="statBox"><b>$4.2M+</b><small>Total Payout</small></div>
-<div class="statBox"><b>USA</b><small>Bank Verified</small></div>
+<div class="stat"><b>12K+</b>Active Investors</div>
+<div class="stat"><b>$4.2M+</b>Total Payout</div>
+<div class="stat"><b>USA</b>Bank Verified</div>
 </div>
+
+<div class="preview">
+<div class="most">MOST POPULAR</div>
+<h3>📈 Live Account Preview</h3>
+<div style="text-align:center">
+<p>Current Balance</p>
+<h1 style="color:#f59e0b;margin:0;font-size:42px">$0.00</h1>
+<p>Login to view your portfolio</p>
+<div style="display:flex;gap:8px;margin-top:12px">
+<button class="btn green" style="flex:1" onclick="openSignup()">Deposit</button>
+<button class="btn blue" style="flex:1" onclick="openLogin()">Withdraw</button>
 </div>
-<div>
-<div class="plan popular" style="background:#fff;color:#0f172a">
-<span class="tag">MOST POPULAR</span>
-<h3 style="color:#0f172a"><i class="fa fa-chart-line"></i> Live Account Preview</h3>
-<div style="text-align:center;margin:15px 0">
-<small>Current Balance</small>
-<div style="font-size:36px;font-weight:900;color:#f59e0b" id="heroBal">$0.00</div>
-<small style="color:#64748b" id="heroEmail">Login to view your portfolio</small>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<button class="btn" style="background:#16a34a;color:#fff" onclick="openDeposit()">Deposit</button>
-<button class="btn" style="background:#1e3a8a;color:#fff" onclick="openWithdraw()">Withdraw</button>
-</div>
-<p style="font-size:10px;color:#ef4444;text-align:center;margin-top:10px"><i class="fa fa-exclamation-triangle"></i> Investment involves risk. Past performance not guarantee.</p>
-</div>
+<p style="color:#ef4444;font-size:11px;margin-top:10px">⚠️ Investment involves risk. Past performance not guarantee.</p>
 </div>
 </div>
 
-<div class="ticker" id="trading">
-<span>BTC <b class="up">$67,234 +2.1%</b></span>
-<span>ETH <b class="up">$3,412 +1.4%</b></span>
-<span>USDT <b>$1.00 0.0%</b></span>
-<span>SOL <b class="up">$145 +5.3%</b></span>
-<span>HUNTINGTON BANK VERIFIED <i class="fa fa-check-circle" style="color:#22c55e"></i></span>
-<span>BOA VERIFIED <i class="fa fa-check-circle" style="color:#22c55e"></i></span>
-<span>ABRI & GLCU SUPPORTED</span>
-<span>LIVE TRADING - USA MARKET OPEN</span>
-</div>
-
-<div class="section" id="plans">
-<h2>Investment Plans</h2>
-<p class="sub">Choose a plan that fits your goals - All withdrawals to USA banks: Huntington, BoA, Abri, GLCU</p>
-<div class="plans">
-<div class="plan">
-<h3>Starter USA</h3><div class="price">$100 - $999</div>
-<small style="color:#94a3b8">For beginners testing USA market</small>
-<ul>
-<li><i class="fa fa-check"></i> Daily Market Updates</li>
-<li><i class="fa fa-check"></i> Withdraw to Huntington / BoA</li>
-<li><i class="fa fa-check"></i> 24/7 Support</li>
-<li><i class="fa fa-check"></i> USA Bank Verification</li>
-</ul>
-<button class="btn btn-outline" style="width:100%" onclick="openAuth('reg')">Choose Plan</button>
-</div>
-<div class="plan popular">
-<span class="tag">BEST VALUE</span>
-<h3>Growth USA</h3><div class="price">$1,000 - $4,999</div>
-<small style="color:#94a3b8">Most chosen by USA investors</small>
-<ul>
-<li><i class="fa fa-check"></i> Priority Withdrawal (Abri, GLCU)</li>
-<li><i class="fa fa-check"></i> Personal Account Manager</li>
-<li><i class="fa fa-check"></i> All USA Banks Supported</li>
-<li><i class="fa fa-check"></i> Live Trading Access</li>
-</ul>
-<button class="btn btn-gold" style="width:100%" onclick="openAuth('reg')">Choose Plan</button>
-</div>
-<div class="plan">
-<h3>Premium USA</h3><div class="price">$5,000+</div>
-<small style="color:#94a3b8">For high-volume investors</small>
-<ul>
-<li><i class="fa fa-check"></i> Instant Withdrawal Review</li>
-<li><i class="fa fa-check"></i> All USA Banks + Credit Unions</li>
-<li><i class="fa fa-check"></i> Dedicated USA Support Line</li>
-<li><i class="fa fa-check"></i> Advanced Trading Tools</li>
-</ul>
-<button class="btn btn-outline" style="width:100%" onclick="openAuth('reg')">Choose Plan</button>
-</div>
-</div>
-</div>
-
-<div class="section" id="deals" style="background:#0f172a">
-<h2>Hot Deals & Benefits</h2>
-<p class="sub">Exclusive benefits for USA verified accounts</p>
-<div class="deals">
-<div class="dealCard"><h4><i class="fa fa-university" style="color:#f59e0b"></i> USA Bank Direct</h4><p style="font-size:12px;color:#94a3b8;margin-top:6px">Direct deposit & withdrawal to Huntington, Bank of America, Abri Credit Union, GLCU - No third party.</p></div>
-<div class="dealCard"><h4><i class="fa fa-bolt" style="color:#22c55e"></i> Instant Verification</h4><p style="font-size:12px;color:#94a3b8;margin-top:6px">USA bank verification in under 5 minutes. Start investing same day.</p></div>
-<div class="dealCard"><h4><i class="fa fa-lock" style="color:#60a5fa"></i> Secure & Insured</h4><p style="font-size:12px;color:#94a3b8;margin-top:6px">Bank-level encryption + secure Firebase authentication for all clients.</p></div>
-<div class="dealCard"><h4><i class="fa fa-headset" style="color:#f59e0b"></i> 24/7 USA Support</h4><p style="font-size:12px;color:#94a3b8;margin-top:6px">Real support team via Chatway widget - bottom right corner.</p></div>
-</div>
-</div>
-
-<div class="section" id="about">
-<div class="about">
-<div>
-<h2 style="text-align:left">About CoinCheap USA</h2>
-<p style="color:#94a3b8;font-size:13px;margin-top:10px">CoinCheap USA was built to simplify USA investment access. We connect investors with transparent USA banking rails - supporting major banks like Huntington Bank and Bank of America, plus trusted credit unions Abri and GLCU.</p>
-<p style="color:#94a3b8;font-size:13px;margin-top:10px">Our platform does NOT guarantee profits. All investments carry risk. We provide tools, live market data, and secure USA bank withdrawal options. Your dashboard shows real balance, email verification, deposit and withdrawal controls.</p>
-<div style="margin-top:15px;display:flex;gap:10px">
-<div class="statBox"><b><i class="fa fa-flag-usa"></i></b><small>USA Focused</small></div>
-<div class="statBox"><b><i class="fa fa-shield"></i></b><small>Secure</small></div>
-<div class="statBox"><b><i class="fa fa-users"></i></b><small>Verified Users</small></div>
-</div>
-</div>
-<div class="plan">
-<h3><i class="fa fa-info-circle"></i> Important Risk Notice</h3>
-<p style="font-size:12px;color:#94a3b8;margin-top:10px">CoinCheap USA is a technology platform. We do not offer guaranteed returns. Market investments can go down as well as up. Only invest what you can afford to lose. Deposits should only be made to a business bank account you verify you own. Always verify bank details before sending funds.</p>
-<button class="btn btn-blue" style="width:100%;margin-top:12px" onclick="openAuth('reg')">Create Verified Account</button>
-</div>
-</div>
-</div>
-
-<div class="footer">
-<p>© 2026 CoinCheap USA - All USA Banks: Huntington, Bank of America, Abri Credit Union, GLCU Credit Union supported for client withdrawals.</p>
-<p style="margin-top:6px">Admin: <a href="admin.html" style="color:#f59e0b">admin.html</a> | Support via chat widget</p>
-<p style="margin-top:8px;color:#334155">Risk Warning: Trading and investment involve risk of loss.</p>
-</div>
-
-<!-- AUTH + DASHBOARD MODAL -->
-<div id="authModal" class="modal">
-<div class="modalBox">
-<div style="display:flex;gap:6px;margin-bottom:10px">
-<button id="btnRegM" onclick="showAuthTab('reg')" style="flex:1;padding:9px;border-radius:8px;border:1px solid #1e3a8a;background:#1e3a8a;color:#fff;font-weight:800">Register</button>
-<button id="btnLogM" onclick="showAuthTab('log')" style="flex:1;padding:9px;border-radius:8px;border:1px solid #cbd5e1;background:#f1f5f9;font-weight:800">Login</button>
-<button id="btnDashM" onclick="showAuthTab('dash')" style="flex:1;padding:9px;border-radius:8px;border:1px solid #cbd5e1;background:#f1f5f9;font-weight:800">Dashboard</button>
-</div>
-
-<div id="mReg" class="tab active">
-<h3>Sign Up</h3>
-<input id="rEmail" type="email" placeholder="Email"><input id="rPass" type="password" placeholder="Password"><input id="rPass2" type="password" placeholder="Confirm">
-<button class="btn" style="background:#1e3a8a;color:#fff;width:100%;margin-top:6px" onclick="signUp()">CREATE ACCOUNT</button>
-</div>
-
-<div id="mLog" class="tab">
-<h3>Login</h3>
-<input id="lEmail" type="email" placeholder="Email"><input id="lPass" type="password" placeholder="Password">
-<button class="btn" style="background:#ea580c;color:#fff;width:100%;margin-top:6px" onclick="login()">LOGIN</button>
-<button class="btn" style="background:#fff;color:#1e3a8a;border:1px solid #cbd5e1;width:100%" onclick="openReset()">Reset Password</button>
-</div>
-
-<div id="mDash" class="tab">
-<span id="dashEmail" style="background:#dbeafe;color:#1e3a8a;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;display:block;text-align:center">Not logged in</span>
-<div style="font-size:38px;font-weight:900;color:#f59e0b;text-align:center" id="bal">$0.00</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-<button class="btn" style="background:#16a34a;color:#fff" onclick="openDeposit()">Deposit</button>
-<button class="btn" style="background:#1e3a8a;color:#fff" onclick="openWithdraw()">Withdraw</button>
-</div>
-<div style="margin-top:10px">
-<input id="adminEmail" placeholder="Client email to credit (admin only)"><input id="adminAmt" type="number" placeholder="Amount">
-<button class="btn" style="background:#16a34a;color:#fff;width:100%" onclick="addMoney()">Add Balance</button>
-</div>
-<button class="btn" style="background:#334155;color:#fff;width:100%;margin-top:6px" onclick="logout()">Logout</button>
-<button class="btn" style="background:#fff;color:#334155;border:1px solid #cbd5e1;width:100%" onclick="closeAuth()">Close</button>
-</div>
-<p id="msg" style="text-align:center;font-weight:800;margin-top:8px;font-size:12px"></p>
-</div>
-</div>
-
-<!-- DEPOSIT -->
-<div id="depositModal" class="modal"><div class="modalBox">
-<h3>Deposit - USA Bank</h3>
-<div style="background:#f0fdf4;border:1px solid #bbf7d0;padding:12px;border-radius:10px;font-size:13px;margin:8px 0">
-<b>Send to Company:</b><br>
-Bank: <b id="depBank">Huntington Bank</b><br>
-Account Name: CoinCheap USA LLC<br>
-<small style="color:red">EDIT real account/routing in code - only use bank you own</small>
-</div>
-<select id="depSelect" onchange="document.getElementById('depBank').innerText=this.value">
-<option>Huntington Bank</option><option>Bank of America</option><option>Abri Credit Union</option><option>GLCU Credit Union</option>
-</select>
-<button class="btn" style="background:#334155;color:#fff;width:100%" onclick="closeModals()">Close</button>
+<!-- SIGNUP MODAL -->
+<div id="signupModal" class="modal"><div class="box">
+<h3>Create Account</h3>
+<input id="suName" placeholder="Full Name">
+<input id="suEmail" placeholder="Email">
+<input id="suPass" type="password" placeholder="Password">
+<button class="btn btn-yellow" style="width:100%" onclick="doSignup()">Create Account</button>
+<p style="text-align:center;margin-top:10px">Already have? <a href="#" onclick="openLogin()">Login</a></p>
+<button class="btn btn-dark" style="width:100%;margin-top:8px" onclick="closeAll()">Close</button>
+<p id="suMsg"></p>
 </div></div>
 
-<!-- WITHDRAW -->
-<div id="withdrawModal" class="modal"><div class="modalBox">
-<h3>Withdraw to USA Bank</h3>
-<p style="font-size:12px">Balance: <b id="wBal">$0.00</b></p>
-<select id="wBankType"><option>Huntington Bank</option><option>Bank of America (BoA)</option><option>Abri Credit Union</option><option>GLCU Credit Union</option><option>Other Bank</option></select>
-<input id="wAccName" placeholder="Account Name"><input id="wAccNum" placeholder="Account Number"><input id="wRouting" placeholder="Routing Number"><input id="wAmount" type="number" placeholder="Amount">
-<button class="btn" style="background:#1e3a8a;color:#fff;width:100%" onclick="requestWithdraw()">Request Withdrawal</button>
-<button class="btn" style="background:#fff;border:1px solid #cbd5e1;width:100%" onclick="closeModals()">Cancel</button>
-<div id="wStatus" style="display:none;background:#f8fafc;padding:10px;border-radius:8px;margin-top:8px;font-size:12px"></div>
-</div></div>
-
-<!-- RESET -->
-<div id="resetModal" class="modal"><div class="modalBox">
-<h3>Reset Password</h3>
-<input id="resEmail" type="email" placeholder="Email"><input id="resNewPass" type="password" placeholder="New Password"><input id="resNewPass2" type="password" placeholder="Confirm">
-<button class="btn" style="background:#0f172a;color:#fff;width:100%" onclick="resetPass()">Reset</button>
-<button class="btn" style="background:#fff;border:1px solid #cbd5e1;width:100%" onclick="closeModals()">Cancel</button>
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal"><div class="box">
+<h3>Welcome Back</h3>
+<input id="liEmail" placeholder="Email">
+<input id="liPass" type="password" placeholder="Password">
+<button class="btn blue" style="width:100%" onclick="doLogin()">Login</button>
+<p style="text-align:center;margin-top:10px">No account? <a href="#" onclick="openSignup()">Create</a></p>
+<button class="btn btn-dark" style="width:100%;margin-top:8px" onclick="closeAll()">Close</button>
+<p id="liMsg"></p>
 </div></div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
-const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-l1M6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325"};
-const app=initializeApp(firebaseConfig);const db=getDatabase(app);
-function keyFromEmail(e){return e.replace(/[^a-zA-Z0-9]/g,'_');}
-window.openAuth=function(t){document.getElementById('authModal').classList.add('active');showAuthTab(t);}
-window.closeAuth=function(){document.getElementById('authModal').classList.remove('active');}
-window.showAuthTab=function(t){
-document.querySelectorAll('#authModal .tab').forEach(x=>x.classList.remove('active'));
-document.getElementById(t==='reg'?'mReg':t==='log'?'mLog':'mDash').classList.add('active');
-}
-window.openDeposit=function(){closeAuth();document.getElementById('depositModal').classList.add('active');}
-window.openWithdraw=function(){closeAuth();let b=document.getElementById('bal').innerText;document.getElementById('wBal').innerText=b;document.getElementById('withdrawModal').classList.add('active');}
-window.openReset=function(){document.getElementById('resetModal').classList.add('active');}
-window.closeModals=function(){document.querySelectorAll('.modal').forEach(x=>x.classList.remove('active'));}
+// Firebase (if you use)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyDUMMY-REPLACE-WITH-YOURS",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project",
+};
+try{ initializeApp(firebaseConfig); }catch(e){}
 
-window.signUp=async function(){
-let email=document.getElementById('rEmail').value.trim().toLowerCase();let p1=document.getElementById('rPass').value;let p2=document.getElementById('rPass2').value;let msg=document.getElementById('msg');
-if(!email||!p1){msg.innerText='Fill all';return;}if(p1!=p2){msg.innerText='No match';return;}
-let k=keyFromEmail(email);let snap=await get(ref(db,'users/'+k));if(snap.exists()){msg.innerText='Exists, Login';showAuthTab('log');return;}
-await set(ref(db,'users/'+k),{email,password:p1,balance:0,country:'USA',created:new Date().toLocaleString()});msg.innerText='✅ Created! Login';msg.style.color='green';document.getElementById('lEmail').value=email;showAuthTab('log');
+window.openSignup = ()=>{closeAll(); document.getElementById('signupModal').classList.add('show');}
+window.openLogin = ()=>{closeAll(); document.getElementById('loginModal').classList.add('show');}
+window.closeAll = ()=>{document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'));}
+
+window.doSignup = ()=>{
+let name=document.getElementById('suName').value;
+let email=document.getElementById('suEmail').value;
+let pass=document.getElementById('suPass').value;
+if(!email||!pass){document.getElementById('suMsg').innerText='Fill all';return;}
+localStorage.setItem('userEmail',email);
+localStorage.setItem('userName',name);
+document.getElementById('suMsg').innerText='✅ Account created! Redirecting to Login...';
+setTimeout(()=>{ closeAll(); openLogin(); document.getElementById('liEmail').value=email; document.getElementById('liMsg').innerText='✅ Now login with your new account'; },1200);
 }
-window.login=async function(){
-let email=document.getElementById('lEmail').value.trim().toLowerCase();let pass=document.getElementById('lPass').value;let msg=document.getElementById('msg');let k=keyFromEmail(email);let snap=await get(ref(db,'users/'+k));
-if(!snap.exists()||snap.val().password!=pass){msg.innerText='Wrong details';msg.style.color='red';return;}
-localStorage.setItem('current_user',email);loadDash(email,snap.val());msg.innerText='Welcome';showAuthTab('dash');
+
+window.doLogin = ()=>{
+let email=document.getElementById('liEmail').value;
+if(!email){document.getElementById('liMsg').innerText='Enter email';return;}
+localStorage.setItem('userEmail',email);
+document.getElementById('liMsg').innerText='✅ Login success! Redirecting...';
+setTimeout(()=>{ window.location.href='dashboard.html'; },1000);
 }
-function loadDash(email,data){
-document.getElementById('dashEmail').innerText='📧 '+email;document.getElementById('bal').innerText='$'+(data.balance||0)+'.00';document.getElementById('heroEmail').innerText=email;document.getElementById('heroBal').innerText='$'+(data.balance||0)+'.00';document.getElementById('wBal').innerText='$'+(data.balance||0)+'.00';
-}
-window.addMoney=async function(){
-let email=(document.getElementById('adminEmail').value.trim().toLowerCase())||localStorage.getItem('current_user');let amt=parseFloat(document.getElementById('adminAmt').value);let msg=document.getElementById('msg');if(!email||!amt){msg.innerText='Fill email & amount';return;}
-let k=keyFromEmail(email);let snap=await get(ref(db,'users/'+k));if(!snap.exists()){msg.innerText='Not found';return;}let cur=parseFloat(snap.val().balance||0);await update(ref(db,'users/'+k),{balance:cur+amt});document.getElementById('bal').innerText='$'+(cur+amt)+'.00';document.getElementById('heroBal').innerText='$'+(cur+amt)+'.00';msg.innerText='Added $'+amt;
-}
-window.requestWithdraw=async function(){
-let email=localStorage.getItem('current_user');if(!email){document.getElementById('msg').innerText='Login first';return;}
-let bankType=document.getElementById('wBankType').value;let accName=document.getElementById('wAccName').value;let accNum=document.getElementById('wAccNum').value;let routing=document.getElementById('wRouting').value;let amount=parseFloat(document.getElementById('wAmount').value);
-if(!accName||!accNum||!amount){alert('Fill all');return;}
-let k=keyFromEmail(email);let snap=await get(ref(db,'users/'+k));let bal=parseFloat(snap.val().balance||0);if(amount>bal){alert('Insufficient $'+bal);return;}
-await update(ref(db,'users/'+k),{bank:{bankType,accName,accNum,routing},withdrawalRequest:{amount,bankType,status:'PENDING',date:new Date().toLocaleString()}});
-document.getElementById('wStatus').style.display='block';document.getElementById('wStatus').innerHTML='✅ Requested $'+amount+' to '+bankType+' - PENDING';document.getElementById('msg').innerText='Withdrawal requested';document.getElementById('msg').style.color='green';
-}
-window.resetPass=async function(){
-let email=document.getElementById('resEmail').value.trim().toLowerCase()||localStorage.getItem('current_user');let p1=document.getElementById('resNewPass').value;let p2=document.getElementById('resNewPass2').value;if(p1!=p2){alert('No match');return;}
-let k=keyFromEmail(email);let snap=await get(ref(db,'users/'+k));if(!snap.exists()){alert('Not found');return;}await update(ref(db,'users/'+k),{password:p1});alert('Password reset!');closeModals();openAuth('log');
-}
-window.logout=function(){localStorage.removeItem('current_user');document.getElementById('dashEmail').innerText='Not logged in';document.getElementById('bal').innerText='$0.00';document.getElementById('heroBal').innerText='$0.00';document.getElementById('heroEmail').innerText='Login to view';closeModals();}
-let saved=localStorage.getItem('current_user');if(saved){get(ref(db,'users/'+keyFromEmail(saved))).then(s=>{if(s.exists())loadDash(saved,s.val());});}
 </script>
-<script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
-</body></html>
+</body>
+</html>
