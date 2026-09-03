@@ -1,91 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard - CoinCheap USA</title>
-<style>
-*{box-sizing:border-box;font-family:system-ui,Arial}
-body{margin:0;background:#020617;color:#e2e8f0;padding:12px}
-.top{display:flex;justify-content:space-between;align-items:center;background:#0f172a;padding:12px;border-radius:12px;border:1px solid #1e293b}
-.btn{padding:10px 14px;border:none;border-radius:8px;font-weight:800;cursor:pointer}
-.y{background:#f59e0b;color:#000}.g{background:#16a34a;color:#fff}.b{background:#1e3a8a;color:#fff}.r{background:#dc2626;color:#fff}.d{background:#0f172a;color:#fff;border:1px solid #334155}
-.card{background:#fff;color:#0f172a;padding:16px;border-radius:14px;margin:10px 0}
-.balance{background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff;border:3px solid #f59e0b;text-align:center}
-h1{font-size:42px;color:#f59e0b;margin:8px 0}
-</style>
-</head>
-<body>
+<!DOCTYPE html><html><head><title>Dashboard</title><script src="https://cdn.tailwindcss.com"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, query, where, addDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig = {apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain: "coincheap-investment.firebaseapp.com",projectId: "coincheap-investment",storageBucket: "coincheap-investment.firebasestorage.app",messagingSenderId: "1065612358336",appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"};
+const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+let email = localStorage.getItem('currentUser'); if(!email) window.location = 'login.html';
 
-<div class="top">
-<div><b>CoinCheap USA 🇺🇸</b><br><small id="userEmailSmall"></small></div>
-<div style="display:flex;gap:6px">
-<a href="index.html" style="text-decoration:none"><button class="btn y">Home</button></a>
-<button class="btn r" onclick="logout()">Logout</button>
-</div>
-</div>
-
-<div class="card balance">
-<p>Current Balance</p>
-<h1 id="bal">$0.00</h1>
-<p id="nameDisplay">Welcome!</p>
-<div style="display:flex;gap:8px;margin-top:14px">
-<button class="btn g" style="flex:1" onclick="deposit()">Deposit</button>
-<button class="btn b" style="flex:1" onclick="withdraw()">Withdraw</button>
-</div>
-</div>
-
-<div class="card">
-<h3>📧 Your Signup Email</h3>
-<p style="font-size:18px;font-weight:900" id="emailBig"></p>
-<p style="color:#64748b">You used this email to create account. Keep it for login.</p>
-</div>
-
-<div class="card">
-<h3>💼 My Investment</h3>
-<p>Plan: <b id="plan">No active plan yet</b></p>
-<p>Total Profit: <b style="color:#16a34a" id="profit">$0.00</b></p>
-<p>Status: <span style="background:#dcfce7;padding:4px 10px;border-radius:20px;font-size:12px">Active ✅</span></p>
-</div>
-
-<div class="card" style="background:#fef3c7;border:2px solid #f59e0b">
-<h3>🔥 Hot Deal For You</h3>
-<p>Deposit $500+ today and get $100 BONUS instantly!</p>
-<button class="btn y" style="width:100%;margin-top:8px" onclick="deposit()">Claim Bonus Now</button>
-</div>
-
-<script>
-// CHECK LOGIN
-let email = localStorage.getItem('userEmail');
-let name = localStorage.getItem('userName') || 'Investor';
-if(!email){
-  alert('Please login first!');
-  window.location.href='index.html';
+async function addHolding(){
+  let coin = prompt("Coin ID: bitcoin, ethereum, solana");
+  let amount = parseFloat(prompt("How much do you own?"));
+  await addDoc(collection(db, "holdings"), {email, coin, amount, date: new Date()});
+  loadPortfolio();
 }
 
-// SHOW EMAIL EVERYWHERE
-document.getElementById('userEmailSmall').innerText = email;
-document.getElementById('emailBig').innerText = email;
-document.getElementById('nameDisplay').innerText = 'Welcome, ' + name + '!';
-
-// SHOW BALANCE FROM ADMIN
-let balKey = 'bal_' + email;
-let balance = localStorage.getItem(balKey) || '0.00';
-document.getElementById('bal').innerText = '$' + parseFloat(balance).toLocaleString();
-document.getElementById('profit').innerText = '$' + (parseFloat(balance)*0.2).toFixed(2);
-
-// FUNCTIONS
-function logout(){
-  localStorage.removeItem('userEmail');
-  window.location.href='index.html';
+async function loadPortfolio(){
+  const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
+  const prices = await res.json();
+  const q = query(collection(db, "holdings"), where("email", "==", email));
+  const snap = await getDocs(q);
+  let total = 0; let html = '<table class="w-full"><tr><th>Coin</th><th>Amount</th><th>Value</th></tr>';
+  snap.forEach(d => {
+    let h = d.data(); let price = prices.find(p => p.id == h.coin)?.current_price || 0;
+    let value = h.amount * price; total += value;
+    html += `<tr><td>${h.coin}</td><td>${h.amount}</td><td>$${value.toFixed(2)}</td></tr>`;
+  });
+  document.getElementById('portfolio').innerHTML = html + `</table><p class="text-2xl mt-4">Total: $${total.toFixed(2)}</p>`;
 }
-function deposit(){
-  alert('To Deposit:\n\n1. Contact Admin on WhatsApp\n2. Send to USA Bank\n3. Your balance will be updated in dashboard automatically\n\nYour Email: ' + email);
-}
-function withdraw(){
-  alert('Withdraw Request Sent!\n\nAdmin will process to your bank in 5 mins.\n\nEmail: ' + email + '\nBalance: $' + balance);
-}
-</script>
-
-</body>
-</html>
+loadPortfolio(); window.addHolding = addHolding;
+</script></head>
+<body class="bg-[#0B1120] text-white p-6"><div class="max-w-5xl mx-auto">
+<div class="flex justify-between mb-6"><h1 class="text-3xl font-bold">My Portfolio</h1><a href="index.html" class="text-red-400">Logout</a></div>
+<button onclick="addHolding()" class="mb-6 px-6 py-2 bg-green-500 text-black rounded-lg font-bold">+ Add Coin</button>
+<div id="portfolio" class="bg-gray-900 p-6 rounded-xl"></div></div></body></html>
