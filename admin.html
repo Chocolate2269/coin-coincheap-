@@ -1,14 +1,20 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ADMIN</title><style>body{background:#020617;color:#fff;font-family:Arial;padding:12px}.card{background:#fff;color:#000;padding:14px;border-radius:12px;margin:8px 0}.u{background:#0f172a;color:#fff;padding:12px;border-radius:10px;margin:6px 0;display:flex;justify-content:space-between}.btn{padding:10px;border:none;border-radius:8px;font-weight:800}.y{background:#f59e0b}.bl{background:#1e3a8a;color:#fff;width:100%}input{width:100%;padding:11px;margin:5px 0;border-radius:8px;border:1px solid #ccc}</style></head><body>
-<div id="log" class="card" style="max-width:360px;margin:60px auto"><h2>ADMIN</h2><input id="ps" type="password" placeholder="coincheap2024"><button class="btn bl" onclick="if(ps.value=='coincheap2024'){log.style.display='none';pan.style.display='block';load()}">Unlock</button></div>
-<div id="pan" style="display:none;max-width:600px;margin:auto"><h2>Users Online (Username)</h2><button class="btn y" style="width:100%" onclick="load()">🔄 LOAD</button><div style="display:flex;gap:8px"><div class="card" style="flex:1;text-align:center"><b id="c">0</b><br>Users</div><div class="card" style="flex:1;text-align:center"><b id="t">$0</b><br>Total</div></div><div id="list"></div><div class="card"><h3>Add Balance</h3><input id="em" placeholder="User Email"><input id="am" type="number" placeholder="Amount"><button class="btn bl" onclick="addB()">Add</button><p id="msg"></p></div></div>
+<!DOCTYPE html><html><head><title>Admin</title><script src="https://cdn.tailwindcss.com"></script>
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import {getFirestore,collection,getDocs,doc,getDoc,setDoc} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325",measurementId:"G-EM6F4CS1C6"};
-const app=initializeApp(firebaseConfig);const db=getFirestore(app);window.db=db;window.gd=getDocs;window.cl=collection;window.gd2=getDoc;window.sd=setDoc;window.doc2=doc;
-</script>
-<script>
-async function load(){let l=document.getElementById('list');l.innerHTML='Loading...';try{let s=await gd(cl(db,"users"));let h='';let cnt=0;let tot=0;s.forEach(x=>{let u=x.data();cnt++;tot+=(u.balance||0);h+=`<div class="u"><div><b>${u.name}</b><br><small>${u.email}</small></div><b>$${u.balance||0}</b></div>`;});l.innerHTML=h||'No users';c.innerText=cnt;t.innerText='$'+tot;}catch(e){l.innerHTML=e.message;}}
-async function addB(){let e=em.value.trim(),a=parseFloat(am.value);if(!e||!a)return;msg.innerText='Updating...';let r=doc2(db,"users",e);let s=await gd2(r);let cur=s.exists()?(s.data().balance||0):0;await sd(r,{balance:cur+a,email:e},{merge:true});msg.innerText='✅ Added $'+a;load();}
-</script>
-</body></html>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig = {apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain: "coincheap-investment.firebaseapp.com",projectId: "coincheap-investment",storageBucket: "coincheap-investment.firebasestorage.app",messagingSenderId: "1065612358336",appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"};
+const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+async function render(){
+  const usersSnap = await getDocs(collection(db, "users"));
+  let userHtml = '<h2 class="text-xl mb-4">All Users</h2><table class="w-full mb-8"><tr class="border-b border-gray-700"><th class="py-2">Email</th><th>Balance</th><th>Action</th></tr>';
+  usersSnap.forEach(d => { let u = d.data(); userHtml += `<tr><td class="py-2">${u.email}</td><td>$${u.balance}</td><td><button onclick="addMoney('${d.id}', ${u.balance})" class="bg-green-500 px-3 py-1 rounded">+100</button></td></tr>`});
+  document.getElementById('users').innerHTML = userHtml + '</table>';
+  const txSnap = await getDocs(collection(db, "transactions"));
+  let txHtml = '<h2 class="text-xl mb-4">All Transactions</h2><table class="w-full"><tr class="border-b border-gray-700"><th class="py-2">Email</th><th>Type</th><th>Amount</th><th>Status</th></tr>';
+  txSnap.forEach(d => { let t = d.data(); txHtml += `<tr><td class="py-2">${t.email}</td><td>${t.type}</td><td>$${t.amount}</td><td>${t.status}</td></tr>`});
+  document.getElementById('tx').innerHTML = txHtml + '</table>';}
+window.addMoney = async function(id, bal){ await updateDoc(doc(db, "users", id), {balance: bal + 100}); render(); }
+render();
+</script></head>
+<body class="bg-[#0B1120] text-white p-6"><h1 class="text-3xl font-bold mb-6">Admin - Global View</h1>
+<div id="users" class="bg-gray-900 p-6 rounded-xl mb-6 border-gray-800"></div><div id="tx" class="bg-gray-900 p-6 rounded-xl border-gray-800"></div></body></html>
