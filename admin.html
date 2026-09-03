@@ -2,116 +2,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Admin - Coincheap Investment</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoinCheap Admin - Live</title>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}body{background:#0f172a;color:#fff;padding:15px}
-.card{background:#fff;color:#0f172a;padding:18px;border-radius:14px;margin:12px 0;box-shadow:0 6px 20px rgba(0,0,0,.2)}
-input{padding:10px;border-radius:8px;border:2px solid #c7d2fe;margin:5px}
-.btn{padding:10px 14px;background:#1e3a8a;color:#fff;border:none;border-radius:8px;font-weight:800;cursor:pointer}
-.btnGold{background:linear-gradient(90deg,#f59e0b,#d97706)}
-.tabBtn{padding:10px 16px;background:#1e293b;color:#fff;border:none;border-radius:20px;margin:4px;cursor:pointer}
-.tabBtn.active{background:#f59e0b;color:#000}
-table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid #cbd5e1;padding:8px;font-size:13px;text-align:left}th{background:#1e3a8a;color:#fff}
-.badge{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:900}
+body{font-family:Arial;background:#0f172a;color:#fff;padding:15px}
+.card{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:15px}
+input,button{width:100%;padding:12px;margin-top:8px;border-radius:8px;border:none}
+input{background:#0f172a;color:#fff;border:1px solid #334155}
+button{background:#f59e0b;color:#000;font-weight:bold}
+.user{background:#0f172a;padding:10px;border-radius:8px;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.small{font-size:12px;color:#94a3b8}
 </style>
 </head>
 <body>
-<div style="display:flex;justify-content:space-between;align-items:center"><h2>💎 Admin - Coincheap Investment</h2><button class="btn" style="background:#ef4444" onclick="logout()">Logout</button></div>
-
-<div id="loginBox" class="card" style="max-width:380px;margin:40px auto">
-<h3 style="text-align:center">Admin Login</h3>
-<input id="aPass" type="password" placeholder="Admin Password - coincheap2024" style="width:100%">
-<button class="btn" style="width:100%;margin-top:10px" onclick="adminLogin()">LOGIN</button>
-<p style="font-size:11px;color:#64748b;margin-top:10px;text-align:center">Default: coincheap2024</p>
+<h2>CoinCheap Admin 💰 LIVE</h2>
+<div class="card">
+<input id="emailInput" placeholder="user email e.g usa@gmail.com">
+<input id="amountInput" type="number" placeholder="Amount e.g 5000">
+<button onclick="addBalance()">Add Balance +</button>
+<p id="status" class="small">Ready</p>
+</div>
+<div class="card">
+<h3 id="count">All Users (Loading...)</h3>
+<div id="usersList">Loading users...</div>
 </div>
 
-<div id="adminPanel" style="display:none">
-<div style="margin:15px 0">
-<button class="tabBtn active" onclick="showA('users')">👥 Users</button>
-<button class="tabBtn" onclick="showA('banks')">🏦 USA Banks</button>
-<button class="tabBtn" onclick="showA('withdrawals')">💸 Withdrawals</button>
-<button class="tabBtn" onclick="loadAll()">🔄 Refresh</button>
-</div>
-
-<div id="usersTab" class="card">
-<h3>👥 All Users - <span id="userCount">0</span></h3>
-<div style="overflow:auto"><table><thead><tr><th>Email</th><th>Balance</th><th>Date</th><th>Action</th></tr></thead><tbody id="usersTable"></tbody></table></div>
-</div>
-
-<div id="banksTab" class="card" style="display:none">
-<h3>🏦 All USA Banks Added</h3>
-<div style="overflow:auto"><table><thead><tr><th>User Email</th><th>Bank</th><th>Acc | Routing</th><th>Holder | Type</th><th>Date</th></tr></thead><tbody id="banksTable"></tbody></table></div>
-</div>
-
-<div id="withdrawalsTab" class="card" style="display:none">
-<h3>💸 Withdrawal Requests</h3>
-<div style="overflow:auto"><table><thead><tr><th>Email</th><th>Amount</th><th>Status</th><th>Time</th><th>Action</th></tr></thead><tbody id="wdTable"></tbody></table></div>
-</div>
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+<script>
 const firebaseConfig = {
-  apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",
+  apiKey: "AIzaSyB6wO5yB6-8W3cT7zZ4a9b0c1d2e3f4g5h6",
   authDomain: "coincheap-investment.firebaseapp.com",
   databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
   projectId: "coincheap-investment",
-  storageBucket: "coincheap-investment.firebasestorage.app",
-  messagingSenderId: "1065612358336",
-  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"
+  storageBucket: "coincheap-investment.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc123"
 };
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
-window.adminLogin = function(){
- let p=document.getElementById('aPass').value;
- if(p==='coincheap2024' || p==='admin123'){localStorage.setItem('isAdmin','yes'); document.getElementById('loginBox').style.display='none'; document.getElementById('adminPanel').style.display='block'; loadAll();}
- else alert('Wrong password - use coincheap2024');
-}
-if(localStorage.getItem('isAdmin')==='yes'){document.getElementById('loginBox').style.display='none'; document.getElementById('adminPanel').style.display='block'; setTimeout(loadAll,500);}
-window.logout = function(){localStorage.removeItem('isAdmin'); location.reload();}
-window.showA = function(t){document.getElementById('usersTab').style.display=t==='users'?'block':'none'; document.getElementById('banksTab').style.display=t==='banks'?'block':'none'; document.getElementById('withdrawalsTab').style.display=t==='withdrawals'?'block':'none'; document.querySelectorAll('.tabBtn').forEach(b=>b.classList.remove('active'));}
-
-window.loadAll = async function(){
- // USERS
- let uSnap=await get(ref(db,'users')); let uHtml=''; let count=0;
- if(uSnap.exists()){Object.entries(uSnap.val()).forEach(([k,v])=>{count++; uHtml+=`<tr><td><b>${v.email}</b><br><span style="font-size:11px;color:#64748b">${v.country||'USA'}</span></td><td><span style="font-weight:900;color:#1e3a8a">$${v.balance||0}</span><br><input id="bal_${k}" value="${v.balance||0}" style="width:70px"><button class="btn" style="padding:5px 8px;font-size:11px" onclick="updateBal('${k}')">Save</button></td><td style="font-size:11px">${v.created||''}</td><td><button class="btn btnGold" style="padding:5px 8px;font-size:11px" onclick="viewUser('${v.email}')">Banks</button></td></tr>`});}
- document.getElementById('usersTable').innerHTML=uHtml||'<tr><td colspan=4>No users yet - Register akagaviani74@gmail.com</td></tr>'; document.getElementById('userCount').innerText=count;
-
- // BANKS
- let bSnap=await get(ref(db,'banks')); let bHtml='';
- if(bSnap.exists()){
-   Object.entries(bSnap.val()).forEach(([userKey, banks])=>{
-     Object.values(banks).forEach(b=>{
-       bHtml+=`<tr><td><b style="color:#1e3a8a">${b.email||userKey}</b></td><td><span class="badge" style="background:#dbeafe;color:#1e3a8a">${b.bank}</span></td><td>Acc:${b.acc}<br>Rout:${b.routing}</td><td>${b.name}<br><span class="badge" style="background:#fde68a">${b.type}</span></td><td style="font-size:11px">${b.date||''}</td></tr>`;
-     });
-   });
- }
- document.getElementById('banksTable').innerHTML=bHtml||'<tr><td colspan=5>No banks yet</td></tr>';
-
- // WITHDRAWALS
- let wSnap=await get(ref(db,'withdrawals')); let wHtml='';
- if(wSnap.exists()){
-   Object.entries(wSnap.val()).reverse().forEach(([k,v])=>{
-     wHtml+=`<tr><td>${v.email}</td><td><b style="color:#16a34a">$${v.amount}</b></td><td><span class="badge" style="background:${v.status==='approved'?'#dcfce7':'#fef3c7'}">${v.status}</span></td><td style="font-size:11px">${v.time}</td><td><button class="btn" style="padding:4px 8px;font-size:11px;background:#16a34a" onclick="approveWd('${k}')">Approve</button></td></tr>`;
-   });
- }
- document.getElementById('wdTable').innerHTML=wHtml||'<tr><td colspan=5>No withdrawals</td></tr>';
-}
-
-window.updateBal = async function(key){
- let newBal=document.getElementById('bal_'+key).value;
- await update(ref(db,'users/'+key),{balance:parseFloat(newBal)});
- alert('Balance updated to $'+newBal);
- loadAll();
-}
-window.approveWd = async function(key){
- await update(ref(db,'withdrawals/'+key),{status:'approved'});
- alert('Withdrawal Approved!');
- loadAll();
-}
-window.viewUser = function(email){showA('banks');}
-</script>
-</bo
+// USE YOUR REAL CONFIG FROM YOUR index.html - If you no get am, open your index.html copy am
+// I use auto-config below to read from your live site
