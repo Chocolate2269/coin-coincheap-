@@ -1,18 +1,26 @@
-<!DOCTYPE html><html><head><title>Sign Up</title><script src="https://cdn.tailwindcss.com"></script>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig = {apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain: "coincheap-investment.firebaseapp.com",projectId: "coincheap-investment",storageBucket: "coincheap-investment.firebasestorage.app",messagingSenderId: "1065612358336",appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"};
-const app = initializeApp(firebaseConfig); const db = getFirestore(app);
-window.signup = async function(){
-  const email = document.getElementById('email').value; const pass = document.getElementById('pass').value;
-  const q = query(collection(db, "users"), where("email", "==", email)); if(!(await getDocs(q)).empty) return alert('User exists');
-  await addDoc(collection(db, "users"), {email, pass, balance: 0, country: "NG", created: new Date()});
-  localStorage.setItem('currentUser', email); alert('Account Created!'); window.location = 'dashboard.html';
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>InvestPro - Crypto Tracker</title>
+<script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-[#0B1120] text-white">
+<nav class="flex justify-between p-6 max-w-7xl mx-auto border-b border-gray-800">
+  <h1 class="text-2xl font-bold">Invest<span class="text-green-400">Pro</span></h1>
+  <div><a href="login.html" class="px-4 py-2 border-gray-600 rounded-lg">Login</a>
+  <a href="signup.html" class="px-4 py-2 bg-green-500 text-black font-bold rounded-lg ml-2">Get Started</a></div>
+</nav>
+<section class="text-center py-24"><h2 class="text-5xl font-bold">Track Real Crypto. <span class="text-green-400">Live Prices.</span></h2>
+<p class="text-gray-400 mt-4">Build your portfolio. Prices from CoinGecko API.</p>
+<a href="signup.html" class="mt-6 inline-block px-8 py-4 bg-green-500 text-black font-bold rounded-lg">Create Free Account</a></section>
+<div class="max-w-7xl mx-auto p-6"><h3 class="text-2xl mb-4">Top Coins</h3><div id="prices" class="grid md:grid-cols-4 gap-4"></div></div>
+<footer class="text-center py-10 text-gray-500 text-sm border-t border-gray-800 mt-16">InvestPro © 2026 - Data from CoinGecko</footer>
+<script>
+async function loadPrices(){
+  const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,bnb');
+  const data = await res.json();
+  let html = '';
+  data.forEach(c => html += `<div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold">${c.name}</p><p class="text-2xl">$${c.current_price}</p></div>`);
+  document.getElementById('prices').innerHTML = html;
 }
-</script></head>
-<body class="bg-[#0B1120] text-white flex items-center justify-center h-screen"><div class="bg-gray-900 p-8 rounded-xl w-96">
-<h2 class="text-2xl font-bold mb-4">Create Simulator Account</h2>
-<input id="email" placeholder="Email" class="w-full p-3 bg-gray-800 rounded mb-3">
-<input id="pass" type="password" placeholder="Password" class="w-full p-3 bg-gray-800 rounded mb-3">
-<button onclick="signup()" class="w-full bg-green-500 text-black py-3 rounded font-bold">Sign Up</button></div></body></html>
+loadPrices();
+</script>
+</body></html>
