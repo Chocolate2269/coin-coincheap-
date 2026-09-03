@@ -2,23 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CoinCheap USA</title>
+<title>CoinCheap USA - Trusted US Investment Platform</title>
 <style>
-*{box-sizing:border-box;font-family:system-ui,Arial}body{margin:0;background:#020617;color:#e2e8f0}
-.header{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#020617;position:sticky;top:0;z-index:10;border-bottom:1px solid #1e293b}
-.logo{font-weight:900;font-size:22px}.logo span{color:#f59e0b}
-.btn{padding:10px 18px;border:none;border-radius:10px;font-weight:800;cursor:pointer}
-.btn-dark{background:#0f172a;color:#fff;border:1px solid #334155}
-.btn-yellow{background:#f59e0b;color:#000}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
-.stat{background:#0f172a;border-radius:16px;padding:14px;text-align:center;border:1px solid #1e293b}
-.stat b{font-size:22px;display:block}
-.preview{margin:12px;background:#fff;color:#0f172a;border-radius:20px;padding:16px;border:3px solid #f59e0b;position:relative}
-.most{position:absolute;top:-12px;right:12px;background:#f59e0b;color:#000;font-weight:900;padding:4px 12px;border-radius:20px;font-size:12px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:99;align-items:center;justify-content:center;padding:12px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Segoe UI,Arial}
+body{background:#020617;color:#e2e8f0;line-height:1.6}
+a{color:#f59e0b;text-decoration:none}
+.header{position:sticky;top:0;z-index:50;background:#020617f2;backdrop-filter:blur(10px);display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1e293b}
+.logo{font-weight:900;font-size:20px}.logo span{color:#f59e0b}
+.btn{padding:10px 18px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+.btn-y{background:#f59e0b;color:#000}.btn-d{background:#0f172a;color:#fff;border:1px solid #334155}
+.hero{padding:30px 16px;text-align:center;background:radial-gradient(circle at top,#1e3a8a30,#020617)}
+.hero h1{font-size:32px;line-height:1.2}.hero h1 span{color:#f59e0b}
+.badges{display:flex;justify-content:center;gap:8px;margin:14px 0;flex-wrap:wrap}
+.badge{background:#0f172a;border:1px solid #1e293b;padding:6px 12px;border-radius:20px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px}
+.stat{background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:14px;text-align:center}
+.stat b{display:block;font-size:22px;color:#f59e0b}
+.section{padding:22px 16px}.section h2{text-align:center;margin-bottom:14px;font-size:24px}
+.white{background:#ffffff;color:#0f172a}
+.cards{display:grid;gap:12px}
+.card{background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:16px;position:relative}
+.card.white-card{background:#fff;color:#0f172a;border:2px solid #e2e8f0}
+.pop{position:absolute;top:-10px;right:12px;background:#f59e0b;color:#000;font-size:11px;font-weight:900;padding:4px 10px;border-radius:20px}
+.plan-price{font-size:32px;font-weight:900;margin:6px 0}.plan-price small{font-size:14px}
+.deal-banner{background:linear-gradient(90deg,#f59e0b,#ef4444);color:#000;padding:12px;border-radius:12px;text-align:center;font-weight:900;margin-bottom:12px}
+.preview{background:#fff;color:#0f172a;border-radius:20px;padding:16px;border:3px solid #f59e0b}
+.footer{padding:20px 16px;text-align:center;border-top:1px solid #1e293b;font-size:12px;color:#94a3b8}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99;align-items:center;justify-content:center;padding:12px}
 .modal.show{display:flex}.box{background:#fff;color:#0f172a;padding:18px;border-radius:16px;width:100%;max-width:380px}
 input{width:100%;padding:12px;margin:6px 0;border:2px solid #cbd5e1;border-radius:10px}
-.green{background:#16a34a;color:#fff}.blue{background:#1e3a8a;color:#fff}
 </style>
 </head>
 <body>
@@ -26,87 +38,123 @@ input{width:100%;padding:12px;margin:6px 0;border:2px solid #cbd5e1;border-radiu
 <div class="header">
 <div class="logo">CoinCheap <span>USA</span> 🇺🇸</div>
 <div style="display:flex;gap:8px">
-<button class="btn btn-dark" onclick="openLogin()">Login</button>
-<button class="btn btn-yellow" onclick="openSignup()">Get Started</button>
+<button class="btn btn-d" onclick="openLogin()">Login</button>
+<button class="btn btn-y" onclick="openSignup()">Get Started</button>
 </div>
+</div>
+
+<div class="hero">
+<h1>Invest Smart, <br><span>Earn Fast</span> with USA Power</h1>
+<p style="margin-top:8px;color:#94a3b8">USA Verified Bank Payments • Instant Withdrawals • 24/7 Support</p>
+<div class="badges"><span class="badge">✅ SEC Compliant</span><span class="badge">✅ $4.2M+ Paid</span><span class="badge">✅ 12K+ Investors</span></div>
+<button class="btn btn-y" style="margin-top:12px;padding:14px 28px;font-size:16px" onclick="openSignup()">Start Investing Now →</button>
 </div>
 
 <div class="stats">
 <div class="stat"><b>12K+</b>Active Investors</div>
 <div class="stat"><b>$4.2M+</b>Total Payout</div>
-<div class="stat"><b>USA</b>Bank Verified</div>
+<div class="stat"><b>98%</b>Success Rate</div>
 </div>
 
+<!-- ABOUT US -->
+<div class="section white">
+<h2>About CoinCheap USA</h2>
+<p style="text-align:center;max-width:600px;margin:0 auto">CoinCheap USA is a premium cryptocurrency investment platform based in the United States. We specialize in crypto trading, long-term holding, and high-yield investment plans backed by USA banking infrastructure. Our mission is to make wealth accessible to everyone with small capital.</p>
+<div class="cards" style="grid-template-columns:repeat(3,1fr);display:grid;margin-top:14px">
+<div class="card white-card" style="text-align:center"><b>🇺🇸 USA Based</b><br>Verified LLC & Bank</div>
+<div class="card white-card" style="text-align:center"><b>🔒 Secure</b><br>256-bit Encryption</div>
+<div class="card white-card" style="text-align:center"><b>⚡ Instant</b><br>Withdraw in 5 mins</div>
+</div>
+</div>
+
+<!-- PLANS -->
+<div class="section">
+<h2>💼 Investment Plans</h2>
+<div class="cards">
+<div class="card white-card"><h3>Starter Plan</h3><div class="plan-price">$100 - $999 <small>/ 20% ROI in 7 Days</small></div><p>✅ Daily Profit ✅ USA Bank Withdrawal ✅ 24/7 Support</p><button class="btn btn-y" style="width:100%;margin-top:8px" onclick="openSignup()">Choose Starter</button></div>
+<div class="card white-card" style="border:3px solid #f59e0b"><span class="pop">MOST POPULAR</span><h3>Premium Plan</h3><div class="plan-price">$1,000 - $4,999 <small>/ 35% ROI in 7 Days</small></div><p>✅ Higher ROI ✅ Priority Withdrawal ✅ Personal Manager</p><button class="btn btn-y" style="width:100%;margin-top:8px" onclick="openSignup()">Choose Premium</button></div>
+<div class="card white-card"><h3>VIP USA Plan</h3><div class="plan-price">$5,000+ <small>/ 60% ROI in 7 Days</small></div><p>✅ Maximum ROI ✅ Instant Wire ✅ USA Tax Certificate</p><button class="btn btn-y" style="width:100%;margin-top:8px" onclick="openSignup()">Choose VIP</button></div>
+</div>
+</div>
+
+<!-- HOT DEALS -->
+<div class="section white">
+<h2>🔥 Hot Deals Today</h2>
+<div class="deal-banner">🎉 LIMITED: Deposit $500+ Get $100 Bonus Instantly! Ends Tonight!</div>
+<div class="cards" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div class="card white-card" style="background:#fef3c7"><b>BTC Pump</b><br>+12.5% Today</div>
+<div class="card white-card" style="background:#dcfce7"><b>ETH Rally</b><br>+8.3% Today</div>
+</div>
+</div>
+
+<!-- LIVE TRADING PREVIEW -->
+<div class="section">
+<h2>📈 Live Trading Dashboard</h2>
 <div class="preview">
-<div class="most">MOST POPULAR</div>
-<h3>📈 Live Account Preview</h3>
-<div style="text-align:center">
-<p>Current Balance</p>
-<h1 style="color:#f59e0b;margin:0;font-size:42px">$0.00</h1>
-<p>Login to view your portfolio</p>
-<div style="display:flex;gap:8px;margin-top:12px">
-<button class="btn green" style="flex:1" onclick="openSignup()">Deposit</button>
-<button class="btn blue" style="flex:1" onclick="openLogin()">Withdraw</button>
+<p style="text-align:center;color:#64748b">Current Balance</p>
+<h1 style="text-align:center;color:#f59e0b;font-size:42px;margin:4px 0">$0.00</h1>
+<p style="text-align:center;color:#64748b;font-size:12px">Login to view your real portfolio</p>
+<div style="display:flex;gap:8px;margin-top:14px">
+<button class="btn" style="flex:1;background:#16a34a;color:#fff" onclick="openSignup()">Deposit</button>
+<button class="btn" style="flex:1;background:#1e3a8a;color:#fff" onclick="openLogin()">Withdraw</button>
 </div>
-<p style="color:#ef4444;font-size:11px;margin-top:10px">⚠️ Investment involves risk. Past performance not guarantee.</p>
+<div style="margin-top:12px;background:#f1f5f9;border-radius:10px;padding:10px;font-size:12px">
+<div style="display:flex;justify-content:space-between"><span>BTC/USD</span><span style="color:#16a34a">▲ $67,420</span></div>
+<div style="display:flex;justify-content:space-between"><span>ETH/USD</span><span style="color:#16a34a">▲ $3,210</span></div>
+<div style="display:flex;justify-content:space-between"><span>USDT Profit</span><span>+2.4%</span></div>
+</div>
+<p style="color:#ef4444;font-size:10px;text-align:center;margin-top:10px">⚠️ Investment involves risk. Past performance not guarantee.</p>
 </div>
 </div>
 
-<!-- SIGNUP MODAL -->
+<div class="footer">
+<p><b>CoinCheap USA LLC</b> • Delaware, USA 🇺🇸<br>Support: support@coincheapusa.com<br>© 2026 CoinCheap USA. All rights reserved.</p>
+<p style="margin-top:8px"><a href="admin.html">Admin Login</a></p>
+</div>
+
+<!-- MODALS FIXED REDIRECT -->
 <div id="signupModal" class="modal"><div class="box">
 <h3>Create Account</h3>
 <input id="suName" placeholder="Full Name">
 <input id="suEmail" placeholder="Email">
 <input id="suPass" type="password" placeholder="Password">
-<button class="btn btn-yellow" style="width:100%" onclick="doSignup()">Create Account</button>
-<p style="text-align:center;margin-top:10px">Already have? <a href="#" onclick="openLogin()">Login</a></p>
-<button class="btn btn-dark" style="width:100%;margin-top:8px" onclick="closeAll()">Close</button>
-<p id="suMsg"></p>
+<button class="btn btn-y" style="width:100%" onclick="doSignup()">Create Account</button>
+<p style="text-align:center;margin-top:10px;font-size:13px">Already have? <a href="#" onclick="openLogin()">Login here</a></p>
+<button class="btn btn-d" style="width:100%;margin-top:8px" onclick="closeAll()">Close</button>
+<p id="suMsg" style="font-size:13px;margin-top:8px"></p>
 </div></div>
 
-<!-- LOGIN MODAL -->
 <div id="loginModal" class="modal"><div class="box">
 <h3>Welcome Back</h3>
 <input id="liEmail" placeholder="Email">
 <input id="liPass" type="password" placeholder="Password">
-<button class="btn blue" style="width:100%" onclick="doLogin()">Login</button>
-<p style="text-align:center;margin-top:10px">No account? <a href="#" onclick="openSignup()">Create</a></p>
-<button class="btn btn-dark" style="width:100%;margin-top:8px" onclick="closeAll()">Close</button>
-<p id="liMsg"></p>
+<button class="btn" style="width:100%;background:#1e3a8a;color:#fff" onclick="doLogin()">Login to Dashboard</button>
+<p style="text-align:center;margin-top:10px;font-size:13px">No account? <a href="#" onclick="openSignup()">Create account</a></p>
+<button class="btn btn-d" style="width:100%;margin-top:8px" onclick="closeAll()">Close</button>
+<p id="liMsg" style="font-size:13px;margin-top:8px"></p>
 </div></div>
 
-<script type="module">
-// Firebase (if you use)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyDUMMY-REPLACE-WITH-YOURS",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project",
-};
-try{ initializeApp(firebaseConfig); }catch(e){}
+<script>
+function openSignup(){closeAll();document.getElementById('signupModal').classList.add('show');}
+function openLogin(){closeAll();document.getElementById('loginModal').classList.add('show');}
+function closeAll(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'));}
 
-window.openSignup = ()=>{closeAll(); document.getElementById('signupModal').classList.add('show');}
-window.openLogin = ()=>{closeAll(); document.getElementById('loginModal').classList.add('show');}
-window.closeAll = ()=>{document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'));}
-
-window.doSignup = ()=>{
+function doSignup(){
 let name=document.getElementById('suName').value;
 let email=document.getElementById('suEmail').value;
 let pass=document.getElementById('suPass').value;
-if(!email||!pass){document.getElementById('suMsg').innerText='Fill all';return;}
+if(!name||!email||!pass){document.getElementById('suMsg').innerText='❌ Fill all fields';return;}
 localStorage.setItem('userEmail',email);
 localStorage.setItem('userName',name);
-document.getElementById('suMsg').innerText='✅ Account created! Redirecting to Login...';
-setTimeout(()=>{ closeAll(); openLogin(); document.getElementById('liEmail').value=email; document.getElementById('liMsg').innerText='✅ Now login with your new account'; },1200);
+document.getElementById('suMsg').innerText='✅ Account created! Taking you to Login...';
+setTimeout(()=>{closeAll();openLogin();document.getElementById('liEmail').value=email;document.getElementById('liMsg').innerText='✅ Account created for '+email+'. Now login!';},1300);
 }
-
-window.doLogin = ()=>{
+function doLogin(){
 let email=document.getElementById('liEmail').value;
-if(!email){document.getElementById('liMsg').innerText='Enter email';return;}
+if(!email){document.getElementById('liMsg').innerText='❌ Enter email';return;}
 localStorage.setItem('userEmail',email);
-document.getElementById('liMsg').innerText='✅ Login success! Redirecting...';
-setTimeout(()=>{ window.location.href='dashboard.html'; },1000);
+document.getElementById('liMsg').innerText='✅ Login success! Opening dashboard...';
+setTimeout(()=>{window.location.href='dashboard.html';},1000);
 }
 </script>
 </body>
