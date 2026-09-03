@@ -1,41 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Sign Up</title>
+<meta charset="UTF-8">
+<title>Sign Up - InvestPro</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-[#0B1120] text-white flex items-center justify-center h-screen">
+
 <div class="bg-gray-900 p-8 rounded-xl w-96 border-gray-800">
-<h2 class="text-2xl font-bold mb-4">Create Demo Account</h2>
-<input id="email" type="email" placeholder="Email" class="w-full p-3 bg-gray-800 rounded mb-3">
-<input id="pass" type="password" placeholder="Password" class="w-full p-3 bg-gray-800 rounded mb-3">
-<button type="button" id="signupBtn" class="w-full bg-green-500 text-black py-3 rounded font-bold">Sign Up</button>
-<p class="text-center mt-4 text-gray-400">Already have an account? <a href="login.html" class="text-green-400">Login</a></p>
+  <h2 class="text-2xl font-bold mb-6 text-center">Create Demo Account</h2>
+  
+  <input id="email" type="email" placeholder="Email" required
+    class="w-full p-3 bg-gray-800 rounded-lg mb-3 outline-none focus:ring-2 focus:ring-green-500">
+  
+  <input id="pass" type="password" placeholder="Password" required
+    class="w-full p-3 bg-gray-800 rounded-lg mb-4 outline-none focus:ring-2 focus:ring-green-500">
+  
+  <button id="signupBtn" type="button" 
+    class="w-full bg-green-500 hover:bg-green-600 text-black py-3 rounded-lg font-bold transition">
+    Sign Up
+  </button>
+  
+  <p class="text-center mt-4 text-gray-400">
+    Already have an account? 
+    <a href="login.html" class="text-green-400 hover:underline">Login</a>
+  </p>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  // 1. Import Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const firebaseConfig = {apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain: "coincheap-investment.firebaseapp.com",projectId: "coincheap-investment",storageBucket: "coincheap-investment.firebasestorage.app",messagingSenderId: "1065612358336",appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"};
-const app = initializeApp(firebaseConfig); 
-const db = getFirestore(app);
+  // 2. Your Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",
+    authDomain: "coincheap-investment.firebaseapp.com",
+    databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
+    projectId: "coincheap-investment",
+    storageBucket: "coincheap-investment.firebasestorage.app",
+    messagingSenderId: "1065612358336",
+    appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"
+  };
 
-document.getElementById('signupBtn').addEventListener('click', async function(){
-  const email = document.getElementById('email').value; 
-  const pass = document.getElementById('pass').value;
-  
-  if(!email || !pass) return alert('Fill all fields');
-  
-  const q = query(collection(db, "users"), where("email", "==", email)); 
-  const exists = await getDocs(q); 
-  if(!exists.empty) return alert('User already exists');
-  
-  await addDoc(collection(db, "users"), {email, pass, balance: 0, created: new Date()});
-  localStorage.setItem('currentUser', email); 
-  alert('Account Created!'); 
-  window.location.href = 'dashboard.html'; // <-- goes to dashboard
-});
-</script>
-</body>
-</html>
+  // 3. Initialize
+  const app = initializeApp(firebaseConfig); 
+  const db = getDatabase(app);
+
+  // 4. Button Click
+  document.getElementById('signupBtn').addEventListener('click', async () => {
+    const emailInput = document.getElementById('email').value.trim().toLowerCase();
+    const pass = document.getElementBy
