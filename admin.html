@@ -1,126 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMIN ONLY - CoinCheap USA</title>
-<style>
-*{box-sizing:border-box;font-family:system-ui,Arial}
-body{margin:0;background:#020617;color:#e2e8f0;padding:12px}
-.btn{padding:10px 14px;border:none;border-radius:8px;font-weight:800;cursor:pointer}
-.y{background:#f59e0b;color:#000}.bl{background:#1e3a8a;color:#fff}.g{background:#16a34a;color:#fff}.r{background:#dc2626;color:#fff}
-.card{background:#fff;color:#0f172a;padding:16px;border-radius:14px;margin:10px 0}
-input,select{width:100%;padding:12px;margin:6px 0;border:2px solid #cbd5e1;border-radius:10px;font-size:15px}
-.u{background:#0f172a;color:#e2e8f0;border:1px solid #334155;padding:12px;border-radius:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.tag{background:#1e293b;padding:3px 8px;border-radius:999px;font-size:11px;margin-left:6px;color:#94a3b8}
-.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.statBox{background:#fff;color:#0f172a;padding:12px;border-radius:12px;text-align:center;font-weight:900}
-</style>
-</head>
-<body>
-
-<div id="loginBox" class="card" style="max-width:380px;margin:80px auto;text-align:center">
-<h2>🔐 ADMIN ONLY</h2>
-<p>Enter Password: <b>coincheap2024</b></p>
-<input id="aPass" type="password" placeholder="Password">
-<button class="btn bl" style="width:100%" onclick="login()">Unlock Admin Panel</button>
-<p id="msg" style="color:red;font-weight:700"></p>
-</div>
-
-<div id="panel" style="display:none;max-width:600px;margin:0 auto">
-<div style="display:flex;justify-content:space-between;align-items:center;background:#0f172a;padding:12px 16px;border-radius:12px;border:1px solid #1e293b">
-<b>🇺🇸 ADMIN PANEL - ALL USERS</b>
-<a href="index.html" style="text-decoration:none"><button class="btn y">Home</button></a>
-</div>
-
-<div class="stat">
-<div class="statBox"><span id="totalUsers" style="font-size:22px">0</span><br>Users</div>
-<div class="statBox"><span id="totalBal" style="font-size:22px;color:#16a34a">$0</span><br>Total Balance</div>
-</div>
-
-<div class="card">
-<h3 style="margin:0 0 8px">💰 Add Money to Client</h3>
-<input id="userEmail" placeholder="Client Email - e.g support@gmail.com">
-<input id="amount" type="number" placeholder="Amount - e.g 500">
-<select id="type">
-<option value="set">Set Balance (Replace)</option>
-<option value="add">Add Deposit (+)</option>
-<option value="zero">Zero Balance</option>
-</select>
-<button class="btn g" style="width:100%;padding:14px" onclick="updateBal()">UPDATE CLIENT BALANCE</button>
-<p id="updMsg" style="font-weight:900;margin:8px 0 0"></p>
-</div>
-
-<div class="card">
-<h3 style="margin:0 0 8px">👥 All Signup Users - Username + Email + Balance</h3>
-<button class="btn bl" style="width:100%;padding:13px" onclick="loadUsers()">🔄 LOAD ALL USERS NOW</button>
-<div id="usersList" style="margin-top:12px"></div>
-</div>
-</div>
-
-<script>
-const PASS="coincheap2024";
-function login(){
-if(document.getElementById('aPass').value===PASS){
-localStorage.setItem('admin_ok','1');
-show();
-}else{
-document.getElementById('msg').innerText='❌ Wrong password!';
-}
-}
-function show(){
-document.getElementById('loginBox').style.display='none';
-document.getElementById('panel').style.display='block';
-loadUsers();
-}
-if(localStorage.getItem('admin_ok')==='1'){show();}
-
-function updateBal(){
-let email=document.getElementById('userEmail').value.trim();
-let amt=parseFloat(document.getElementById('amount').value);
-let type=document.getElementById('type').value;
-if(!email){document.getElementById('updMsg').style.color='red';document.getElementById('updMsg').innerText='Enter client email!';return;}
-if(isNaN(amt)&&type!=='zero'){document.getElementById('updMsg').style.color='red';document.getElementById('updMsg').innerText='Enter amount!';return;}
-let cur=parseFloat(localStorage.getItem('bal_'+email)||0);
-if(type==='add') cur+=amt;
-if(type==='set') cur=amt;
-if(type==='zero') cur=0;
-localStorage.setItem('bal_'+email,cur);
-document.getElementById('updMsg').style.color='green';
-document.getElementById('updMsg').innerText='✅ '+email+' → $'+cur.toLocaleString()+' SAVED!';
-loadUsers();
-}
-
-function loadUsers(){
-let list=document.getElementById('usersList');list.innerHTML='';
-let allUsers=JSON.parse(localStorage.getItem('allUsers')||'[]');
-let allNames=JSON.parse(localStorage.getItem('allUsersNames')||'{}');
-// also check bal_ keys
-for(let i=0;i<localStorage.length;i++){
-let k=localStorage.key(i);
-if(k.startsWith('bal_')){
-let em=k.replace('bal_','');
-if(!allUsers.includes(em)) allUsers.push(em);
-}
-}
-let total=0;
-if(allUsers.length===0){
-list.innerHTML='<p style="color:#64748b">No users yet.<br><br>👉 Open HOME in <b>Chrome</b> (not Messenger), create account, then come back here and click LOAD.</p>';
-document.getElementById('totalUsers').innerText='0';
-document.getElementById('totalBal').innerText='$0';
-return;
-}
-allUsers.forEach(email=>{
-let bal=localStorage.getItem('bal_'+email)||'0';
-let name=allNames[email]||localStorage.getItem('name_'+email)||'No Name Saved';
-total+=parseFloat(bal);
-let div=document.createElement('div');div.className='u';
-div.innerHTML='<div><div>👤 <b style="color:#fff;font-size:15px">'+name+'</b></div><div style="font-size:12px;margin-top:4px;color:#94a3b8">📧 '+email+'</div><div style="margin-top:4px">💰 <b style="color:#f59e0b">$'+parseFloat(bal).toLocaleString()+'</b></div></div><div style="display:flex;gap:6px"><button class="btn y" style="padding:8px 12px" onclick="document.getElementById(\'userEmail\').value=\''+email+'\';window.scrollTo(0,0);">Select</button></div>';
-list.appendChild(div);
-});
-document.getElementById('totalUsers').innerText=allUsers.length;
-document.getElementById('totalBal').innerText='$'+total.toLocaleString();
-}
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ADMIN</title><style>body{background:#020617;color:#fff;font-family:Arial;padding:12px}.card{background:#fff;color:#000;padding:14px;border-radius:12px;margin:8px 0}.u{background:#0f172a;color:#fff;padding:12px;border-radius:10px;margin:6px 0;display:flex;justify-content:space-between}.btn{padding:10px;border:none;border-radius:8px;font-weight:800}.y{background:#f59e0b}.bl{background:#1e3a8a;color:#fff;width:100%}input{width:100%;padding:11px;margin:5px 0;border-radius:8px;border:1px solid #ccc}</style></head><body>
+<div id="log" class="card" style="max-width:360px;margin:60px auto"><h2>ADMIN</h2><input id="ps" type="password" placeholder="coincheap2024"><button class="btn bl" onclick="if(ps.value=='coincheap2024'){log.style.display='none';pan.style.display='block';load()}">Unlock</button></div>
+<div id="pan" style="display:none;max-width:600px;margin:auto"><h2>Users Online (Username)</h2><button class="btn y" style="width:100%" onclick="load()">🔄 LOAD</button><div style="display:flex;gap:8px"><div class="card" style="flex:1;text-align:center"><b id="c">0</b><br>Users</div><div class="card" style="flex:1;text-align:center"><b id="t">$0</b><br>Total</div></div><div id="list"></div><div class="card"><h3>Add Balance</h3><input id="em" placeholder="User Email"><input id="am" type="number" placeholder="Amount"><button class="btn bl" onclick="addB()">Add</button><p id="msg"></p></div></div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {getFirestore,collection,getDocs,doc,getDoc,setDoc} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325",measurementId:"G-EM6F4CS1C6"};
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);window.db=db;window.gd=getDocs;window.cl=collection;window.gd2=getDoc;window.sd=setDoc;window.doc2=doc;
 </script>
-
-</body>
-</html>
+<script>
+async function load(){let l=document.getElementById('list');l.innerHTML='Loading...';try{let s=await gd(cl(db,"users"));let h='';let cnt=0;let tot=0;s.forEach(x=>{let u=x.data();cnt++;tot+=(u.balance||0);h+=`<div class="u"><div><b>${u.name}</b><br><small>${u.email}</small></div><b>$${u.balance||0}</b></div>`;});l.innerHTML=h||'No users';c.innerText=cnt;t.innerText='$'+tot;}catch(e){l.innerHTML=e.message;}}
+async function addB(){let e=em.value.trim(),a=parseFloat(am.value);if(!e||!a)return;msg.innerText='Updating...';let r=doc2(db,"users",e);let s=await gd2(r);let cur=s.exists()?(s.data().balance||0):0;await sd(r,{balance:cur+a,email:e},{merge:true});msg.innerText='✅ Added $'+a;load();}
+</script>
+</body></html>
