@@ -1,79 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InvestPro Demo - Investment Platform</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://s3.tradingview.com/tv.js"></script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
-</head>
-<body class="bg-[#0B1120] text-white font-sans">
-
-  <!-- DEMO BANNER - KEEP THIS FOR SAFETY -->
-  <div class="bg-yellow-400 text-black text-center py-2 font-bold text-sm tracking-wide">
-    DEMO ONLY - NO REAL MONEY, NO REAL TRADING, NO REAL BANKING
-  </div>
-
-  <!-- NAV -->
-  <nav class="flex justify-between items-center p-6 max-w-7xl mx-auto border-b border-gray-800">
-    <h1 class="text-2xl font-bold">Invest<span class="text-green-400">Pro</span><span class="text-xs ml-2 text-gray-400">DEMO</span></h1>
-    <div class="space-x-3">
-      <a href="login.html" class="px-4 py-2 border-gray-600 rounded-lg hover:bg-gray-800">Login</a>
-      <a href="signup.html" class="px-4 py-2 bg-green-500 text-black font-bold rounded-lg hover:bg-green-400">Get Started</a>
-      <a href="admin.html" class="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-500">Admin</a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="text-center py-24 px-6">
-    <h2 class="text-5xl md:text-6xl font-bold mb-6">Trade Smarter. <span class="text-green-400">Grow Faster.</span></h2>
-    <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">Professional demo investment platform with live market data and dashboard UI. Built for learning and portfolio use.</p>
-    <a href="signup.html" class="px-8 py-4 bg-green-500 text-black font-bold rounded-lg text-lg hover:bg-green-400">Create Demo Account</a>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-8">
-    <div class="bg-gray-900 p-6 rounded-xl border-gray-800">
-      <h3 class="text-xl font-bold mb-2">Live Market Data</h3>
-      <p class="text-gray-400">Real TradingView charts to simulate real market conditions.</p>
-    </div>
-    <div class="bg-gray-900 p-6 rounded-xl border-gray-800">
-      <h3 class="text-xl font-bold mb-2">Demo Dashboard</h3>
-      <p class="text-gray-400">Balance, deposit, withdraw UI with $0.00 starting balance.</p>
-    </div>
-    <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
-      <h3 class="text-xl font-bold mb-2">Admin Panel</h3>
-      <p class="text-gray-400">Manage demo users and approve fake transactions.</p>
-    </div>
-  </section>
-
-  <!-- LIVE TRADING CHART -->
-  <section class="max-w-7xl mx-auto p-6">
-    <h3 class="text-2xl font-bold mb-4">Live Market Preview</h3>
-    <div id="tradingview_chart" class="h-[500px] rounded-xl overflow-hidden border border-gray-800"></div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="text-center py-10 text-gray-500 text-sm border-t border-gray-800 mt-16">
-    <p>InvestPro Demo © 2026 - This is a demo project. Not affiliated with any real financial institution.</p>
-  </footer>
-
-  <script>
-  // TradingView Widget
-  new TradingView.widget({
-    "width": "100%",
-    "height": 500,
-    "symbol": "NASDAQ:AAPL",
-    "interval": "D",
-    "theme": "dark",
-    "style": "1",
-    "locale": "en",
-    "toolbar_bg": "#0B1120",
-    "enable_publishing": false,
-    "hide_top_toolbar": false,
-    "container_id": "tradingview_chart"
-  });
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html><head><title>Sign Up</title><script src="https://cdn.tailwindcss.com"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig = {apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain: "coincheap-investment.firebaseapp.com",projectId: "coincheap-investment",storageBucket: "coincheap-investment.firebasestorage.app",messagingSenderId: "1065612358336",appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"};
+const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+window.signup = async function(){
+  const email = document.getElementById('email').value; const pass = document.getElementById('pass').value;
+  const q = query(collection(db, "users"), where("email", "==", email)); if(!(await getDocs(q)).empty) return alert('User exists');
+  await addDoc(collection(db, "users"), {email, pass, balance: 0, country: "NG", created: new Date()});
+  localStorage.setItem('currentUser', email); alert('Account Created!'); window.location = 'dashboard.html';
+}
+</script></head>
+<body class="bg-[#0B1120] text-white flex items-center justify-center h-screen"><div class="bg-gray-900 p-8 rounded-xl w-96">
+<h2 class="text-2xl font-bold mb-4">Create Simulator Account</h2>
+<input id="email" placeholder="Email" class="w-full p-3 bg-gray-800 rounded mb-3">
+<input id="pass" type="password" placeholder="Password" class="w-full p-3 bg-gray-800 rounded mb-3">
+<button onclick="signup()" class="w-full bg-green-500 text-black py-3 rounded font-bold">Sign Up</button></div></body></html>
