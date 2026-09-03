@@ -2,104 +2,107 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CoinCheap USA - ADMIN ONLY</title>
+<title>ADMIN ONLY - CoinCheap USA</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,Arial}
 body{margin:0;background:#020617;color:#e2e8f0;padding:12px}
-.header{display:flex;justify-content:space-between;align-items:center;background:#0f172a;padding:12px;border-radius:12px;border:1px solid #1e293b;margin-bottom:12px}
 .btn{padding:10px 14px;border:none;border-radius:8px;font-weight:800;cursor:pointer}
 .y{background:#f59e0b;color:#000}.bl{background:#1e3a8a;color:#fff}.g{background:#16a34a;color:#fff}.r{background:#dc2626;color:#fff}
 .card{background:#fff;color:#0f172a;padding:16px;border-radius:14px;margin:10px 0}
-input,select{width:100%;padding:12px;margin:6px 0;border:2px solid #cbd5e1;border-radius:10px}
-.u{background:#0f172a;color:#e2e8f0;border:1px solid #1e293b;padding:10px;border-radius:10px;margin:6px 0;display:flex;justify-content:space-between;flex-wrap:wrap}
+input,select{width:100%;padding:12px;margin:6px 0;border:2px solid #cbd5e1;border-radius:10px;font-size:15px}
+.u{background:#0f172a;color:#e2e8f0;border:1px solid #334155;padding:12px;border-radius:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.tag{background:#1e293b;padding:3px 8px;border-radius:999px;font-size:11px;margin-left:6px;color:#94a3b8}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.statBox{background:#fff;color:#0f172a;padding:12px;border-radius:12px;text-align:center;font-weight:900}
 </style>
 </head>
 <body>
 
-<div id="loginBox" class="card" style="max-width:380px;margin:90px auto;text-align:center">
+<div id="loginBox" class="card" style="max-width:380px;margin:80px auto;text-align:center">
 <h2>🔐 ADMIN ONLY</h2>
-<p>Password: <b>coincheap2024</b></p>
-<input id="aPass" type="password" placeholder="Enter password">
-<button class="btn bl" style="width:100%" onclick="login()">Unlock</button>
-<p id="msg" style="color:red"></p>
+<p>Enter Password: <b>coincheap2024</b></p>
+<input id="aPass" type="password" placeholder="Password">
+<button class="btn bl" style="width:100%" onclick="login()">Unlock Admin Panel</button>
+<p id="msg" style="color:red;font-weight:700"></p>
 </div>
 
-<div id="panel" style="display:none">
-<div class="header">
-<b>🇺🇸 ADMIN PANEL - Nel</b>
-<div style="display:flex;gap:6px">
+<div id="panel" style="display:none;max-width:600px;margin:0 auto">
+<div style="display:flex;justify-content:space-between;align-items:center;background:#0f172a;padding:12px 16px;border-radius:12px;border:1px solid #1e293b">
+<b>🇺🇸 ADMIN PANEL - ALL USERS</b>
 <a href="index.html" style="text-decoration:none"><button class="btn y">Home</button></a>
-<button class="btn r" onclick="logout()">Logout</button>
-</div>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<div class="card" style="text-align:center"><b id="totalUsers">0</b><br>Users</div>
-<div class="card" style="text-align:center"><b id="totalBal">$0</b><br>Total Balance Given</div>
+<div class="stat">
+<div class="statBox"><span id="totalUsers" style="font-size:22px">0</span><br>Users</div>
+<div class="statBox"><span id="totalBal" style="font-size:22px;color:#16a34a">$0</span><br>Total Balance</div>
 </div>
 
 <div class="card">
-<h3>💰 Add Money to Client Dashboard</h3>
-<p style="font-size:12px;color:gray">Client will see this money after: Create Account → Login → Dashboard</p>
-<input id="userEmail" placeholder="Client Email (e.g akagaviani@gmail.com)">
-<input id="amount" type="number" placeholder="Amount e.g 500">
+<h3 style="margin:0 0 8px">💰 Add Money to Client</h3>
+<input id="userEmail" placeholder="Client Email - e.g support@gmail.com">
+<input id="amount" type="number" placeholder="Amount - e.g 500">
 <select id="type">
-<option value="add">Add Deposit</option>
-<option value="profit">Add Profit</option>
-<option value="set">Set Total Balance</option>
+<option value="set">Set Balance (Replace)</option>
+<option value="add">Add Deposit (+)</option>
+<option value="zero">Zero Balance</option>
 </select>
-<button class="btn g" style="width:100%" onclick="updateBal()">UPDATE CLIENT BALANCE</button>
-<p id="updMsg" style="font-weight:900;margin-top:8px"></p>
+<button class="btn g" style="width:100%;padding:14px" onclick="updateBal()">UPDATE CLIENT BALANCE</button>
+<p id="updMsg" style="font-weight:900;margin:8px 0 0"></p>
 </div>
 
 <div class="card">
-<h3>👥 All Client Emails (From Signup)</h3>
-<button class="btn bl" onclick="loadUsers()">Refresh List</button>
-<div id="usersList" style="margin-top:10px"></div>
+<h3 style="margin:0 0 8px">👥 All Signup Users - Username + Email + Balance</h3>
+<button class="btn bl" style="width:100%;padding:13px" onclick="loadUsers()">🔄 LOAD ALL USERS NOW</button>
+<div id="usersList" style="margin-top:12px"></div>
 </div>
-
 </div>
 
 <script>
 const PASS="coincheap2024";
-function login(){let p=document.getElementById('aPass').value;if(p===PASS){localStorage.setItem('admin_ok','1');show();}else{document.getElementById('msg').innerText='Wrong password!';}}
-function show(){document.getElementById('loginBox').style.display='none';document.getElementById('panel').style.display='block';loadUsers();}
-function logout(){localStorage.removeItem('admin_ok');location.reload();}
+function login(){
+if(document.getElementById('aPass').value===PASS){
+localStorage.setItem('admin_ok','1');
+show();
+}else{
+document.getElementById('msg').innerText='❌ Wrong password!';
+}
+}
+function show(){
+document.getElementById('loginBox').style.display='none';
+document.getElementById('panel').style.display='block';
+loadUsers();
+}
 if(localStorage.getItem('admin_ok')==='1'){show();}
 
 function updateBal(){
 let email=document.getElementById('userEmail').value.trim();
 let amt=parseFloat(document.getElementById('amount').value);
 let type=document.getElementById('type').value;
-if(!email||isNaN(amt)){document.getElementById('updMsg').innerText='Fill email & amount';return;}
-let key='bal_'+email;
-let cur=parseFloat(localStorage.getItem(key)||0);
+if(!email){document.getElementById('updMsg').style.color='red';document.getElementById('updMsg').innerText='Enter client email!';return;}
+if(isNaN(amt)&&type!=='zero'){document.getElementById('updMsg').style.color='red';document.getElementById('updMsg').innerText='Enter amount!';return;}
+let cur=parseFloat(localStorage.getItem('bal_'+email)||0);
 if(type==='add') cur+=amt;
-if(type==='profit') cur+=amt;
 if(type==='set') cur=amt;
-localStorage.setItem(key,cur);
-document.getElementById('updMsg').innerText='✅ Updated '+email+' → $'+cur+' (Client will see am for Dashboard)';
+if(type==='zero') cur=0;
+localStorage.setItem('bal_'+email,cur);
+document.getElementById('updMsg').style.color='green';
+document.getElementById('updMsg').innerText='✅ '+email+' → $'+cur.toLocaleString()+' SAVED!';
 loadUsers();
 }
 
 function loadUsers(){
 let list=document.getElementById('usersList');list.innerHTML='';
-let count=0;let total=0;
+let allUsers=JSON.parse(localStorage.getItem('allUsers')||'[]');
+let allNames=JSON.parse(localStorage.getItem('allUsersNames')||'{}');
+// also check bal_ keys
 for(let i=0;i<localStorage.length;i++){
 let k=localStorage.key(i);
 if(k.startsWith('bal_')){
-let email=k.replace('bal_','');
-let bal=localStorage.getItem(k);
-count++;total+=parseFloat(bal);
-let div=document.createElement('div');div.className='u';
-div.innerHTML='<span>📧 '+email+'<br><b>$'+bal+'</b></span><button class="btn y" onclick="document.getElementById(\'userEmail\').value=\''+email+'\'">Select</button>';
-list.appendChild(div);
+let em=k.replace('bal_','');
+if(!allUsers.includes(em)) allUsers.push(em);
 }
 }
-if(count===0){list.innerHTML='<p>No users yet. When someone Create Account → Login, their email go show here.</p>';}
-document.getElementById('totalUsers').innerText=count;
-document.getElementById('totalBal').innerText='$'+total.toLocaleString();
-}
-</script>
-</body>
-</html>
+let total=0;
+if(allUsers.length===0){
+list.innerHTML='<p style="color:#64748b">No users yet.<br><br>👉 Open HOME in <b>Chrome</b> (not Messenger), create account, then come back here and click LOAD.</p>';
+document.getElementById('totalUsers
