@@ -1,68 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoinCheap Admin LIVE</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <style>
 body{font-family:Arial;background:#0f172a;color:#fff;padding:15px}
 .card{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:15px}
-input,button{width:100%;padding:12px;margin-top:8px;border-radius:8px;border:none}
+input,button{width:100%;padding:14px;margin-top:8px;border-radius:10px;border:none;box-sizing:border-box}
 input{background:#0f172a;color:#fff;border:1px solid #334155}
 button{background:#f59e0b;color:#000;font-weight:bold}
-.user{background:#0f172a;padding:10px;border-radius:8px;margin-top:8px;display:flex;justify-content:space-between}
+.user{background:#0f172a;padding:12px;border-radius:10px;margin-top:10px;display:flex;justify-content:space-between;align-items:center}
 .small{font-size:12px;color:#94a3b8}
 </style>
 </head>
 <body>
-<h2>Admin 💰 LIVE</h2>
+<h2>Admin LIVE 💰</h2>
 <div class="card">
-<input id="emailInput" placeholder="USA user email">
-<input id="amountInput" type="number" placeholder="Amount e.g 5000">
+<input id="emailInput" placeholder="Email">
+<input id="amountInput" type="number" placeholder="Amount">
 <button onclick="addBalance()">Add Balance +</button>
 <p id="status" class="small">Ready</p>
 </div>
-<div class="card"><h3 id="count">Loading...</h3><div id="usersList"></div></div>
+<div class="card">
+<h3 id="count">Loading...</h3>
+<div id="usersList">Loading...</div>
+</div>
 <script>
 const firebaseConfig = {
-  apiKey: "AIzaSyCLD9yedNA-l1M6VU81L9gZ40jv36PL3sw",
+  apiKey: "AIzaSyCLD9yedNA-l1M6VU01L9gZ40jv36PlSsw",
   authDomain: "coincheap-investment.firebaseapp.com",
   databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
   projectId: "coincheap-investment",
   storageBucket: "coincheap-investment.firebasestorage.app",
   messagingSenderId: "1065612358336",
-  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"
+  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325",
+  measurementId: "G-EM6F4CS1C6"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 function loadUsers(){
-  db.ref('users').on('value',snap=>{
+  db.ref('users').on('value', snap=>{
     const data=snap.val();
     const list=document.getElementById('usersList');
     const count=document.getElementById('count');
     if(!data){count.innerText='All Users (0)';list.innerHTML='No users';return;}
     const users=Object.entries(data);
-    count.innerText=`All Users (${users.length})`;
+    count.innerText='All Users ('+users.length+')';
     list.innerHTML='';
-    users.forEach(([uid,u])=>{
-      const div=document.createElement('div');div.className='user';
-      div.innerHTML=`<div><b>${u.email||'no email'}</b><br><span class=small>$${u.balance||0}</span></div><button style="width:70px" onclick="selectUser('${u.email}')">Select</button>`;
+    users.forEach(function(entry){
+      var uid=entry[0];var u=entry[1];
+      var div=document.createElement('div');div.className='user';
+      div.innerHTML='<div><b>'+(u.email||'no email')+'</b><br><span class="small">$'+(u.balance||0)+'</span></div><button style="width:70px" onclick="selectUser(\''+u.email+'\')">Select</button>';
       list.appendChild(div);
     });
   });
 }
-function selectUser(email){document.getElementById('emailInput').value=email;document.getElementById('status').innerText='Selected: '+email;}
+function selectUser(email){
+  document.getElementById('emailInput').value=email;
+  document.getElementById('status').innerText='Selected: '+email;
+}
 function addBalance(){
-  const email=document.getElementById('emailInput').value.trim().toLowerCase();
-  const amt=parseFloat(document.getElementById('amountInput').value);
+  var email=document.getElementById('emailInput').value.trim().toLowerCase();
+  var amt=parseFloat(document.getElementById('amountInput').value);
   if(!email||!amt){alert('Put email and amount');return;}
-  db.ref('users').once('value').then(snap=>{
-    const data=snap.val();let key=null;
-    for(let k in data){if(data[k].email&&data[k].email.toLowerCase()===email){key=k;break;}}
-    if(!key){alert('Not found');return;}
-    const cur=parseFloat(data[key].balance||0);
-    db.ref('users/'+key+'/balance').set(cur+amt).then(()=>{document.getElementById('status').innerText='✅ Added $'+amt+' to '+email;});
+  db.ref('users').once('value').then(function(snap){
+    var data=snap.val();var key=null;
+    for(var k in data){if(data[k].email&&data[k].email.toLowerCase()===email){key=k;break;}}
+    if(!key){alert('User not found: '+email);return;}
+    var cur=parseFloat(data[key].balance||0);
+    db.ref('users/'+key+'/balance').set(cur+amt).then(function(){
+      document.getElementById('status').innerText='Added $'+amt+' to '+email+' New: $'+(cur+amt);
+    });
   });
 }
 loadUsers();
