@@ -1,98 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CoinCheap USA - Invest Smarter 🇺🇸</title>
-<style>
-*{box-sizing:border-box;font-family:system-ui,Arial}
-body{margin:0;background:#020617;color:#e2e8f0;line-height:1.5}
-.nav{position:sticky;top:0;z-index:50;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid #1e293b;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;font-size:20px}.logo span{color:#f59e0b}
-.btn{padding:11px 18px;border:none;border-radius:12px;font-weight:800;cursor:pointer}.y{background:#f59e0b;color:#000}.d{background:#0f172a;color:#fff;border:1px solid #334155}.b{background:#1e3a8a;color:#fff;width:100%}
-.hero{padding:60px 16px 30px;text-align:center;background:radial-gradient(ellipse at top,#1e3a8a40,transparent 65%)}
-.hero h1{font-size:34px;line-height:1.1;margin:0;font-weight:900;max-width:700px;margin:0 auto}.hero p{color:#94a3b8;max-width:620px;margin:14px auto 20px;font-size:15px}
-.badge{display:inline-block;background:#f59e0b22;border:1px solid #f59e0b44;color:#fbbf24;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;max-width:1050px;margin:0 auto}
-@media(min-width:750px){.grid{grid-template-columns:repeat(3,1fr)}.hero h1{font-size:48px}}
-.card{background:#0f172a;border:1px solid #1e293b;border-radius:18px;padding:18px;position:relative;overflow:hidden}
-.card.pop{border-color:#f59e0b;transform:scale(1.02)}.card.pop::before{content:"MOST POPULAR";position:absolute;top:12px;right:-30px;background:#f59e0b;color:#000;font-size:10px;font-weight:900;padding:4px 40px;transform:rotate(35deg)}
-.price{font-size:28px;font-weight:900;color:#f59e0b;margin:8px 0}.price small{font-size:13px;color:#94a3b8;font-weight:600}
-ul{padding-left:18px;color:#cbd5e1;font-size:13px;margin:10px 0} li{margin:5px 0}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
-.box{background:#fff;color:#0f172a;border-radius:18px;padding:22px;max-width:400px;width:100%}
-input{width:100%;padding:13px;margin:7px 0;border:2px solid #e2e8f0;border-radius:12px;font-size:15px;outline:none} input:focus{border-color:#1e3a8a}
-.footer{padding:24px 16px;text-align:center;border-top:1px solid #1e293b;color:#64748b;font-size:12px;margin-top:30px}
-.link{color:#60a5fa;cursor:pointer;text-decoration:underline;font-size:13px}
-</style>
-</head>
-<body>
-
-<div class="nav">
-<div class="logo">CoinCheap <span>USA 🇺🇸</span></div>
-<div style="display:flex;gap:8px">
-<button class="btn d" onclick="openLogin()">Login</button>
-<button class="btn y" onclick="openSignup()">Get Started</button>
-</div>
-</div>
-
-<div class="hero">
-<div class="badge">🇺🇸 Delaware Registered • Secure USA Platform</div>
-<h1>Invest Smarter,<br><span style="color:#f59e0b">Grow Faster</span> With USA Power</h1>
-<p>Join 12,000+ investors earning daily returns. USA-grade security, instant withdrawals, and 24/7 support.</p>
-<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-<button class="btn y" onclick="openSignup()" style="padding:14px 28px;font-size:16px">Start Investing Now →</button>
-<button class="btn d" onclick="document.getElementById('plans').scrollIntoView({behavior:'smooth'})">View Plans</button>
-</div>
-</div>
-
-<div id="plans" class="grid">
-<div class="card"><h3>Starter</h3><div class="price">$50 - $499 <small>/ 7 Days</small></div><ul><li>✅ 5% Daily Profit</li><li>✅ Instant Withdrawal</li><li>✅ Capital Back</li></ul><button class="btn b" onclick="openSignup()">Choose Starter</button></div>
-<div class="card pop"><h3>Professional</h3><div class="price">$500 - $4,999 <small>/ 14 Days</small></div><ul><li>✅ 8% Daily Profit</li><li>✅ Priority Support</li><li>✅ Capital + Bonus</li></ul><button class="btn y" style="width:100%" onclick="openSignup()">Choose Professional</button></div>
-<div class="card"><h3>Enterprise</h3><div class="price">$5,000+ <small>/ 30 Days</small></div><ul><li>✅ 12% Daily Profit</li><li>✅ Dedicated Manager</li><li>✅ Capital + 20% Bonus</li></ul><button class="btn b" onclick="openSignup()">Choose Enterprise</button></div>
-</div>
-
-<div id="suModal" class="modal"><div class="box"><h2 style="margin:0">Create Account</h2><p style="color:#64748b;font-size:13px">Start your USA investment journey</p><input id="suName" placeholder="Full Name / Username"><input id="suEmail" type="email" placeholder="Email Address"><input id="suPass" type="password" placeholder="Password"><button class="btn y" style="width:100%;margin-top:8px" onclick="doSignup()">Create Account</button><p id="suMsg" style="font-size:13px;font-weight:700;margin:10px 0 0"></p><p style="text-align:center;margin:12px 0 0;font-size:13px">Already have account? <span class="link" onclick="closeAll();openLogin()">Login</span></p><p style="text-align:center;margin:8px 0 0"><span class="link" onclick="closeAll()" style="color:#64748b">Close</span></p></div></div>
-
-<div id="liModal" class="modal"><div class="box"><h2 style="margin:0">Welcome Back</h2><p style="color:#64748b;font-size:13px">Login to your dashboard</p><input id="liEmail" type="email" placeholder="Email Address"><input id="liPass" type="password" placeholder="Password"><button class="btn b" style="margin-top:8px" onclick="doLogin()">Login to Dashboard</button><p id="liMsg" style="font-size:13px;font-weight:700;margin:10px 0 0"></p><p style="text-align:center;margin:12px 0 0;font-size:13px">No account? <span class="link" onclick="closeAll();openSignup()">Create Account</span></p><p style="text-align:center;margin:8px 0 0"><span class="link" onclick="closeAll()" style="color:#64748b">Close</span></p></div></div>
-
-<div class="footer"><p><b style="color:#e2e8f0">CoinCheap USA LLC</b> • Delaware, USA 🇺🇸<br>Support: support@coincheapusa.com<br><br>© 2026 CoinCheap USA. All rights reserved.</p></div>
-
-<script>
-function openSignup(){document.getElementById('suModal').style.display='flex';}
-function openLogin(){document.getElementById('liModal').style.display='flex';}
-function closeAll(){document.getElementById('suModal').style.display='none';document.getElementById('liModal').style.display='none';}
-window.onclick=function(e){if(e.target.classList.contains('modal')) closeAll();}
-
-function doSignup(){
-let n=document.getElementById('suName').value.trim();
-let e=document.getElementById('suEmail').value.trim();
-let p=document.getElementById('suPass').value;
-if(!n||!e||!p){document.getElementById('suMsg').style.color='red';document.getElementById('suMsg').innerText='Please fill all fields';return;}
-localStorage.setItem('userName',n);
-localStorage.setItem('userEmail',e);
-localStorage.setItem('userPass',p);
-localStorage.setItem('name_'+e,n);
-let all=JSON.parse(localStorage.getItem('allUsers')||'[]');
-let allNames=JSON.parse(localStorage.getItem('allUsersNames')||'{}');
-if(!all.includes(e)){all.push(e);}
-allNames[e]=n;
-localStorage.setItem('allUsers',JSON.stringify(all));
-localStorage.setItem('allUsersNames',JSON.stringify(allNames));
-document.getElementById('suMsg').style.color='green';
-document.getElementById('suMsg').innerText='✅ Account created! Opening login...';
-setTimeout(()=>{closeAll();openLogin();document.getElementById('liEmail').value=e;document.getElementById('liMsg').style.color='green';document.getElementById('liMsg').innerText='✅ Now login with: '+e;},1200);
-}
-
-function doLogin(){
-let e=document.getElementById('liEmail').value.trim();
-let p=document.getElementById('liPass').value;
-if(!e||!p){document.getElementById('liMsg').style.color='red';document.getElementById('liMsg').innerText='Fill email & password';return;}
-localStorage.setItem('userEmail',e);
-document.getElementById('liMsg').style.color='green';
-document.getElementById('liMsg').innerText='✅ Login success! Loading dashboard...';
-setTimeout(()=>{window.location.href='dashboard.html';},800);
-}
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ADMIN</title>
+<style>body{margin:0;background:#020617;color:#e2e8f0;padding:12px;font-family:Arial}.btn{padding:10px;border:none;border-radius:8px;font-weight:800;cursor:pointer}.y{background:#f59e0b}.bl{background:#1e3a8a;color:#fff}.card{background:#fff;color:#000;padding:16px;border-radius:12px;margin:10px 0}input{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:2px solid #ccc}.u{background:#0f172a;color:#fff;padding:12px;border-radius:10px;margin:8px 0;display:flex;justify-content:space-between}</style></head><body>
+<div id="loginBox" class="card" style="max-width:380px;margin:80px auto"><h2>ADMIN</h2><input id="aPass" type="password" placeholder="coincheap2024"><button class="btn bl" style="width:100%" onclick="login()">Unlock</button><p id="msg"></p></div>
+<div id="panel" style="display:none;max-width:650px;margin:0 auto"><h2>ADMIN - ONLINE</h2><div style="display:flex;gap:8px"><div class="card" style="flex:1;text-align:center"><b id="totalUsers">0</b><br>Users</div><div class="card" style="flex:1;text-align:center"><b id="totalBal">$0</b><br>Balance</div></div><button class="btn y" onclick="loadUsers()" style="width:100%;margin:10px 0">🔄 LOAD ALL USERS NOW (Online)</button><div id="usersList"></div><div class="card"><h3>Add Balance</h3><input id="uEmail" placeholder="User Email"><input id="uAmount" type="number" placeholder="Amount"><button class="btn bl" style="width:100%" onclick="addBal()">Add Balance Online</button><p id="addMsg"></p></div></div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {getFirestore,collection,getDocs,doc,getDoc,setDoc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325",measurementId:"G-EM6F4CS1C6"};
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);window.db=db;window.fb={collection,getDocs,doc,getDoc,setDoc};
 </script>
-
-</body>
-</html>
+<script>
+function login(){if(document.getElementById('aPass').value==='coincheap2024'){document.getElementById('loginBox').style.display='none';document.getElementById('panel').style.display='block';loadUsers();}else{document.getElementById('msg').innerText='Wrong';}}
+async function loadUsers(){
+let list=document.getElementById('usersList');list.innerHTML='Loading online...';
+try{
+let snap=await fb.getDocs(fb.collection(db,"users"));let html='';let count=0;let total=0;
+snap.forEach(d=>{let u=d.data();count++;total+=(u.balance||0);html+=`<div class="u"><div><b>${u.name||'No name'}</b><br><small>${u.email}</small></div><b>$${(u.balance||0).toLocaleString()}</b></div>`;});
+if(count==0)html='<div class="card">No users yet online - create account first</div>';
+list.innerHTML=html;document.getElementById('totalUsers').innerText=count;document.getElementById('totalBal').innerText='$'+total.toLocaleString();
+}catch(e){list.innerHTML='Error: '+e.message+'<br>Check Rules published!';}
+}
+async function addBal(){
+let e=document.getElementById('uEmail').value.trim(),a=parseFloat(document.getElementById('uAmount').value);
+if(!e||!a)return;document.getElementById('addMsg').innerText='Updating...';
+try{let ref=fb.doc(db,"users",e);let snap=await fb.getDoc(ref);let cur=snap.exists()?(snap.data().balance||0):0;await fb.setDoc(ref,{balance:cur+a,email:e},{merge:true});localStorage.setItem('bal_'+e,cur+a);document.getElementById('addMsg').innerText='✅ $'+a+' added to '+e;loadUsers();}catch(err){document.getElementById('addMsg').innerText=err.message;}
+}
+</script></body></html>
