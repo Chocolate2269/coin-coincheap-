@@ -1,84 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CoinCheap USA 🇺🇸</title>
-<style>
-body{margin:0;background:#020617;color:#e2e8f0;font-family:system-ui,Arial}
-.nav{padding:12px 16px;display:flex;justify-content:space-between;background:#020617;border-bottom:1px solid #1e293b;position:sticky;top:0}
-.btn{padding:11px 18px;border:none;border-radius:12px;font-weight:800;cursor:pointer}.y{background:#f59e0b;color:#000}.d{background:#0f172a;color:#fff;border:1px solid #334155}.b{background:#1e3a8a;color:#fff;width:100%}
-.hero{padding:60px 16px;text-align:center}.card{background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:18px;margin:10px}.price{color:#f59e0b;font-size:24px;font-weight:900}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}
-.box{background:#fff;color:#000;padding:22px;border-radius:16px;max-width:380px;width:100%}
-input{width:100%;padding:13px;margin:7px 0;border-radius:12px;border:2px solid #ddd}
-.grid{max-width:900px;margin:auto;display:grid;grid-template-columns:1fr;gap:10px;padding:16px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}}
-</style>
-</head>
-<body>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CoinCheap USA</title><style>body{margin:0;background:#020617;color:#e2e8f0;font-family:Arial}.nav{padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #1e293b}.btn{padding:11px 18px;border:none;border-radius:12px;font-weight:800;cursor:pointer}.y{background:#f59e0b}.b{background:#1e3a8a;color:#fff;width:100%}.hero{padding:50px 16px;text-align:center}.card{background:#0f172a;border:1px solid #1e293b;border-radius:16px;padding:18px;margin:10px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}.box{background:#fff;color:#000;padding:22px;border-radius:16px;max-width:380px;width:100%}input{width:100%;padding:13px;margin:7px 0;border-radius:12px;border:2px solid #ddd}</style></head><body>
 <div class="nav"><b>CoinCheap USA 🇺🇸</b><button class="btn y" onclick="su.style.display='flex'">Get Started</button></div>
-<div class="hero"><h1>Invest Smarter, <span style="color:#f59e0b">Grow Faster</span></h1><p>USA-grade security</p><button class="btn y" onclick="su.style.display='flex'">Start Now →</button></div>
-<div class="grid">
-<div class="card"><h3>Starter</h3><div class="price">$50 - $499</div><p>5% Daily</p><button class="btn b" onclick="su.style.display='flex'">Choose</button></div>
-<div class="card" style="border-color:#f59e0b"><h3>Professional ⭐</h3><div class="price">$500 - $4,999</div><p>8% Daily</p><button class="btn y" style="width:100%" onclick="su.style.display='flex'">Choose</button></div>
-<div class="card"><h3>Enterprise</h3><div class="price">$5000+</div><p>12% Daily</p><button class="btn b" onclick="su.style.display='flex'">Choose</button></div>
-</div>
-
-<div id="su" class="modal"><div class="box">
-<h2>Create Account</h2>
-<input id="uName" placeholder="Username / Full Name">
-<input id="uEmail" placeholder="Email">
-<input id="uPass" type="password" placeholder="Password">
-<button class="btn y" style="width:100%" onclick="doSignup()">Create Account</button>
-<p id="msg" style="text-align:center"></p>
-</div></div>
-
+<div class="hero"><h1>Invest Smarter, <span style="color:#f59e0b">Grow Faster</span></h1><button class="btn y" onclick="su.style.display='flex'">Start Now</button></div>
+<div id="su" class="modal" style="display:flex"><div class="box"><h2>Create Account</h2><input id="uName" placeholder="Username"><input id="uEmail" placeholder="Email"><input id="uPass" type="password" placeholder="Password"><button class="btn y" style="width:100%" onclick="doSignup()">Create Account</button><p id="msg" style="text-align:center;font-weight:700"></p><small id="err" style="color:red"></small></div></div>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",
-  authDomain: "coincheap-investment.firebaseapp.com",
-  databaseURL: "https://coincheap-investment-default-rtdb.firebaseio.com",
-  projectId: "coincheap-investment",
-  storageBucket: "coincheap-investment.firebasestorage.app",
-  messagingSenderId: "1065612358336",
-  appId: "1:1065612358336:web:1e9b4678e5df622bc9f325",
-  measurementId: "G-EM6F4CS1C6"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-window.db = db;
-window._setDoc = setDoc;
-window._doc = doc;
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {getFirestore,doc,setDoc} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+import {getDatabase,ref,set} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain:"coincheap-investment.firebaseapp.com",databaseURL:"https://coincheap-investment-default-rtdb.firebaseio.com",projectId:"coincheap-investment",storageBucket:"coincheap-investment.firebasestorage.app",messagingSenderId:"1065612358336",appId:"1:1065612358336:web:1e9b4678e5df622bc9f325",measurementId:"G-EM6F4CS1C6"};
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const rdb=getDatabase(app);
+window.db=db;window.rdb=rdb;window._setDoc=setDoc;window._doc=doc;window._ref=ref;window._set=set;
 </script>
-
 <script>
 async function doSignup(){
- let name = document.getElementById('uName').value.trim();
- let email = document.getElementById('uEmail').value.trim();
- let pass = document.getElementById('uPass').value.trim();
- if(!name || !email || !pass){document.getElementById('msg').innerText='Fill all fields';return;}
- document.getElementById('msg').innerText='Creating...';
- localStorage.setItem('userEmail', email);
- localStorage.setItem('userName', name);
+ let name=document.getElementById('uName').value.trim(),email=document.getElementById('uEmail').value.trim();
+ if(!name||!email){msg.innerText='Fill username & email';return;}
+ msg.innerText='Creating...'; err.innerText='';
+ localStorage.setItem('userEmail',email); localStorage.setItem('userName',name);
  try{
-   await _setDoc(_doc(db, "users", email), {
-     name: name,
-     email: email,
-     balance: 0,
-     created: new Date().toISOString()
-   }, {merge:true});
-   document.getElementById('msg').innerText='✅ Saved online! Redirecting...';
-   setTimeout(()=>{location.href='dashboard.html';},800);
+   // Save to Firestore
+   await _setDoc(_doc(db,"users",email),{name:name,email:email,balance:0,created:new Date().toISOString()},{merge:true});
+   // Also save to Realtime DB as backup
+   await _set(_ref(rdb,'users/'+email.replace(/\./g,'_')),{name:name,email:email,balance:0});
+   msg.innerText='✅ Saved! Redirecting...';
+   setTimeout(()=>location.href='dashboard.html',900);
  }catch(e){
-   document.getElementById('msg').innerText='Error: '+e.message;
+   err.innerText='FIREBASE ERROR: '+e.message+'\nGo publish Rules!';
+   msg.innerText='⚠️ Saving offline - Check Rules!';
+   // Save offline so you can still proceed
+   setTimeout(()=>{location.href='dashboard.html';},1500);
  }
 }
 </script>
-
-<!-- CHATWAY LIVE CHAT -->
 <script id="chatway" async src="https://cdn.chatway.app/widget.js?id=YOUR_CHATWAY_ID"></script>
-
-</body>
-</html>
+</body></html>
