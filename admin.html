@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel – Concheap Investment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-white antialiased">
+
+  <nav class="flex items-center justify-between px-6 py-4 bg-slate-800">
+    <a href="index.html" class="text-emerald-400 text-2xl font-bold">Concheap Admin</a>
+    <a href="index.html" class="text-sm hover:text-emerald-400">← Back to Site</a>
+  </nav>
+
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <h1 class="text-3xl font-bold mb-8">Admin Dashboard</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <p class="text-sm text-slate-400">Total Registered Users</p>
+        <p class="text-3xl font-bold" id="totalUsers">0</p>
+      </div>
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <p class="text-sm text-slate-400">Total Assets Managed</p>
+        <p class="text-3xl font-bold text-emerald-400">$24.5M</p>
+      </div>
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <p class="text-sm text-slate-400">Pending Withdrawals</p>
+        <p class="text-3xl font-bold text-yellow-400">5</p>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4">Registered Users</h2>
+    <div class="bg-slate-800 rounded-xl overflow-hidden">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-700">
+            <th class="p-3 text-left">Name</th>
+            <th class="p-3 text-left">Email</th>
+            <th class="p-3 text-left">Balance</th>
+            <th class="p-3 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody"></tbody>
+      </table>
+      <p id="noUsers" class="p-4 text-slate-400 hidden">No registered users yet.</p>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC13gF4veja18FRtQ_RuERjac0Uj6L2wSk",
+      authDomain: "concheap-investment.firebaseapp.com",
+      projectId: "concheap-investment",
+      storageBucket: "concheap-investment.firebasestorage.app",
+      messagingSenderId: "170931870108",
+      appId: "1:170931870108:web:e7d7feda2c076bd8289059",
+      measurementId: "G-QEL2T835KW"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadUsers();
+    });
+
+    async function loadUsers() {
+      const tbody = document.getElementById('userTableBody');
+      const noUsers = document.getElementById('noUsers');
+      const totalUsersEl = document.getElementById('totalUsers');
+      tbody.innerHTML = '';
+      totalUsersEl.textContent = '0';
+
+      try {
+        const snapshot = await db.collection('users').orderBy('createdAt', 'desc').get();
+        const users = [];
+        snapshot.forEach(doc => users.push({ id: doc.id, ...doc.data() }));
+        totalUsersEl.textContent = users.length;
+
+        if (users.length === 0) {
+          noUsers.classList.remove('hidden');
+          return;
+        }
+        noUsers.classList.add('hidden');
+
+        users.forEach(user => {
+          const row = document.createElement('tr');
+          row.className = 'border-b border-slate-700';
+          row.innerHTML = `
+            <td class="p-3">${user.name || 'N/A'}</td>
+            <td class="p-3">${user.email}</td>
+            <td class="p-3 font-semibold">$${(user.balance || 0).toFixed(2)}</td>
+            <td class="p-3">
+              <button class="addFundsBtn bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded text-sm" data-id="${user.id}" data-balance="${user.balance || 0}">Add Funds</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+
+        document.querySelectorAll('.addFundsBtn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            const currentBalance = parseFloat(btn.getAttribute('data-balance'));
+            const amount = prompt('Enter amount to add ($):');
+            if (amount === null) return;
+            const parsed = parseFloat(amount);
+            if (isNaN(parsed) || parsed <= 0) {
+              alert('Invalid amount');
+              return;
+            }
+            try {
+              await db.collection('users').doc(id).update({
+                balance: currentBalance + parsed
+              });
+              loadUsers();
+            } catch (err) {
+              alert('Error updating balance: ' + err.message);
+            }
+          });
+        });
+      } catch (err) {
+        alert('Error loading users: ' + err.message);
+      }
+    }
+  </script>
+
+  <!-- Chatway Widget -->
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+</body>
+</html>
