@@ -22,11 +22,11 @@
   <div class="max-w-6xl mx-auto px-6 py-12">
     <h1 class="text-3xl font-bold mb-8">Admin Panel</h1>
 
-    <!-- Stats -->
+    <!-- Stats (static for now) -->
     <div class="grid grid-cols-3 gap-6 mb-12">
       <div class="bg-slate-800 p-6 rounded-xl">
         <p class="text-sm text-slate-400">Total Users</p>
-        <p class="text-3xl font-bold">1,248</p>
+        <p class="text-3xl font-bold" id="totalUsers">–</p>
       </div>
       <div class="bg-slate-800 p-6 rounded-xl">
         <p class="text-sm text-slate-400">Total AUM</p>
@@ -39,7 +39,7 @@
     </div>
 
     <!-- User Management Table -->
-    <h2 class="text-2xl font-bold mb-4">User Management</h2>
+    <h2 class="text-2xl font-bold mb-4">Registered Users</h2>
     <div class="bg-slate-800 rounded-xl overflow-hidden mb-12">
       <table class="w-full">
         <thead>
@@ -47,67 +47,59 @@
             <th class="p-3 text-left">Email</th>
             <th class="p-3 text-left">Role</th>
             <th class="p-3 text-left">Status</th>
-            <th class="p-3 text-left">Action</th>
+            <th class="p-3 text-left">Created At</th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="border-b border-slate-700">
-            <td class="p-3">user1@example.com</td>
-            <td class="p-3">Client</td>
-            <td class="p-3 text-emerald-400">Active</td>
-            <td class="p-3"><button class="bg-blue-500 px-3 py-1 rounded text-sm">Toggle</button></td>
-          </tr>
-          <tr class="border-b border-slate-700">
-            <td class="p-3">user2@example.com</td>
-            <td class="p-3">Client</td>
-            <td class="p-3 text-red-400">Suspended</td>
-            <td class="p-3"><button class="bg-blue-500 px-3 py-1 rounded text-sm">Toggle</button></td>
-          </tr>
-          <tr>
-            <td class="p-3">admin@coincheap.com</td>
-            <td class="p-3">Admin</td>
-            <td class="p-3 text-emerald-400">Active</td>
-            <td class="p-3"><button class="bg-blue-500 px-3 py-1 rounded text-sm">Toggle</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pending Withdrawals -->
-    <h2 class="text-2xl font-bold mb-4">Pending Withdrawals</h2>
-    <div class="bg-slate-800 rounded-xl overflow-hidden">
-      <table class="w-full">
-        <thead>
-          <tr class="border-b border-slate-700">
-            <th class="p-3 text-left">User</th>
-            <th class="p-3 text-left">Amount</th>
-            <th class="p-3 text-left">Destination</th>
-            <th class="p-3 text-left">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b border-slate-700">
-            <td class="p-3">user1@example.com</td>
-            <td class="p-3">$500</td>
-            <td class="p-3">0x1234...abcd</td>
-            <td class="p-3">
-              <button class="bg-emerald-500 px-3 py-1 rounded text-sm mr-2">Approve</button>
-              <button class="bg-red-500 px-3 py-1 rounded text-sm">Reject</button>
-            </td>
-          </tr>
-          <tr>
-            <td class="p-3">user2@example.com</td>
-            <td class="p-3">$1,200</td>
-            <td class="p-3">0x5678...efgh</td>
-            <td class="p-3">
-              <button class="bg-emerald-500 px-3 py-1 rounded text-sm mr-2">Approve</button>
-              <button class="bg-red-500 px-3 py-1 rounded text-sm">Reject</button>
-            </td>
-          </tr>
+        <tbody id="userTableBody">
+          <!-- Dynamic rows will be inserted here -->
         </tbody>
       </table>
     </div>
   </div>
+
+  <script>
+    // Replace with your Render API URL (keep the trailing /api)
+    const API_URL = 'https://coincheap-api.onrender.com/api';
+
+    // Check if user is admin
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const token = localStorage.getItem('token');
+    if (!token || user.role !== 'admin') {
+      alert('Admin access required');
+      window.location.href = 'login.html';
+    }
+
+    async function fetchUsers() {
+      try {
+        const res = await fetch(`${API_URL}/admin/users`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const users = await res.json();
+          document.getElementById('totalUsers').textContent = users.length;
+          const tbody = document.getElementById('userTableBody');
+          tbody.innerHTML = '';
+          users.forEach(u => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-slate-700';
+            row.innerHTML = `
+              <td class="p-3">${u.email}</td>
+              <td class="p-3">${u.role}</td>
+              <td class="p-3 ${u.is_active ? 'text-emerald-400' : 'text-red-400'}">${u.is_active ? 'Active' : 'Suspended'}</td>
+              <td class="p-3">${new Date(u.created_at).toLocaleDateString()}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        } else {
+          alert('Failed to fetch users. Check admin permissions.');
+        }
+      } catch (err) {
+        alert('Network error: ' + err.message);
+      }
+    }
+
+    fetchUsers();
+  </script>
 
   <!-- Chatway Widget (optional) -->
   <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
