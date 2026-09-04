@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concheap Investment – Invest Smart. Start Small.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #064e3b 100%);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .text-gradient {
+      background: linear-gradient(90deg, #34d399, #10b981, #059669);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="gradient-bg text-white antialiased min-h-screen">
+
+  <!-- LANDING VIEW -->
+  <div id="landingView" class="min-h-screen flex flex-col items-center justify-center px-6 text-center">
+    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">
+      Invest in Crypto <span class="text-gradient">Starting at $10</span>
+    </h1>
+    <p class="mt-6 text-lg text-slate-300 max-w-2xl">
+      Concheap makes it easy to grow your wealth with curated assets, transparent fees, and zero jargon.
+    </p>
+    <div class="mt-8 flex gap-4">
+      <button id="btnLogin" class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold transition">Login</button>
+      <button id="btnRegister" class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold transition">Register</button>
+    </div>
+    <a href="admin.html" class="mt-4 text-sm text-slate-400 hover:text-emerald-400">Admin</a>
+  </div>
+
+  <!-- REGISTER VIEW -->
+  <div id="registerView" class="hidden min-h-screen flex items-center justify-center px-6">
+    <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
+      <form id="registerForm">
+        <input type="text" id="regName" placeholder="Full Name" class="w-full p-3 mb-4 bg-slate-700 rounded" required>
+        <input type="email" id="regEmail" placeholder="Email" class="w-full p-3 mb-4 bg-slate-700 rounded" required>
+        <input type="password" id="regPassword" placeholder="Password (min 8 chars)" class="w-full p-3 mb-6 bg-slate-700 rounded" required minlength="8">
+        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold">Register</button>
+      </form>
+      <p class="mt-4 text-sm text-slate-400 text-center">
+        Already have an account? <a href="#" id="linkToLogin" class="text-emerald-400">Login</a>
+      </p>
+      <p id="registerError" class="text-red-400 text-center mt-2 hidden"></p>
+    </div>
+  </div>
+
+  <!-- LOGIN VIEW -->
+  <div id="loginView" class="hidden min-h-screen flex items-center justify-center px-6">
+    <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" class="w-full p-3 mb-4 bg-slate-700 rounded" required>
+        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 mb-6 bg-slate-700 rounded" required>
+        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold">Login</button>
+      </form>
+      <p class="mt-4 text-sm text-slate-400 text-center">
+        Don't have an account? <a href="#" id="linkToRegister" class="text-emerald-400">Register</a>
+      </p>
+      <p id="loginError" class="text-red-400 text-center mt-2 hidden"></p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD VIEW -->
+  <div id="dashboardView" class="hidden min-h-screen">
+    <nav class="flex justify-between items-center px-6 py-4 bg-slate-800">
+      <span class="text-emerald-400 text-xl font-bold">Concheap</span>
+      <button id="btnLogout" class="text-sm hover:text-emerald-400">Logout</button>
+    </nav>
+    <div class="p-8">
+      <h1 class="text-3xl font-bold mb-2">Welcome, <span id="userName"></span> 👋</h1>
+      <p class="text-slate-400 mb-8">Here's your investor dashboard.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-slate-800 p-6 rounded-xl">
+          <p class="text-sm text-slate-400">Portfolio Value</p>
+          <p class="text-3xl font-bold text-emerald-400" id="portfolioValue">$0.00</p>
+        </div>
+        <div class="bg-slate-800 p-6 rounded-xl">
+          <p class="text-sm text-slate-400">Available Balance</p>
+          <p class="text-3xl font-bold text-emerald-400" id="availableBalance">$0.00</p>
+        </div>
+        <div class="bg-slate-800 p-6 rounded-xl">
+          <p class="text-sm text-slate-400">Active Investments</p>
+          <p class="text-3xl font-bold">0</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <button class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold">Invest Now</button>
+        <button class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold">Withdraw</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC13gF4veja18FRtQ_RuERjac0Uj6L2wSk",
+      authDomain: "concheap-investment.firebaseapp.com",
+      projectId: "concheap-investment",
+      storageBucket: "concheap-investment.firebasestorage.app",
+      messagingSenderId: "170931870108",
+      appId: "1:170931870108:web:e7d7feda2c076bd8289059",
+      measurementId: "G-QEL2T835KW"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // View management
+    function showView(viewId) {
+      document.querySelectorAll('#landingView, #registerView, #loginView, #dashboardView').forEach(v => v.classList.add('hidden'));
+      document.getElementById(viewId).classList.remove('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('btnLogin').addEventListener('click', () => showView('loginView'));
+      document.getElementById('btnRegister').addEventListener('click', () => showView('registerView'));
+
+      document.getElementById('linkToLogin').addEventListener('click', (e) => { e.preventDefault(); showView('loginView'); });
+      document.getElementById('linkToRegister').addEventListener('click', (e) => { e.preventDefault(); showView('registerView'); });
+
+      document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value;
+        const errorEl = document.getElementById('registerError');
+        errorEl.classList.add('hidden');
+
+        try {
+          const cred = await auth.createUserWithEmailAndPassword(email, password);
+          await db.collection('users').doc(cred.user.uid).set({
+            name,
+            email,
+            balance: 0,
+            role: 'client',
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          alert('Account created successfully! Please login.');
+          showView('loginView');
+          document.getElementById('registerForm').reset();
+        } catch (err) {
+          errorEl.textContent = err.message;
+          errorEl.classList.remove('hidden');
+        }
+      });
+
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const errorEl = document.getElementById('loginError');
+        errorEl.classList.add('hidden');
+
+        try {
+          await auth.signInWithEmailAndPassword(email, password);
+          showView('dashboardView');
+          document.getElementById('loginForm').reset();
+        } catch (err) {
+          errorEl.textContent = err.message;
+          errorEl.classList.remove('hidden');
+        }
+      });
+
+      document.getElementById('btnLogout').addEventListener('click', async () => {
+        await auth.signOut();
+        showView('landingView');
+      });
+    });
+
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          const doc = await db.collection('users').doc(user.uid).get();
+          if (doc.exists) {
+            const userData = doc.data();
+            document.getElementById('userName').textContent = userData.name ? userData.name.split(' ')[0] : user.email.split('@')[0];
+            document.getElementById('availableBalance').textContent = `$${(userData.balance || 0).toFixed(2)}`;
+            document.getElementById('portfolioValue').textContent = `$${(userData.balance || 0).toFixed(2)}`;
+          } else {
+            document.getElementById('userName').textContent = user.email.split('@')[0];
+          }
+          showView('dashboardView');
+        } catch (err) {
+          console.error('Error fetching user data:', err);
+          showView('dashboardView');
+        }
+      } else {
+        showView('landingView');
+      }
+    });
+  </script>
+
+  <!-- Chatway Widget -->
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+</body>
+</html>
