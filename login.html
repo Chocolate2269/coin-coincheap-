@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login – Coincheap Investment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-900 text-white antialiased flex items-center justify-center min-h-screen">
+
+  <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md">
+    <div class="text-center mb-6">
+      <a href="index.html" class="text-emerald-400 text-3xl font-bold">Coincheap</a>
+    </div>
+    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+    <form onsubmit="alert('Login simulated!'); return false;">
+      <div class="mb-4">
+        <label class="block text-sm mb-2">Email</label>
+        <input type="email" placeholder="you@example.com" class="w-full p-3 bg-slate-700 rounded" required>
+      </div>
+      <div class="mb-6">
+        <label class="block text-sm mb-2">Password</label>
+        <input type="password" placeholder="••••••••" class="w-full p-3 bg-slate-700 rounded" required>
+      </div>
+      <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold transition">Login</button>
+    </form>
+    <p class="mt-4 text-center text-sm text-slate-400">
+      Don't have an account? <a href="register.html" class="text-emerald-400 hover:underline">Register</a>
+    </p>
+  </div>
+
+  <!-- Chatway Widget -->
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+</body>
+</html>
