@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register – Coincheap Investment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-900 text-white antialiased flex items-center justify-center min-h-screen">
+
+  <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md">
+    <div class="text-center mb-6">
+      <a href="index.html" class="text-emerald-400 text-3xl font-bold">Coincheap</a>
+    </div>
+    <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
+    <form onsubmit="alert('Registration simulated!'); return false;">
+      <div class="mb-4">
+        <label class="block text-sm mb-2">Full Name</label>
+        <input type="text" placeholder="John Doe" class="w-full p-3 bg-slate-700 rounded" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm mb-2">Email</label>
+        <input type="email" placeholder="you@example.com" class="w-full p-3 bg-slate-700 rounded" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm mb-2">Password</label>
+        <input type="password" placeholder="Min 8 characters" class="w-full p-3 bg-slate-700 rounded" required minlength="8">
+      </div>
+      <div class="mb-6">
+        <label class="block text-sm mb-2">Confirm Password</label>
+        <input type="password" placeholder="Repeat password" class="w-full p-3 bg-slate-700 rounded" required minlength="8">
+      </div>
+      <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold transition">Register</button>
+    </form>
+    <p class="mt-4 text-center text-sm text-slate-400">
+      Already have an account? <a href="login.html" class="text-emerald-400 hover:underline">Login</a>
+    </p>
+  </div>
+
+  <!-- Chatway Widget -->
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+</body>
+</html>
