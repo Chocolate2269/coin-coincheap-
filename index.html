@@ -21,13 +21,27 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body class="gradient-bg text-white antialiased min-h-screen">
 
+  <!-- Loading overlay -->
+  <div id="loadingOverlay" style="position: fixed; top:0; left:0; width:100%; height:100%; background:#0f172a; display:flex; align-items:center; justify-content:center; z-index:9999;">
+    <div class="text-center">
+      <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+      <p class="mt-4 text-slate-400">Loading...</p>
+    </div>
+  </div>
+
   <!-- ========== HOME VIEW ========== -->
-  <div id="homeView" class="min-h-screen">
-    <!-- Navbar -->
+  <div id="homeView" class="min-h-screen hidden">
     <nav class="sticky top-0 z-50 glass">
       <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -48,10 +62,9 @@
       </div>
     </nav>
 
-    <!-- Hero -->
     <section class="relative px-6 pt-24 pb-32 max-w-7xl mx-auto text-center">
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div class="w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl float-animation"></div>
+        <div class="w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl"></div>
       </div>
       <div class="relative z-10">
         <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
@@ -72,7 +85,6 @@
       </div>
     </section>
 
-    <!-- Features -->
     <section id="features" class="px-6 py-24 bg-slate-900/50">
       <div class="max-w-6xl mx-auto">
         <h2 class="text-4xl font-extrabold text-center mb-16">Why Concheap?</h2>
@@ -96,7 +108,6 @@
       </div>
     </section>
 
-    <!-- How It Works -->
     <section id="how" class="px-6 py-24">
       <div class="max-w-6xl mx-auto">
         <h2 class="text-4xl font-extrabold text-center mb-16">How It Works</h2>
@@ -120,7 +131,6 @@
       </div>
     </section>
 
-    <!-- Stats -->
     <section id="stats" class="px-6 py-24 bg-slate-900/50">
       <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         <div><p class="text-4xl font-extrabold text-emerald-400">24K+</p><p class="text-slate-400 mt-2">Users</p></div>
@@ -130,14 +140,12 @@
       </div>
     </section>
 
-    <!-- CTA -->
     <section class="px-6 py-24 text-center">
       <h2 class="text-4xl font-extrabold mb-4">Ready to Start?</h2>
       <p class="text-xl text-slate-400 mb-10">Join thousands of investors building wealth with Concheap.</p>
       <button id="btnRegisterCTA" class="bg-emerald-500 hover:bg-emerald-600 px-10 py-4 rounded-xl font-bold text-lg shadow-lg shadow-emerald-500/25 transition">Create Free Account</button>
     </section>
 
-    <!-- Footer -->
     <footer class="px-6 py-8 border-t border-white/10 text-center text-sm text-slate-500">
       <p>© 2025 Concheap Investment. All rights reserved. <a href="admin.html" class="hover:text-emerald-400 ml-2">Admin</a></p>
     </footer>
@@ -169,6 +177,9 @@
         <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 mb-6 bg-slate-700 rounded" required>
         <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold">Login</button>
       </form>
+      <div class="mt-4 text-center">
+        <a href="#" id="forgotPassword" class="text-sm text-emerald-400 hover:underline">Forgot Password?</a>
+      </div>
       <p class="mt-4 text-sm text-slate-400 text-center">
         Don't have an account? <a href="#" id="linkToRegister" class="text-emerald-400">Register</a>
       </p>
@@ -248,7 +259,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
   <script>
-    // Your Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyC13gF4veja18FRtQ_RuERjac0Uj6L2wSk",
       authDomain: "concheap-investment.firebaseapp.com",
@@ -263,25 +273,21 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // View management
     function showView(viewId) {
       document.querySelectorAll('#homeView, #registerView, #loginView, #dashboardView, #investView').forEach(v => v.classList.add('hidden'));
       document.getElementById(viewId).classList.remove('hidden');
     }
 
-    // Helper to fetch user document
     async function fetchUserDoc(uid) {
       const doc = await db.collection('users').doc(uid).get();
       return doc.exists ? doc.data() : null;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Home buttons
       document.getElementById('btnLoginHome').addEventListener('click', () => showView('loginView'));
       document.getElementById('btnRegisterHome').addEventListener('click', () => showView('registerView'));
       document.getElementById('btnRegisterCTA').addEventListener('click', () => showView('registerView'));
       document.getElementById('btnStartInvesting').addEventListener('click', () => {
-        // If logged in, go to invest; else go to login
         if (auth.currentUser) showView('investView');
         else showView('loginView');
       });
@@ -289,11 +295,9 @@
         document.getElementById('how').scrollIntoView({ behavior: 'smooth' });
       });
 
-      // Auth buttons
       document.getElementById('linkToLogin').addEventListener('click', (e) => { e.preventDefault(); showView('loginView'); });
       document.getElementById('linkToRegister').addEventListener('click', (e) => { e.preventDefault(); showView('registerView'); });
 
-      // Register
       document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = document.getElementById('regName').value.trim();
@@ -320,7 +324,6 @@
         }
       });
 
-      // Login
       document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('loginEmail').value.trim();
@@ -338,18 +341,31 @@
         }
       });
 
-      // Logout
+      // Forgot password
+      document.getElementById('forgotPassword').addEventListener('click', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        if (!email) {
+          alert('Please enter your email address first.');
+          return;
+        }
+        try {
+          await auth.sendPasswordResetEmail(email);
+          alert('Password reset email sent! Please check your inbox.');
+        } catch (err) {
+          alert('Error sending reset email: ' + err.message);
+        }
+      });
+
       document.getElementById('btnLogout').addEventListener('click', async () => {
         await auth.signOut();
         showView('homeView');
       });
 
-      // Dashboard buttons
       document.getElementById('btnInvest').addEventListener('click', () => showView('investView'));
       document.getElementById('btnGoInvest').addEventListener('click', () => showView('investView'));
       document.getElementById('btnBackDashboard').addEventListener('click', () => showView('dashboardView'));
 
-      // Invest form
       document.getElementById('investForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const asset = document.getElementById('assetSelect').value;
@@ -370,14 +386,12 @@
           const userData = userDoc.data();
           if (userData.balance < amount) throw new Error('Insufficient balance');
 
-          // Deduct balance and create investment in a transaction
           await db.runTransaction(async (transaction) => {
             const freshUser = await transaction.get(userRef);
             const freshBalance = freshUser.data().balance;
             if (freshBalance < amount) throw new Error('Insufficient balance');
             transaction.update(userRef, { balance: freshBalance - amount });
 
-            // Create investment document
             const investRef = db.collection('investments').doc();
             transaction.set(investRef, {
               userId: auth.currentUser.uid,
@@ -399,7 +413,6 @@
       });
     });
 
-    // Load dashboard data
     async function loadDashboardData() {
       if (!auth.currentUser) return;
       const uid = auth.currentUser.uid;
@@ -409,7 +422,6 @@
         document.getElementById('availableBalance').textContent = `$${(userData.balance || 0).toFixed(2)}`;
       }
 
-      // Load investments
       const investSnapshot = await db.collection('investments').where('userId', '==', uid).where('status', '==', 'active').get();
       let totalInvested = 0;
       const investListEl = document.getElementById('investmentsList');
@@ -432,7 +444,6 @@
       document.getElementById('activeInvestmentsCount').textContent = investSnapshot.size;
     }
 
-    // Auth state listener
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         await loadDashboardData();
@@ -440,6 +451,8 @@
       } else {
         showView('homeView');
       }
+      const loader = document.getElementById('loadingOverlay');
+      if (loader) loader.style.display = 'none';
     });
   </script>
 
