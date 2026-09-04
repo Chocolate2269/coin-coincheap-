@@ -14,21 +14,60 @@
       <a href="index.html" class="text-emerald-400 text-3xl font-bold">Coincheap</a>
     </div>
     <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-    <form onsubmit="alert('Login simulated!'); return false;">
+    <form id="loginForm">
       <div class="mb-4">
         <label class="block text-sm mb-2">Email</label>
-        <input type="email" placeholder="you@example.com" class="w-full p-3 bg-slate-700 rounded" required>
+        <input type="email" id="email" placeholder="you@example.com" class="w-full p-3 bg-slate-700 rounded" required>
       </div>
       <div class="mb-6">
         <label class="block text-sm mb-2">Password</label>
-        <input type="password" placeholder="••••••••" class="w-full p-3 bg-slate-700 rounded" required>
+        <input type="password" id="password" placeholder="••••••••" class="w-full p-3 bg-slate-700 rounded" required>
       </div>
       <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold transition">Login</button>
     </form>
     <p class="mt-4 text-center text-sm text-slate-400">
       Don't have an account? <a href="register.html" class="text-emerald-400 hover:underline">Register</a>
     </p>
+    <p id="errorMsg" class="text-red-400 text-center mt-2 hidden"></p>
   </div>
+
+  <script>
+    // Replace with your Render API URL (keep the trailing /api)
+    const API_URL = 'https://coincheap-api.onrender.com/api';
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.classList.add('hidden');
+
+      try {
+        const res = await fetch(`${API_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          localStorage.setItem('token', data.access_token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          // Redirect based on role
+          if (data.user.role === 'admin') {
+            window.location.href = 'admin.html';
+          } else {
+            window.location.href = 'dashboard.html';
+          }
+        } else {
+          errorMsg.textContent = data.message || 'Login failed';
+          errorMsg.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorMsg.textContent = 'Network error. Is the backend running?';
+        errorMsg.classList.remove('hidden');
+      }
+    });
+  </script>
 
   <!-- Chatway Widget -->
   <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
