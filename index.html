@@ -3,102 +3,177 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coincheap Investment – Invest Smart. Start Small.</title>
+  <title>Coincheap Investment</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
+  <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
-<body class="bg-slate-900 text-white antialiased">
+<body class="bg-slate-900 text-white antialiased min-h-screen">
 
-  <!-- Navbar -->
-  <nav class="flex items-center justify-between px-6 py-4 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
-    <div class="flex items-center gap-2">
-      <span class="text-emerald-400 text-2xl font-bold">Coincheap</span>
-    </div>
-    <div class="hidden md:flex space-x-6 text-sm font-medium">
-      <a href="#features" class="hover:text-emerald-400">Features</a>
-      <a href="#how" class="hover:text-emerald-400">How it Works</a>
-      <a href="#stats" class="hover:text-emerald-400">Stats</a>
-    </div>
-    <a href="login.html" class="bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-lg text-sm font-semibold transition">Get Started</a>
-  </nav>
-
-  <!-- Hero -->
-  <section class="relative px-6 pt-20 pb-24 text-center max-w-5xl mx-auto">
-    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">
+  <!-- LANDING VIEW -->
+  <div id="landingView" class="min-h-screen flex flex-col items-center justify-center px-6 text-center">
+    <h1 class="text-5xl md:text-6xl font-extrabold">
       Invest in Crypto <span class="text-emerald-400">Starting at $10</span>
     </h1>
-    <p class="mt-6 text-lg text-slate-300 max-w-2xl mx-auto">
+    <p class="mt-6 text-lg text-slate-300 max-w-2xl">
       Coincheap makes it easy to grow your wealth with curated assets, transparent fees, and zero jargon.
     </p>
-    <div class="mt-8 flex justify-center gap-4">
-      <a href="login.html" class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold transition">Start Investing</a>
-      <a href="#how" class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold transition">Learn More</a>
+    <div class="mt-8 flex gap-4">
+      <button onclick="showView('loginView')" class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold">Login</button>
+      <button onclick="showView('registerView')" class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold">Register</button>
     </div>
-    <div class="mt-12 bg-slate-800/50 p-6 rounded-2xl max-w-md mx-auto">
-      <p class="text-sm text-slate-400">Total Value Locked</p>
-      <p class="text-3xl font-bold text-emerald-400">$24,560,000+</p>
+    <a href="admin.html" class="mt-4 text-sm text-slate-400 hover:text-emerald-400">Admin</a>
+  </div>
+
+  <!-- REGISTER VIEW -->
+  <div id="registerView" class="hidden min-h-screen flex items-center justify-center px-6">
+    <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
+      <form id="registerForm">
+        <input type="text" id="regName" placeholder="Full Name" class="w-full p-3 mb-4 bg-slate-700 rounded" required>
+        <input type="email" id="regEmail" placeholder="Email" class="w-full p-3 mb-4 bg-slate-700 rounded" required>
+        <input type="password" id="regPassword" placeholder="Password (min 8 chars)" class="w-full p-3 mb-6 bg-slate-700 rounded" required minlength="8">
+        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold">Register</button>
+      </form>
+      <p class="mt-4 text-sm text-slate-400 text-center">
+        Already have an account? <a href="#" onclick="showView('loginView'); return false;" class="text-emerald-400">Login</a>
+      </p>
     </div>
-  </section>
+  </div>
 
-  <!-- Features -->
-  <section id="features" class="px-6 py-20 bg-slate-800/30">
-    <h2 class="text-3xl font-bold text-center mb-12">Why Coincheap?</h2>
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <div class="bg-slate-800 p-6 rounded-xl">
-        <div class="text-emerald-400 text-2xl mb-3">💸</div>
-        <h3 class="text-xl font-semibold mb-2">Low Minimums</h3>
-        <p class="text-slate-400">Start investing with as little as $10.</p>
+  <!-- LOGIN VIEW -->
+  <div id="loginView" class="hidden min-h-screen flex items-center justify-center px-6">
+    <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md">
+      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" class="w-full p-3 mb-4 bg-slate-700 rounded" required>
+        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 mb-6 bg-slate-700 rounded" required>
+        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold">Login</button>
+      </form>
+      <p class="mt-4 text-sm text-slate-400 text-center">
+        Don't have an account? <a href="#" onclick="showView('registerView'); return false;" class="text-emerald-400">Register</a>
+      </p>
+      <p id="loginError" class="text-red-400 text-center mt-2 hidden"></p>
+    </div>
+  </div>
+
+  <!-- DASHBOARD VIEW -->
+  <div id="dashboardView" class="hidden min-h-screen">
+    <nav class="flex justify-between items-center px-6 py-4 bg-slate-800">
+      <span class="text-emerald-400 text-xl font-bold">Coincheap</span>
+      <button onclick="logout()" class="text-sm hover:text-emerald-400">Logout</button>
+    </nav>
+    <div class="p-8">
+      <h1 class="text-3xl font-bold mb-2">Welcome, <span id="userName"></span> 👋</h1>
+      <p class="text-slate-400 mb-8">Here's your investor dashboard.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-slate-800 p-6 rounded-xl">
+          <p class="text-sm text-slate-400">Portfolio Value</p>
+          <p class="text-3xl font-bold text-emerald-400" id="portfolioValue">$0.00</p>
+        </div>
+        <div class="bg-slate-800 p-6 rounded-xl">
+          <p class="text-sm text-slate-400">Available Balance</p>
+          <p class="text-3xl font-bold text-emerald-400" id="availableBalance">$0.00</p>
+        </div>
+        <div class="bg-slate-800 p-6 rounded-xl">
+          <p class="text-sm text-slate-400">Active Investments</p>
+          <p class="text-3xl font-bold">0</p>
+        </div>
       </div>
-      <div class="bg-slate-800 p-6 rounded-xl">
-        <div class="text-emerald-400 text-2xl mb-3">🔒</div>
-        <h3 class="text-xl font-semibold mb-2">Bank‑Grade Security</h3>
-        <p class="text-slate-400">Cold storage, 2FA, and KYC verification.</p>
-      </div>
-      <div class="bg-slate-800 p-6 rounded-xl">
-        <div class="text-emerald-400 text-2xl mb-3">📈</div>
-        <h3 class="text-xl font-semibold mb-2">Curated Assets</h3>
-        <p class="text-slate-400">We pick high‑potential cryptocurrencies.</p>
+      <div class="flex flex-wrap gap-4">
+        <button class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold">Invest Now</button>
+        <button class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold">Withdraw</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- How It Works -->
-  <section id="how" class="px-6 py-20">
-    <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <div class="text-center">
-        <div class="bg-emerald-500 text-slate-900 rounded-full w-12 h-12 flex items-center justify-center mx-auto font-bold text-xl">1</div>
-        <h3 class="text-xl font-semibold mt-4">Create Account</h3>
-        <p class="text-slate-400 mt-2">Sign up and complete KYC in minutes.</p>
-      </div>
-      <div class="text-center">
-        <div class="bg-emerald-500 text-slate-900 rounded-full w-12 h-12 flex items-center justify-center mx-auto font-bold text-xl">2</div>
-        <h3 class="text-xl font-semibold mt-4">Deposit Funds</h3>
-        <p class="text-slate-400 mt-2">Add money via card, bank transfer, or crypto.</p>
-      </div>
-      <div class="text-center">
-        <div class="bg-emerald-500 text-slate-900 rounded-full w-12 h-12 flex items-center justify-center mx-auto font-bold text-xl">3</div>
-        <h3 class="text-xl font-semibold mt-4">Invest & Grow</h3>
-        <p class="text-slate-400 mt-2">Choose assets and watch your portfolio grow.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action -->
-  <section class="px-6 py-20 text-center">
-    <h2 class="text-3xl font-bold mb-4">Ready to Start?</h2>
-    <p class="text-slate-400 mb-8">Join thousands of investors building wealth with Coincheap.</p>
-    <a href="login.html" class="bg-emerald-500 hover:bg-emerald-600 px-8 py-3 rounded-lg font-semibold text-lg transition">Create Free Account</a>
-  </section>
-
-  <!-- Footer -->
-  <footer class="px-6 py-8 border-t border-slate-800 text-center text-sm text-slate-500">
-    <p>© 2025 Coincheap Investment. All rights reserved.</p>
-  </footer>
-
-  <!-- Chatway Live Support Widget -->
+  <!-- Chatway Widget -->
   <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+
+  <script>
+    let users = JSON.parse(localStorage.getItem('coincheap_users')) || [];
+    let currentUser = JSON.parse(localStorage.getItem('coincheap_current_user')) || null;
+
+    function saveUsers() {
+      localStorage.setItem('coincheap_users', JSON.stringify(users));
+    }
+
+    function showView(viewId) {
+      document.querySelectorAll('#landingView, #registerView, #loginView, #dashboardView').forEach(v => v.classList.add('hidden'));
+      document.getElementById(viewId).classList.remove('hidden');
+    }
+
+    // Register handler
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+
+      if (users.find(u => u.email === email)) {
+        alert('Email already registered. Please login.');
+        showView('loginView');
+        return;
+      }
+
+      users.push({ name, email, password, balance: 0 });
+      saveUsers();
+      alert('Account created successfully! Please login.');
+      this.reset();
+      showView('loginView');
+    });
+
+    // Login handler
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const user = users.find(u => u.email === email && u.password === password);
+      const errorEl = document.getElementById('loginError');
+      errorEl.classList.add('hidden');
+
+      if (!user) {
+        errorEl.textContent = 'Invalid email or password.';
+        errorEl.classList.remove('hidden');
+        return;
+      }
+
+      currentUser = user;
+      localStorage.setItem('coincheap_current_user', JSON.stringify(currentUser));
+      document.getElementById('userName').textContent = user.name.split(' ')[0];
+      updateDashboard();
+      showView('dashboardView');
+      this.reset();
+    });
+
+    function updateDashboard() {
+      if (currentUser) {
+        document.getElementById('availableBalance').textContent = `$${currentUser.balance.toFixed(2)}`;
+        document.getElementById('portfolioValue').textContent = `$${currentUser.balance.toFixed(2)}`;
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      localStorage.removeItem('coincheap_current_user');
+      showView('landingView');
+    }
+
+    // Auto-login if currentUser exists
+    if (currentUser) {
+      // Refresh user data from users array
+      const freshUser = users.find(u => u.email === currentUser.email);
+      if (freshUser) {
+        currentUser = freshUser;
+        localStorage.setItem('coincheap_current_user', JSON.stringify(currentUser));
+        document.getElementById('userName').textContent = currentUser.name.split(' ')[0];
+        updateDashboard();
+        showView('dashboardView');
+      } else {
+        showView('landingView');
+      }
+    } else {
+      showView('landingView');
+    }
+  </script>
 </body>
 </html>
