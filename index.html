@@ -25,22 +25,125 @@
 </head>
 <body class="gradient-bg text-white antialiased min-h-screen">
 
-  <!-- LANDING VIEW -->
-  <div id="landingView" class="min-h-screen flex flex-col items-center justify-center px-6 text-center">
-    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">
-      Invest in Crypto <span class="text-gradient">Starting at $10</span>
-    </h1>
-    <p class="mt-6 text-lg text-slate-300 max-w-2xl">
-      Concheap makes it easy to grow your wealth with curated assets, transparent fees, and zero jargon.
-    </p>
-    <div class="mt-8 flex gap-4">
-      <button id="btnLogin" class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold transition">Login</button>
-      <button id="btnRegister" class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold transition">Register</button>
-    </div>
-    <a href="admin.html" class="mt-4 text-sm text-slate-400 hover:text-emerald-400">Admin</a>
+  <!-- ========== HOME VIEW ========== -->
+  <div id="homeView" class="min-h-screen">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+            <span class="text-slate-900 font-bold">C</span>
+          </div>
+          <span class="text-2xl font-extrabold tracking-tight">Concheap</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <a href="#" id="linkHomeFeatures" class="hover:text-emerald-400 transition">Features</a>
+          <a href="#" id="linkHomeHow" class="hover:text-emerald-400 transition">How it Works</a>
+          <a href="#" id="linkHomeStats" class="hover:text-emerald-400 transition">Stats</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnLoginHome" class="text-sm font-semibold hover:text-emerald-400 transition">Login</button>
+          <button id="btnRegisterHome" class="bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-lg text-sm font-semibold transition">Get Started</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative px-6 pt-24 pb-32 max-w-7xl mx-auto text-center">
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl float-animation"></div>
+      </div>
+      <div class="relative z-10">
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+          Invest in Crypto<br />
+          <span class="text-gradient">Starting at $10</span>
+        </h1>
+        <p class="mt-8 text-xl text-slate-300 max-w-2xl mx-auto">
+          Concheap makes it easy to grow your wealth with curated assets, transparent fees, and zero jargon.
+        </p>
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+          <button id="btnStartInvesting" class="bg-emerald-500 hover:bg-emerald-600 px-8 py-4 rounded-xl font-bold text-lg shadow-lg shadow-emerald-500/25 transition">Start Investing</button>
+          <button id="btnLearnMore" class="border border-white/20 hover:border-emerald-400 px-8 py-4 rounded-xl font-bold text-lg transition">Learn More</button>
+        </div>
+        <div class="mt-16 glass p-6 rounded-2xl max-w-md mx-auto">
+          <p class="text-sm text-slate-400 uppercase tracking-wider">Total Value Locked</p>
+          <p class="text-4xl font-extrabold text-emerald-400 mt-2">$24,560,000+</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="px-6 py-24 bg-slate-900/50">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-extrabold text-center mb-16">Why Concheap?</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="glass p-8 rounded-2xl hover:scale-105 transition">
+            <div class="w-14 h-14 rounded-xl bg-emerald-500/20 flex items-center justify-center text-3xl mb-6">💸</div>
+            <h3 class="text-2xl font-bold mb-3">Low Minimums</h3>
+            <p class="text-slate-400">Start investing with as little as $10.</p>
+          </div>
+          <div class="glass p-8 rounded-2xl hover:scale-105 transition">
+            <div class="w-14 h-14 rounded-xl bg-emerald-500/20 flex items-center justify-center text-3xl mb-6">🔒</div>
+            <h3 class="text-2xl font-bold mb-3">Bank‑Grade Security</h3>
+            <p class="text-slate-400">Cold storage, 2FA, and KYC verification.</p>
+          </div>
+          <div class="glass p-8 rounded-2xl hover:scale-105 transition">
+            <div class="w-14 h-14 rounded-xl bg-emerald-500/20 flex items-center justify-center text-3xl mb-6">📈</div>
+            <h3 class="text-2xl font-bold mb-3">Curated Assets</h3>
+            <p class="text-slate-400">We pick high‑potential cryptocurrencies.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how" class="px-6 py-24">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-extrabold text-center mb-16">How It Works</h2>
+        <div class="grid md:grid-cols-3 gap-12">
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-emerald-500 text-slate-900 flex items-center justify-center mx-auto font-extrabold text-2xl shadow-lg shadow-emerald-500/30">1</div>
+            <h3 class="text-2xl font-bold mt-6 mb-2">Create Account</h3>
+            <p class="text-slate-400">Sign up in minutes.</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-emerald-500 text-slate-900 flex items-center justify-center mx-auto font-extrabold text-2xl shadow-lg shadow-emerald-500/30">2</div>
+            <h3 class="text-2xl font-bold mt-6 mb-2">Deposit Funds</h3>
+            <p class="text-slate-400">Add money via card or crypto.</p>
+          </div>
+          <div class="text-center">
+            <div class="w-16 h-16 rounded-full bg-emerald-500 text-slate-900 flex items-center justify-center mx-auto font-extrabold text-2xl shadow-lg shadow-emerald-500/30">3</div>
+            <h3 class="text-2xl font-bold mt-6 mb-2">Invest & Grow</h3>
+            <p class="text-slate-400">Choose assets and watch your portfolio grow.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section id="stats" class="px-6 py-24 bg-slate-900/50">
+      <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div><p class="text-4xl font-extrabold text-emerald-400">24K+</p><p class="text-slate-400 mt-2">Users</p></div>
+        <div><p class="text-4xl font-extrabold text-emerald-400">$24M</p><p class="text-slate-400 mt-2">Assets Managed</p></div>
+        <div><p class="text-4xl font-extrabold text-emerald-400">5.2%</p><p class="text-slate-400 mt-2">Avg. Monthly Return</p></div>
+        <div><p class="text-4xl font-extrabold text-emerald-400">4.9/5</p><p class="text-slate-400 mt-2">User Rating</p></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="px-6 py-24 text-center">
+      <h2 class="text-4xl font-extrabold mb-4">Ready to Start?</h2>
+      <p class="text-xl text-slate-400 mb-10">Join thousands of investors building wealth with Concheap.</p>
+      <button id="btnRegisterCTA" class="bg-emerald-500 hover:bg-emerald-600 px-10 py-4 rounded-xl font-bold text-lg shadow-lg shadow-emerald-500/25 transition">Create Free Account</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="px-6 py-8 border-t border-white/10 text-center text-sm text-slate-500">
+      <p>© 2025 Concheap Investment. All rights reserved. <a href="admin.html" class="hover:text-emerald-400 ml-2">Admin</a></p>
+    </footer>
   </div>
 
-  <!-- REGISTER VIEW -->
+  <!-- ========== REGISTER VIEW ========== -->
   <div id="registerView" class="hidden min-h-screen flex items-center justify-center px-6">
     <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md">
       <h2 class="text-2xl font-bold mb-6 text-center">Create Account</h2>
@@ -57,7 +160,7 @@
     </div>
   </div>
 
-  <!-- LOGIN VIEW -->
+  <!-- ========== LOGIN VIEW ========== -->
   <div id="loginView" class="hidden min-h-screen flex items-center justify-center px-6">
     <div class="bg-slate-800 p-8 rounded-xl w-full max-w-md">
       <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
@@ -73,32 +176,68 @@
     </div>
   </div>
 
-  <!-- DASHBOARD VIEW -->
+  <!-- ========== DASHBOARD VIEW ========== -->
   <div id="dashboardView" class="hidden min-h-screen">
     <nav class="flex justify-between items-center px-6 py-4 bg-slate-800">
       <span class="text-emerald-400 text-xl font-bold">Concheap</span>
-      <button id="btnLogout" class="text-sm hover:text-emerald-400">Logout</button>
+      <div class="flex items-center gap-4">
+        <button id="btnInvest" class="text-sm hover:text-emerald-400">Invest</button>
+        <button id="btnLogout" class="text-sm hover:text-emerald-400">Logout</button>
+      </div>
     </nav>
     <div class="p-8">
       <h1 class="text-3xl font-bold mb-2">Welcome, <span id="userName"></span> 👋</h1>
       <p class="text-slate-400 mb-8">Here's your investor dashboard.</p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="bg-slate-800 p-6 rounded-xl">
-          <p class="text-sm text-slate-400">Portfolio Value</p>
-          <p class="text-3xl font-bold text-emerald-400" id="portfolioValue">$0.00</p>
-        </div>
-        <div class="bg-slate-800 p-6 rounded-xl">
           <p class="text-sm text-slate-400">Available Balance</p>
           <p class="text-3xl font-bold text-emerald-400" id="availableBalance">$0.00</p>
         </div>
         <div class="bg-slate-800 p-6 rounded-xl">
+          <p class="text-sm text-slate-400">Total Invested</p>
+          <p class="text-3xl font-bold text-emerald-400" id="totalInvested">$0.00</p>
+        </div>
+        <div class="bg-slate-800 p-6 rounded-xl">
           <p class="text-sm text-slate-400">Active Investments</p>
-          <p class="text-3xl font-bold">0</p>
+          <p class="text-3xl font-bold" id="activeInvestmentsCount">0</p>
         </div>
       </div>
-      <div class="flex flex-wrap gap-4">
-        <button class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold">Invest Now</button>
-        <button class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold">Withdraw</button>
+      <h2 class="text-2xl font-bold mb-4">My Investments</h2>
+      <div id="investmentsList" class="bg-slate-800 rounded-xl p-4">
+        <p class="text-slate-400">No investments yet.</p>
+      </div>
+      <div class="mt-8">
+        <button id="btnGoInvest" class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold">Invest Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== INVEST VIEW ========== -->
+  <div id="investView" class="hidden min-h-screen">
+    <nav class="flex justify-between items-center px-6 py-4 bg-slate-800">
+      <span class="text-emerald-400 text-xl font-bold">Concheap – Invest</span>
+      <button id="btnBackDashboard" class="text-sm hover:text-emerald-400">← Back</button>
+    </nav>
+    <div class="p-8 max-w-2xl mx-auto">
+      <h1 class="text-3xl font-bold mb-8">Invest in Assets</h1>
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <form id="investForm">
+          <div class="mb-4">
+            <label class="block text-sm mb-2">Select Asset</label>
+            <select id="assetSelect" class="w-full p-3 bg-slate-700 rounded" required>
+              <option value="BTC">Bitcoin (BTC) - APY 3.5%</option>
+              <option value="ETH">Ethereum (ETH) - APY 4.0%</option>
+              <option value="USDT">Tether (USDT) - APY 5.0%</option>
+              <option value="SOL">Solana (SOL) - APY 6.0%</option>
+            </select>
+          </div>
+          <div class="mb-6">
+            <label class="block text-sm mb-2">Amount (USD)</label>
+            <input type="number" id="investAmount" placeholder="10" class="w-full p-3 bg-slate-700 rounded" required min="10">
+          </div>
+          <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold">Invest</button>
+          <p id="investError" class="text-red-400 text-center mt-2 hidden"></p>
+        </form>
       </div>
     </div>
   </div>
@@ -126,17 +265,35 @@
 
     // View management
     function showView(viewId) {
-      document.querySelectorAll('#landingView, #registerView, #loginView, #dashboardView').forEach(v => v.classList.add('hidden'));
+      document.querySelectorAll('#homeView, #registerView, #loginView, #dashboardView, #investView').forEach(v => v.classList.add('hidden'));
       document.getElementById(viewId).classList.remove('hidden');
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('btnLogin').addEventListener('click', () => showView('loginView'));
-      document.getElementById('btnRegister').addEventListener('click', () => showView('registerView'));
+    // Helper to fetch user document
+    async function fetchUserDoc(uid) {
+      const doc = await db.collection('users').doc(uid).get();
+      return doc.exists ? doc.data() : null;
+    }
 
+    document.addEventListener('DOMContentLoaded', () => {
+      // Home buttons
+      document.getElementById('btnLoginHome').addEventListener('click', () => showView('loginView'));
+      document.getElementById('btnRegisterHome').addEventListener('click', () => showView('registerView'));
+      document.getElementById('btnRegisterCTA').addEventListener('click', () => showView('registerView'));
+      document.getElementById('btnStartInvesting').addEventListener('click', () => {
+        // If logged in, go to invest; else go to login
+        if (auth.currentUser) showView('investView');
+        else showView('loginView');
+      });
+      document.getElementById('btnLearnMore').addEventListener('click', () => {
+        document.getElementById('how').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      // Auth buttons
       document.getElementById('linkToLogin').addEventListener('click', (e) => { e.preventDefault(); showView('loginView'); });
       document.getElementById('linkToRegister').addEventListener('click', (e) => { e.preventDefault(); showView('registerView'); });
 
+      // Register
       document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = document.getElementById('regName').value.trim();
@@ -163,6 +320,7 @@
         }
       });
 
+      // Login
       document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('loginEmail').value.trim();
@@ -180,31 +338,107 @@
         }
       });
 
+      // Logout
       document.getElementById('btnLogout').addEventListener('click', async () => {
         await auth.signOut();
-        showView('landingView');
+        showView('homeView');
+      });
+
+      // Dashboard buttons
+      document.getElementById('btnInvest').addEventListener('click', () => showView('investView'));
+      document.getElementById('btnGoInvest').addEventListener('click', () => showView('investView'));
+      document.getElementById('btnBackDashboard').addEventListener('click', () => showView('dashboardView'));
+
+      // Invest form
+      document.getElementById('investForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const asset = document.getElementById('assetSelect').value;
+        const amount = parseFloat(document.getElementById('investAmount').value);
+        const errorEl = document.getElementById('investError');
+        errorEl.classList.add('hidden');
+
+        if (!auth.currentUser) {
+          alert('Please login first');
+          showView('loginView');
+          return;
+        }
+
+        try {
+          const userRef = db.collection('users').doc(auth.currentUser.uid);
+          const userDoc = await userRef.get();
+          if (!userDoc.exists) throw new Error('User data not found');
+          const userData = userDoc.data();
+          if (userData.balance < amount) throw new Error('Insufficient balance');
+
+          // Deduct balance and create investment in a transaction
+          await db.runTransaction(async (transaction) => {
+            const freshUser = await transaction.get(userRef);
+            const freshBalance = freshUser.data().balance;
+            if (freshBalance < amount) throw new Error('Insufficient balance');
+            transaction.update(userRef, { balance: freshBalance - amount });
+
+            // Create investment document
+            const investRef = db.collection('investments').doc();
+            transaction.set(investRef, {
+              userId: auth.currentUser.uid,
+              asset,
+              amount,
+              status: 'active',
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          });
+
+          document.getElementById('investAmount').value = '';
+          alert('Investment successful!');
+          showView('dashboardView');
+          loadDashboardData();
+        } catch (err) {
+          errorEl.textContent = err.message;
+          errorEl.classList.remove('hidden');
+        }
       });
     });
 
+    // Load dashboard data
+    async function loadDashboardData() {
+      if (!auth.currentUser) return;
+      const uid = auth.currentUser.uid;
+      const userData = await fetchUserDoc(uid);
+      if (userData) {
+        document.getElementById('userName').textContent = userData.name ? userData.name.split(' ')[0] : auth.currentUser.email.split('@')[0];
+        document.getElementById('availableBalance').textContent = `$${(userData.balance || 0).toFixed(2)}`;
+      }
+
+      // Load investments
+      const investSnapshot = await db.collection('investments').where('userId', '==', uid).where('status', '==', 'active').get();
+      let totalInvested = 0;
+      const investListEl = document.getElementById('investmentsList');
+      investListEl.innerHTML = '';
+      if (investSnapshot.empty) {
+        investListEl.innerHTML = '<p class="text-slate-400">No investments yet.</p>';
+        document.getElementById('activeInvestmentsCount').textContent = '0';
+        document.getElementById('totalInvested').textContent = '$0.00';
+        return;
+      }
+      investSnapshot.forEach(doc => {
+        const inv = doc.data();
+        totalInvested += inv.amount;
+        const row = document.createElement('div');
+        row.className = 'flex justify-between py-2 border-b border-slate-700';
+        row.innerHTML = `<span>${inv.asset}</span><span class="text-emerald-400">$${inv.amount.toFixed(2)}</span>`;
+        investListEl.appendChild(row);
+      });
+      document.getElementById('totalInvested').textContent = `$${totalInvested.toFixed(2)}`;
+      document.getElementById('activeInvestmentsCount').textContent = investSnapshot.size;
+    }
+
+    // Auth state listener
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        try {
-          const doc = await db.collection('users').doc(user.uid).get();
-          if (doc.exists) {
-            const userData = doc.data();
-            document.getElementById('userName').textContent = userData.name ? userData.name.split(' ')[0] : user.email.split('@')[0];
-            document.getElementById('availableBalance').textContent = `$${(userData.balance || 0).toFixed(2)}`;
-            document.getElementById('portfolioValue').textContent = `$${(userData.balance || 0).toFixed(2)}`;
-          } else {
-            document.getElementById('userName').textContent = user.email.split('@')[0];
-          }
-          showView('dashboardView');
-        } catch (err) {
-          console.error('Error fetching user data:', err);
-          showView('dashboardView');
-        }
+        await loadDashboardData();
+        showView('dashboardView');
       } else {
-        showView('landingView');
+        showView('homeView');
       }
     });
   </script>
