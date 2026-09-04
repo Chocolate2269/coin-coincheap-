@@ -1,34 +1,98 @@
-<!DOCTYPE html><html><head><title>Dashboard</title><script src="https://cdn.tailwindcss.com"></script>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs, query, where, addDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig = {apiKey: "AIzaSyCLD9yedNA-llM6VU01L9gZ40jv36PlSsw",authDomain: "coincheap-investment.firebaseapp.com",projectId: "coincheap-investment",storageBucket: "coincheap-investment.firebasestorage.app",messagingSenderId: "1065612358336",appId: "1:1065612358336:web:1e9b4678e5df622bc9f325"};
-const app = initializeApp(firebaseConfig); const db = getFirestore(app);
-let email = localStorage.getItem('currentUser'); if(!email) window.location = 'login.html';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – Coincheap Investment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-white antialiased">
 
-async function addHolding(){
-  let coin = prompt("Coin ID: bitcoin, ethereum, solana");
-  let amount = parseFloat(prompt("How much do you own?"));
-  await addDoc(collection(db, "holdings"), {email, coin, amount, date: new Date()});
-  loadPortfolio();
-}
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between px-6 py-4 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="flex items-center gap-2">
+      <a href="index.html" class="text-emerald-400 text-2xl font-bold">Coincheap</a>
+    </div>
+    <div class="flex space-x-4 text-sm font-medium">
+      <a href="dashboard.html" class="text-emerald-400 hover:text-emerald-300">Dashboard</a>
+      <a href="invest.html" class="hover:text-emerald-400">Invest</a>
+      <a href="portfolio.html" class="hover:text-emerald-400">Portfolio</a>
+      <a href="index.html" class="hover:text-emerald-400">Logout</a>
+    </div>
+  </nav>
 
-async function loadPortfolio(){
-  const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd');
-  const prices = await res.json();
-  const q = query(collection(db, "holdings"), where("email", "==", email));
-  const snap = await getDocs(q);
-  let total = 0; let html = '<table class="w-full"><tr><th>Coin</th><th>Amount</th><th>Value</th></tr>';
-  snap.forEach(d => {
-    let h = d.data(); let price = prices.find(p => p.id == h.coin)?.current_price || 0;
-    let value = h.amount * price; total += value;
-    html += `<tr><td>${h.coin}</td><td>${h.amount}</td><td>$${value.toFixed(2)}</td></tr>`;
-  });
-  document.getElementById('portfolio').innerHTML = html + `</table><p class="text-2xl mt-4">Total: $${total.toFixed(2)}</p>`;
-}
-loadPortfolio(); window.addHolding = addHolding;
-</script></head>
-<body class="bg-[#0B1120] text-white p-6"><div class="max-w-5xl mx-auto">
-<div class="flex justify-between mb-6"><h1 class="text-3xl font-bold">My Portfolio</h1><a href="index.html" class="text-red-400">Logout</a></div>
-<button onclick="addHolding()" class="mb-6 px-6 py-2 bg-green-500 text-black rounded-lg font-bold">+ Add Coin</button>
-<div id="portfolio" class="bg-gray-900 p-6 rounded-xl"></div></div></body></html>
+  <!-- Dashboard Content -->
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <h1 class="text-3xl font-bold mb-2">Welcome back, Investor 👋</h1>
+    <p class="text-slate-400 mb-8">Here’s your portfolio at a glance.</p>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <p class="text-sm text-slate-400">Total Portfolio Value</p>
+        <p class="text-3xl font-bold text-emerald-400 mt-2">$24,560.00</p>
+        <p class="text-green-500 text-sm mt-1">↑ 12.3% this month</p>
+      </div>
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <p class="text-sm text-slate-400">Active Investments</p>
+        <p class="text-3xl font-bold mt-2">7</p>
+        <p class="text-slate-400 text-sm mt-1">Across 4 assets</p>
+      </div>
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <p class="text-sm text-slate-400">Available Balance</p>
+        <p class="text-3xl font-bold text-emerald-400 mt-2">$1,250.00</p>
+        <p class="text-slate-400 text-sm mt-1">Ready to invest</p>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="flex flex-wrap gap-4 mb-12">
+      <a href="invest.html" class="bg-emerald-500 hover:bg-emerald-600 px-6 py-3 rounded-lg font-semibold transition">Invest Now</a>
+      <button class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold transition">Withdraw</button>
+      <button class="border border-slate-600 hover:border-emerald-400 px-6 py-3 rounded-lg font-semibold transition">Swap</button>
+    </div>
+
+    <!-- Asset Allocation -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <h2 class="text-xl font-semibold mb-4">Asset Allocation</h2>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-sm mb-1"><span>Bitcoin</span><span>45%</span></div>
+            <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width:45%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm mb-1"><span>Ethereum</span><span>30%</span></div>
+            <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width:30%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm mb-1"><span>USDT</span><span>15%</span></div>
+            <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width:15%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm mb-1"><span>Solana</span><span>10%</span></div>
+            <div class="w-full bg-slate-700 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width:10%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Transactions -->
+      <div class="bg-slate-800 p-6 rounded-xl">
+        <h2 class="text-xl font-semibold mb-4">Recent Activity</h2>
+        <div class="space-y-3">
+          <div class="flex justify-between text-sm"><span>Bought BTC</span><span class="text-emerald-400">+0.02 BTC</span></div>
+          <div class="flex justify-between text-sm"><span>Bought ETH</span><span class="text-emerald-400">+0.5 ETH</span></div>
+          <div class="flex justify-between text-sm"><span>Withdrawal</span><span class="text-red-400">-$500</span></div>
+          <div class="flex justify-between text-sm"><span>Interest earned</span><span class="text-emerald-400">+$23.45</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatway Live Support Widget -->
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+</body>
+</html>
