@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Withdraw – Coincheap Investment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-900 text-white antialiased">
+
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between px-6 py-4 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <a href="index.html" class="text-emerald-400 text-2xl font-bold">Coincheap</a>
+    <div class="flex space-x-4 text-sm font-medium">
+      <a href="dashboard.html" class="hover:text-emerald-400">Dashboard</a>
+      <a href="invest.html" class="hover:text-emerald-400">Invest</a>
+      <a href="portfolio.html" class="hover:text-emerald-400">Portfolio</a>
+      <a href="withdraw.html" class="text-emerald-400">Withdraw</a>
+      <a href="index.html" class="hover:text-emerald-400">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Withdraw Content -->
+  <div class="max-w-md mx-auto px-6 py-12">
+    <h1 class="text-3xl font-bold mb-8">Withdraw Funds</h1>
+    <div class="bg-slate-800 p-6 rounded-xl">
+      <form onsubmit="alert('Withdrawal request submitted (simulated)!'); return false;">
+        <div class="mb-4">
+          <label class="block text-sm mb-2">Asset</label>
+          <select class="w-full p-3 bg-slate-700 rounded">
+            <option>USDT (Tether)</option>
+            <option>BTC (Bitcoin)</option>
+            <option>ETH (Ethereum)</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm mb-2">Amount</label>
+          <input type="number" placeholder="0.00" class="w-full p-3 bg-slate-700 rounded" required min="0">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm mb-2">Destination Address</label>
+          <input type="text" placeholder="Wallet address or bank account" class="w-full p-3 bg-slate-700 rounded" required>
+        </div>
+        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 p-3 rounded-lg font-semibold">Request Withdrawal</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chatway Widget -->
+  <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+</body>
+</html>
