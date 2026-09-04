@@ -1,0 +1,156 @@
+const express = require('express');
+const cors = require('cors');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
+
+// Middleware
+const authenticate = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'No token' });
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  } catch {
+    res.status(401).json({ message: 'Invalid token' });
+  }
+};
+
+const isAdmin = (req, res, next) => {
+  if (req.user.role !== 'admin') return res.status(403).json({ message: 'Admin only' });
+  next();
+};
+
+// Register
+app.post('/api/auth/register', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const hashed = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email, role',
+      [email, hashed]
+    );
+    const user = result.rows[0];
+    const token = jwt.sign({ sub: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '15m' });
+    res.json({ access_token: token, user });
+  } catch (err) {
+    res.status(400).json({ message: 'Email already exists' });
+  }
+});
+
+// Login
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body;
+  const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+  const user = result.rows[0];
+  if (!user || !(await bcrypt.compare(password, user.password_hash))) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+  const token = jwt.sign({ sub: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '15m' });
+  res.json({ access_token: token, user: { id: user.id, email: user.email, role: user.role } });
+});
+
+// Get Assets
+app.get('/api/assets', async (req, res) => {
+  const result = await pool.query('SELECT * FROM assets WHERE is_active = true');
+  res.json(result.rows);
+});
+
+// Get My Wallets
+app.get('/api/wallets', authenticate, async (req, res) => {
+  const result = await pool.query(
+    `SELECT w.*, a.symbol, a.name FROM wallets w 
+     JOIN assets a ON w.asset_id = a.id 
+     WHERE w.user_id = $1`,
+    [req.user.sub]
+  );
+  res.json(result.rows);
+});
+
+// Create Investment
+app.post('/api/investments', authenticate, async (req, res) => {
+  const { assetId, amount } = req.body;
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const wallet = await client.query(
+      'SELECT * FROM wallets WHERE user_id = $1 AND asset_id = $2 FOR UPDATE',
+      [req.user.sub, assetId]
+    );
+    if (!wallet.rows[0] || Number(wallet.rows[0].balance) < amount) {
+      throw new Error('Insufficient balance');
+    }
+    await client.query(
+      'UPDATE wallets SET balance = balance - $1 WHERE user_id = $2 AND asset_id = $3',
+      [amount, req.user.sub, assetId]
+    );
+    const investment = await client.query(
+      `INSERT INTO investments (user_id, asset_id, amount, current_value, apy_at_investment, status)
+       VALUES ($1, $2, $3, $3, (SELECT apy FROM assets WHERE id = $2), 'active')
+       RETURNING *`,
+      [req.user.sub, assetId, amount]
+    );
+    await client.query(
+      `INSERT INTO transactions (user_id, asset_id, type, amount, status, description)
+       VALUES ($1, $2, 'investment', $3, 'completed', 'Investment')`,
+      [req.user.sub, assetId, amount]
+    );
+    await client.query('COMMIT');
+    res.json(investment.rows[0]);
+  } catch (err) {
+    await client.query('ROLLBACK');
+    res.status(400).json({ message: err.message });
+  } finally {
+    client.release();
+  }
+});
+
+// Get My Investments
+app.get('/api/investments', authenticate, async (req, res) => {
+  const result = await pool.query(
+    `SELECT i.*, a.symbol, a.name FROM investments i 
+     JOIN assets a ON i.asset_id = a.id 
+     WHERE i.user_id = $1 AND i.status = 'active'`,
+    [req.user.sub]
+  );
+  res.json(result.rows);
+});
+
+// Get Transactions
+app.get('/api/transactions', authenticate, async (req, res) => {
+  const result = await pool.query(
+    `SELECT t.*, a.symbol FROM transactions t 
+     JOIN assets a ON t.asset_id = a.id 
+     WHERE t.user_id = $1 ORDER BY t.created_at DESC`,
+    [req.user.sub]
+  );
+  res.json(result.rows);
+});
+
+// Admin: Get All Users
+app.get('/api/admin/users', authenticate, isAdmin, async (req, res) => {
+  const result = await pool.query('SELECT id, email, role, is_active, created_at FROM users');
+  res.json(result.rows);
+});
+
+// Admin: Toggle User Active
+app.post('/api/admin/users/:id/toggle', authenticate, isAdmin, async (req, res) => {
+  await pool.query('UPDATE users SET is_active = NOT is_active WHERE id = $1', [req.params.id]);
+  res.json({ message: 'User updated' });
+});
+
+// Health Check
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server on port ${PORT}`));
