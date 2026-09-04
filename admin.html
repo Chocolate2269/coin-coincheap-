@@ -9,27 +9,21 @@
 </head>
 <body class="bg-slate-900 text-white antialiased">
 
-  <!-- Navbar -->
-  <nav class="flex items-center justify-between px-6 py-4 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+  <nav class="flex items-center justify-between px-6 py-4 bg-slate-800">
     <a href="index.html" class="text-emerald-400 text-2xl font-bold">Coincheap Admin</a>
-    <div class="flex space-x-4 text-sm font-medium">
-      <a href="dashboard.html" class="hover:text-emerald-400">Dashboard</a>
-      <a href="index.html" class="hover:text-emerald-400">Logout</a>
-    </div>
+    <a href="index.html" class="text-sm hover:text-emerald-400">← Back to Site</a>
   </nav>
 
-  <!-- Admin Content -->
   <div class="max-w-6xl mx-auto px-6 py-12">
-    <h1 class="text-3xl font-bold mb-8">Admin Panel</h1>
+    <h1 class="text-3xl font-bold mb-8">Admin Dashboard</h1>
 
-    <!-- Stats (static for now) -->
-    <div class="grid grid-cols-3 gap-6 mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
       <div class="bg-slate-800 p-6 rounded-xl">
-        <p class="text-sm text-slate-400">Total Users</p>
-        <p class="text-3xl font-bold" id="totalUsers">–</p>
+        <p class="text-sm text-slate-400">Total Registered Users</p>
+        <p class="text-3xl font-bold" id="totalUsers">0</p>
       </div>
       <div class="bg-slate-800 p-6 rounded-xl">
-        <p class="text-sm text-slate-400">Total AUM</p>
+        <p class="text-sm text-slate-400">Total Assets Managed</p>
         <p class="text-3xl font-bold text-emerald-400">$24.5M</p>
       </div>
       <div class="bg-slate-800 p-6 rounded-xl">
@@ -38,70 +32,81 @@
       </div>
     </div>
 
-    <!-- User Management Table -->
     <h2 class="text-2xl font-bold mb-4">Registered Users</h2>
-    <div class="bg-slate-800 rounded-xl overflow-hidden mb-12">
+    <div class="bg-slate-800 rounded-xl overflow-hidden">
       <table class="w-full">
         <thead>
           <tr class="border-b border-slate-700">
+            <th class="p-3 text-left">Name</th>
             <th class="p-3 text-left">Email</th>
-            <th class="p-3 text-left">Role</th>
-            <th class="p-3 text-left">Status</th>
-            <th class="p-3 text-left">Created At</th>
+            <th class="p-3 text-left">Balance</th>
+            <th class="p-3 text-left">Action</th>
           </tr>
         </thead>
         <tbody id="userTableBody">
-          <!-- Dynamic rows will be inserted here -->
         </tbody>
       </table>
+      <p id="noUsers" class="p-4 text-slate-400 hidden">No registered users yet.</p>
     </div>
   </div>
 
-  <script>
-    // Replace with your Render API URL (keep the trailing /api)
-    const API_URL = 'https://coincheap-api.onrender.com/api';
-
-    // Check if user is admin
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const token = localStorage.getItem('token');
-    if (!token || user.role !== 'admin') {
-      alert('Admin access required');
-      window.location.href = 'login.html';
-    }
-
-    async function fetchUsers() {
-      try {
-        const res = await fetch(`${API_URL}/admin/users`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const users = await res.json();
-          document.getElementById('totalUsers').textContent = users.length;
-          const tbody = document.getElementById('userTableBody');
-          tbody.innerHTML = '';
-          users.forEach(u => {
-            const row = document.createElement('tr');
-            row.className = 'border-b border-slate-700';
-            row.innerHTML = `
-              <td class="p-3">${u.email}</td>
-              <td class="p-3">${u.role}</td>
-              <td class="p-3 ${u.is_active ? 'text-emerald-400' : 'text-red-400'}">${u.is_active ? 'Active' : 'Suspended'}</td>
-              <td class="p-3">${new Date(u.created_at).toLocaleDateString()}</td>
-            `;
-            tbody.appendChild(row);
-          });
-        } else {
-          alert('Failed to fetch users. Check admin permissions.');
-        }
-      } catch (err) {
-        alert('Network error: ' + err.message);
-      }
-    }
-
-    fetchUsers();
-  </script>
-
-  <!-- Chatway Widget (optional) -->
   <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=YcVV5pL9H0KO"></script>
+
+  <script>
+    let users = JSON.parse(localStorage.getItem('coincheap_users')) || [];
+
+    function saveUsers() {
+      localStorage.setItem('coincheap_users', JSON.stringify(users));
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('userTableBody');
+      const noUsers = document.getElementById('noUsers');
+      tbody.innerHTML = '';
+      document.getElementById('totalUsers').textContent = users.length;
+
+      if (users.length === 0) {
+        noUsers.classList.remove('hidden');
+        return;
+      }
+      noUsers.classList.add('hidden');
+
+      users.forEach((user, index) => {
+        const row = document.createElement('tr');
+        row.className = 'border-b border-slate-700';
+        row.innerHTML = `
+          <td class="p-3">${user.name}</td>
+          <td class="p-3">${user.email}</td>
+          <td class="p-3 font-semibold" id="balance-${index}">$${user.balance.toFixed(2)}</td>
+          <td class="p-3">
+            <button onclick="addFunds(${index})" class="bg-emerald-500 hover:bg-emerald-600 px-3 py-1 rounded text-sm">Add Funds</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function addFunds(index) {
+      const amount = prompt('Enter amount to add ($):');
+      if (amount === null) return;
+      const parsed = parseFloat(amount);
+      if (isNaN(parsed) || parsed <= 0) {
+        alert('Invalid amount');
+        return;
+      }
+      users[index].balance += parsed;
+      saveUsers();
+      // Also update current user if this user is currently logged in (in the single-page app)
+      const currentUser = JSON.parse(localStorage.getItem('coincheap_current_user'));
+      if (currentUser && currentUser.email === users[index].email) {
+        currentUser.balance = users[index].balance;
+        localStorage.setItem('coincheap_current_user', JSON.stringify(currentUser));
+      }
+      renderTable();
+    }
+
+    // Initial render
+    renderTable();
+  </script>
 </body>
 </html>
